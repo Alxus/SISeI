@@ -1,4 +1,3 @@
-
 <!--Hay que mover esto a un css aparte-->
 <style type="text/css">
   .brand-logo img{
@@ -6,7 +5,6 @@
     margin-left: 1em;
   }
 </style>
-
 <!--Esta navbar la editaremos cuando agreguemos secciones-->
   <div class="navbar-fixed black-text">
     <nav class="grey lighten-4">
