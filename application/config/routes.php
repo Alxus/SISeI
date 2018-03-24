@@ -54,6 +54,7 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 //Rutas Backend
+$route['login']['POST']='Login_controller/login/$data';
 $route['admin']='Login_controller';
 $route['admin/panel']='Admin_controller';
 $route['admin/panel/usuarios']='Admin_controller/vista_usuarios';

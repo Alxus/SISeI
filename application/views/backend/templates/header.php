@@ -5,6 +5,6 @@
   <link type="text/css" rel="stylesheet" href=<?php echo base_url()."assets/css/materialize.min.css";?> media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href=<?php echo base_url()."assets/js/particles.js";?> media="screen,projection"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title><?echo $title;?></title>
+  <title><?php echo $title;?></title>
 </head>
 <body>

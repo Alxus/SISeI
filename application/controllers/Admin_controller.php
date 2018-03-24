@@ -5,14 +5,19 @@ class Admin_controller extends CI_Controller {
 	
 	public function __construct(){
 		parent::__construct();
+		if($this->authentication->check_user()){
 		//Cargamos los modelos que vamos a necesitar en el constructor
-		$this->load->model('Usuario_model');
+			$this->load->model('Usuario_model');
 		//Reglas para validar formularios.
-		$this->form_validation->set_rules('username', 'Username', 'trim|required');
-		$this->form_validation->set_rules('password', 'Password', 'required');
-		$this->form_validation->set_rules('tipo', 'Tipo', 'required');
-		$this->form_validation->set_rules('nombres', 'Nombres', 'trim|required');
-		$this->form_validation->set_rules('apellidos', 'Apellidos', 'trim|required');
+			$this->form_validation->set_rules('username', 'Username', 'trim|required');
+			$this->form_validation->set_rules('password', 'Password', 'required');
+			$this->form_validation->set_rules('tipo', 'Tipo', 'required');
+			$this->form_validation->set_rules('nombres', 'Nombres', 'trim|required');
+			$this->form_validation->set_rules('apellidos', 'Apellidos', 'trim|required');
+		}
+		else{
+			redirect('admin');
+		}
 	}
 	
 	public function index(){
@@ -25,6 +30,7 @@ class Admin_controller extends CI_Controller {
 	}
 
 	public function vista_usuarios(){
+		$data['title']='Crear usuario';
 		$this->load->view('backend/templates/header');
 		$this->load->view('backend/templates/navbar');
 		$this->load->view('backend/formulario_usuarios');
@@ -48,7 +54,6 @@ class Admin_controller extends CI_Controller {
 		else{
 			//La validacion no fue exitosa
 			$data['error']="BAD_POST";
-			redirect("admin");
 		}
 		//JSON de respuesta
 		echo json_encode($data);
