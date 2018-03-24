@@ -5,11 +5,32 @@ class Login_controller extends CI_Controller {
 	
 	public function __construct(){
 		parent::__construct();
+		$this->form_validation->set_rules('username','Username','trim|required');
+		$this->form_validation->set_rules('password','Password','trim|required');
 	}
 	
 	public function index(){
-		$this->load->view('backend/templates/header');
-		$this->load->view('backend/login');
-		$this->load->view('backend/templates/footer');
+		if(!$this->authentication->check_user()){
+			$this->load->view('backend/templates/header');
+			$this->load->view('backend/login');
+			$this->load->view('backend/templates/footer');
+		}
+		else{
+			redirect('admin/panel');
+		}
+	}
+
+	public function login(){
+		if($this->form_validation->run()){
+			$data['username']=$this->input->post('username');
+			$data['password']=$this->input->post('password');
+			if($this->authentication->login($data)){
+				$data['error']='ALL_OK';
+			}
+		}
+		else{
+			$data['error']='BAD_LOGIN';
+		}
+		echo json_encode($data);
 	}
 }

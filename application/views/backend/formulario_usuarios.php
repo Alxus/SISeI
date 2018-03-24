@@ -4,7 +4,7 @@
 			<div class="card-content">
 				<span class="card-title center">Crear Usuario</span>
 				<div class="row">
-					<form method="POST" action=<?echo site_url("admin/create_user");?> class="col s12">
+					<form id="users-form" method="POST" action=<?php echo site_url("admin/create_user");?> class="col s12">
 						<div class="input-field col s12">
 							<input id="username" type="text" name="username">
 							<label for="username">Usuario</label>
