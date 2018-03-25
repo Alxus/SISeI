@@ -1,20 +1,47 @@
-/* Custom Stylesheet */
-/**
- * Use this file to override Materialize files so you can update
- * the core Materialize files in the future
- *
- * Made By MaterializeCSS.com
- */
-
-nav ul a,
-nav .brand-logo {
-  color: #444;
+/************ General ************/
+::-webkit-scrollbar {
+	display: none;
+}
+html {
+	font-family: 'Roboto', sans-serif;
+}
+h1, h2, h4{
+	font-weight: 500;
 }
 
-p {
-  line-height: 2rem;
+/*********************************/
+/************ Navbar *************/
+nav {
+	background-color: transparent;
+}
+nav ul a{
+	text-transform: uppercase;
+	color: black;
+}
+.brand-logo img {
+	max-height: 2em;
+	margin-left: 1em;
+}
+.brand-logo img:last-of-type {
+	margin-left: 1.5em;
+}
+.table-of-contents a.active {
+	border-left: 2px solid #3C90CB;
+}
+.table-of-contents a:hover {
+	border-left: 1px solid #3C90CB;	
 }
 
+/*********************************/
+/************ Footer *************/
+footer {
+	background-color: #004680 !important;
+}
+.footer-copyright .container .row .col a {
+	color: white;
+}
+/*********************************/
+/************Parallax*************/
 .sidenav-trigger {
   color: #26a69a;
 }
@@ -51,7 +78,4 @@ p {
 .icon-block .material-icons {
   font-size: inherit;
 }
-
-footer.page-footer {
-  margin: 0;
-}
+/*********************************/
