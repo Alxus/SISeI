@@ -5,23 +5,22 @@ class Admin_controller extends CI_Controller {
 	
 	public function __construct(){
 		parent::__construct();
-		if($this->authentication->check_user()){
-		//Cargamos los modelos que vamos a necesitar en el constructor
-			$this->load->model('Usuario_model');
-		//Reglas para validar formularios.
-			$this->form_validation->set_rules('username', 'Username', 'trim|required');
-			$this->form_validation->set_rules('password', 'Password', 'required');
-			$this->form_validation->set_rules('tipo', 'Tipo', 'required');
-			$this->form_validation->set_rules('nombres', 'Nombres', 'trim|required');
-			$this->form_validation->set_rules('apellidos', 'Apellidos', 'trim|required');
-		}
-		else{
+		if(!$this->authentication->check_user()){
 			redirect('admin');
 		}
+		//Cargamos los modelos que vamos a necesitar en el constructor
+		$this->load->model('Usuario_model');
+		//Reglas para validar formularios.
+		$this->form_validation->set_rules('username', 'Username', 'trim|required');
+		$this->form_validation->set_rules('password', 'Password', 'required');
+		$this->form_validation->set_rules('tipo', 'Tipo', 'required');
+		$this->form_validation->set_rules('nombres', 'Nombres', 'trim|required');
+		$this->form_validation->set_rules('apellidos', 'Apellidos', 'trim|required');
+		
 	}
 	
 	public function index(){
-		$data['title']='Login Admin';
+		$data['title']='Panel';
 		//Pasamos esta variable como parametro al header para darle titulo a la pagina
 		$this->load->view('backend/templates/header',$data);
 		$this->load->view('backend/templates/navbar');

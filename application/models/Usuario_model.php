@@ -11,7 +11,7 @@ class Usuario_model extends CI_Model{
     }
 
     public function find_user($data){
-        return $this->db->get_where('usuario',$data)->resul_array();
+        return $this->db->get_where('usuario',$data)->result_array();
     }
 
 }
