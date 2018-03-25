@@ -55,15 +55,10 @@ $route['translate_uri_dashes'] = FALSE;
 
 //Rutas Backend
 $route['login']['POST']='Login_controller/login/$data';
+$route['logout']='Login_controller/logout';
 $route['admin']='Login_controller';
 $route['admin/panel']='Admin_controller';
 $route['admin/panel/usuarios']='Admin_controller/vista_usuarios';
 $route['admin/create_user']['POST']='Admin_controller/create_user/$data';
-
-
-
-
-
-
 
 //Rutas Frontend

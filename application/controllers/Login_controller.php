@@ -11,7 +11,8 @@ class Login_controller extends CI_Controller {
 	
 	public function index(){
 		if(!$this->authentication->check_user()){
-			$this->load->view('backend/templates/header');
+			$data['title']='Login Admin';
+			$this->load->view('backend/templates/header',$data);
 			$this->load->view('backend/login');
 			$this->load->view('backend/templates/footer');
 		}
@@ -32,5 +33,10 @@ class Login_controller extends CI_Controller {
 			$data['error']='BAD_LOGIN';
 		}
 		echo json_encode($data);
+	}
+
+	public function logout(){
+		$this->authentication->logout();
+		redirect('admin');
 	}
 }

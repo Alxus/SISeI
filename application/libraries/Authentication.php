@@ -18,7 +18,7 @@ class Authentication{
     }
 
     public function login($data){
-        $usuario=$this->CI->Usuario_model->find_usuario($data);
+        $usuario=$this->CI->Usuario_model->find_user($data);
         if($usuario!=null){
             unset($usuario['password']);
             $_SESSION['SISeI_User']=$usuario;

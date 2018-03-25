@@ -4,7 +4,7 @@
 			<div class="card-content">
 				<span class="card-title center">Log in</span>
 				<div class="row">
-					<form action="" id="login-form" class="col s12">
+					<form  id="login-form" action=<?php echo site_url("login");?> class="col s12">
 						<div class="input-field col s12">
 							<input id="username" type="text" name="username">
 							<label for="username">Usuario</label>

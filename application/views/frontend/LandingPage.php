@@ -15,7 +15,7 @@
 
       </div>
     </div>
-    <div class="parallax"><img src=<?php echo base_url()."assets/img/background1.jgp";?> alt="Unsplashed background img 1"></div>
+    <div class="parallax"><img src=<?php echo base_url()."assets/img/background1.jpg";?> alt="Unsplashed background img 1"></div>
   </div>
 
 
@@ -64,7 +64,7 @@
         </div>
       </div>
     </div>
-    <div class="parallax"><img src=<?php echo base_url()."assets/img/background2.jgp";?> alt="Unsplashed background img 2"></div>
+    <div class="parallax"><img src=<?php echo base_url()."assets/img/background2.jpg";?> alt="Unsplashed background img 2"></div>
   </div>
 
   <div class="container">
@@ -90,5 +90,5 @@
         </div>
       </div>
     </div>
-    <div class="parallax"><img src=<?php echo base_url()."assets/img/background3.jgp";?>" alt="Unsplashed background img 3"></div>
+    <div class="parallax"><img src=<?php echo base_url()."assets/img/background3.jpg";?> alt="Unsplashed background img 3"></div>
   </div>
