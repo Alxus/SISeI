@@ -2,7 +2,6 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 require_once 'application/third_party/CompropagoSdk/UnitTest/autoload.php';
 use CompropagoSdk\Client;
-use CompropagoSdk\Service;
 use CompropagoSdk\Factory\Factory;
 class Pagos_controller extends CI_Controller {
 	private $client;
@@ -21,7 +20,17 @@ class Pagos_controller extends CI_Controller {
 		$this->generar_orden();
 	}
 
-	function generar_orden(){
+	public function paylistener(){
+		$body = @file_get_contents('php://input');
+     	$event_json = json_decode($body,TRUE);
+     	$resp=["status"=> "success",  
+  		"short_id"=> $event_json['short_id'],
+  		"message"=> "OK",
+  		"reference"=> null];
+     	echo json_encode($resp);
+	}
+
+	public function generar_orden(){
 		//generamos una nueva orden
 		$order_info = [
 			'order_id' => 1,
@@ -31,24 +40,17 @@ class Pagos_controller extends CI_Controller {
 			'customer_email' => 'davidmv1295@gmail.com',
 			'payment_type' => 'OXXO',
 			'currency' => 'MXN',
-			'expiration_time' => 1484799158,
-			'customer'=>[
-				'customer_name' => 'David',
-				'customer_email' => 'davidmv1295@gmail.com',
-				'customer_phone' => '6677745430'
-			]
+			'expiration_time' => 1484799158
 		];
 		$order = Factory::getInstanceOf('PlaceOrderInfo', $order_info);
 		echo json_encode($order);
-		$neworder = $this->client->api->placeOrder($order);
-		echo json_encode($neworder);
 		//insertamos en la base de datos
 		/*$order_id = $neworder->id;
 		$info = $this->client->api->verifyOrder($order_id);
 		$data=[
 			'asistente_carnet_id'=>1,
 			'id_cargo'=> $info->id,
-			'folio_cargo'=> $info->sort_id,
+			'folio_cargo'=> $info->short_id,
 			'customer_name'=>'David',
 			'cantidad'=> $info->amount,
 			'fecha_solicitud'=>$info->created_at,
@@ -56,13 +58,13 @@ class Pagos_controller extends CI_Controller {
 			'fecha_pago'=>null,
 			'tienda'=>'OXXO',
 			'status'=> $info->type,
-			'descripcion_abono'=>''
-		];
-		if($this->Pagos_model->create($data)){
+			'descripcion_abono'=>':v'
+		];*/
+		/*if($this->Pagos_model->create($data)){
 			$data['error']="Fierro alv";
 			echo json_encode($data);
-		}*/
-
+		}
+		*/
 	}
 
 }
