@@ -5,9 +5,9 @@ class Admin_controller extends CI_Controller {
 	
 	public function __construct(){
 		parent::__construct();
-		if(!$this->authentication->check_user()){
+		/*if(!$this->authentication->check_user()){
 			redirect('admin');
-		}
+		}*/
 		//Cargamos los modelos que vamos a necesitar en el constructor
 		$this->load->model('Usuario_model');
 		//Reglas para validar formularios.
