@@ -60,3 +60,24 @@ $('#users-form').submit(function(event){
     });
   });
 
+$('#pago-form').submit(function(event){
+  event.preventDefault();
+  $.ajax({
+    type        : 'POST',
+    url         : $('#pago-form').attr( "action" ),
+    data        : {
+    },
+    dataType    : 'json',
+    encode          : false
+  }).done(function (json){
+      if(json!=null){
+        console.log(json.error);
+      }else{
+        alert('Ha ocurrido un error');
+      }
+    }).fail(function(xhr){
+      console.log(xhr);
+      alert("Error en el servidor");
+    });
+  });
+

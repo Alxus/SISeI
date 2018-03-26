@@ -8,18 +8,18 @@
 				<p class="white-text">Correo: sisei.social@gmail.com</p>
 			</div>
 			<div class="col l4 offset-l2 s12">
-				<h5 class="white-text center">Síguenos en nuestras redes sociales</h5>
-				<div class="row">
-					<div class="col s12 m3 l3">
+				<h5 class="white-text">Síguenos en nuestras redes sociales</h5>
+				<div class="row center">
+					<div class="col s3">
 						<a class="icono-contacto grey-text text-lighten-3" href="https://www.facebook.com/Simposio.SISeI" target="_blank"><i class="fa fa-facebook-official fa-3x animated fadeInLeft" aria-hidden="true"></i></a>
 					</div>
-					<div class="col s12 m3 l3">
+					<div class="col s3">
 						<a class="icono-contacto grey-text text-lighten-3" href="https://www.instagram.com/siseionline/" target="_blank"><i class="fa fa-instagram fa-3x animated fadeInLeft" aria-hidden="true"></i></a>
 					</div>
-					<div class="col s12 m3 l3">
+					<div class="col s3">
 						<a class="icono-contacto grey-text text-lighten-3" href="https://twitter.com/siseionline" target="_blank"><i class="fa fa-twitter fa-3x animated fadeInUp" aria-hidden="true"></i></a>
 					</div>
-					<div class="col s12 m3 l3">
+					<div class="col s3">
 						<a class="icono-contacto grey-text text-lighten-3" href="https://www.youtube.com/channel/UCwk44rHpOweokiNDJn-QUnA" target="_blank"><i class="fa fa-youtube fa-3x animated fadeInRight" aria-hidden="true"></i></a>
 					</div>
 				</div>
@@ -29,8 +29,8 @@
 	<div class="footer-copyright">
 		<div class="container">
 			<div class="row">
-				<div class="col s6 m6 l6">© 2018 SISeI</div>
-				<div class="col s6 m6 l6 center-align">
+				<div class="col s6">© 2018 SISeI</div>
+				<div class="col s6 center-align">
 					<a href="http://www.sisei.com.mx/politica.html">Política de privacidad</a>
 					<br>
 					<a href="Terminos y Condiciones SISeI 2017.pdf">Términos y condiciones</a>
