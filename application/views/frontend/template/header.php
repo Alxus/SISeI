@@ -11,8 +11,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link type="text/css" rel="stylesheet" href=<?php echo base_url()."assets/css/materialize.min.css";?> media="screen,projection"/>
-	<link type="text/css" rel="stylesheet" href=<?php echo base_url()."assets/css/style.css";?> media="screen,projection"/>
+	<link type="text/css" rel="stylesheet" href="assets/css/materialize.min.css" media="screen,projection"/>
+	<link type="text/css" rel="stylesheet" href="assets/css/style.css" media="screen,projection"/>
 	<title><?echo $title;?></title>
 </head>
 <body>

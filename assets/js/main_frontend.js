@@ -1,6 +1,5 @@
 $(document).ready(function() {
   init();
-	particlesLoad();
 });
 
 function init(){
@@ -8,32 +7,6 @@ function init(){
 
 }
 
-function particlesLoad(){
-	if(isMobile()){
-		particlesJS.load("particles-js" , "particlesMobile.json",function () {
-			console.log("particlesMobile.json loaded...");
-		});
-		return;
-	}
-	particlesJS.load("particles-js" , "particles.json",function () {
-		console.log("particles.json loaded...");
-	});
-	return;
-}
-
-function particlesReload(){
-	$("#particles-js").empty();
-	if($(window).width()>=1024){
-		particlesJS.load("particles-js" , "particles.json",function () {
-			console.log("particles.json loaded...");
-		});
-		return;
-	}
-	particlesJS.load("particles-js" , "particlesMobile.json",function () {
-		console.log("particlesMobile.json loaded...");
-	});
-	return;
-}
 
 function isMobile() {
 	var isMobile = {
