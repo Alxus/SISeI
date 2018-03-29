@@ -13,6 +13,6 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link type="text/css" rel="stylesheet" href="assets/css/materialize.min.css" media="screen,projection"/>
 	<link type="text/css" rel="stylesheet" href="assets/css/style.css" media="screen,projection"/>
-	<title><?echo $title;?></title>
+	<title><?php echo $title;?></title>
 </head>
 <body>
