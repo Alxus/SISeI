@@ -2,23 +2,8 @@
 
 namespace CompropagoSdk\Tools;
 
-/**
- * Class Request
- * @package CompropagoSdk\Tools
- *
- * @author Eduardo Aguilar <dante.aguilar41@gmail.com>
- */
 class Request
 {
-    /**
-     * Validate if the source data is an error
-     *
-     * @param string $response
-     * @return bool
-     * @throws \Exception
-     *
-     * @author Eduardo Aguilar <dante.aguilar41@gmail.com>
-     */
     private static function validateResponse($response)
     {
         if (!empty($response)) {
@@ -34,16 +19,6 @@ class Request
         }
     }
 
-    /**
-     * Execute GET request
-     *
-     * @param string $url
-     * @param array $auth
-     * @param array $headers
-     * @return mixed
-     *
-     * @author Eduardo Aguilar <dante.aguilar41@gmail.com>
-     */
     public static function get($url, $auth=array(), $headers=array())
     {
         $http = new Http($url);
@@ -58,17 +33,6 @@ class Request
 
     }
 
-    /**
-     * Execute POST request
-     *
-     * @param string $url
-     * @param array $data
-     * @param array $auth
-     * @param array $headers
-     * @return mixed
-     *
-     * @author Eduardo Aguilar <dante.aguilar41@gmail.com>
-     */
     public static function post($url, $data=array(), $auth=array(), $headers=array())
     {
         $http = new Http($url);
@@ -83,17 +47,6 @@ class Request
         return $res;
     }
 
-    /**
-     * Execute PUT request
-     *
-     * @param string $url
-     * @param array $data
-     * @param array $auth
-     * @param array $headers
-     * @return mixed
-     *
-     * @author Eduardo Aguilar <dante.aguilar41@gmail.com>
-     */
     public static function put($url, $data=array(), $auth=array(), $headers=array())
     {
         $http = new Http($url);
@@ -108,17 +61,6 @@ class Request
         return $res;
     }
 
-    /**
-     * Execute DELETE request
-     *
-     * @param string $url
-     * @param array $data
-     * @param array $auth
-     * @param array $headers
-     * @return mixed
-     *
-     * @author Eduardo Aguilar <dante.aguilar41@gmail.com>
-     */
     public static function delete($url, $data=array(), $auth=array(), $headers=array())
     {
         $http = new Http($url);

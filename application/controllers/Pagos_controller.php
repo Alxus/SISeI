@@ -5,9 +5,16 @@ use CompropagoSdk\Client;
 use CompropagoSdk\Factory\Factory;
 class Pagos_controller extends CI_Controller {
 	private $webhook;
+	private $client;
 	public function __construct(){
 		parent::__construct();
+		date_default_timezone_set( 'America/Mazatlan' );
 		$this->load->model('Pagos_model');
+		$this->client = new Client(
+		    'pk_test_9952f9b28224929214',  # publickey
+		    'sk_test_4fc2245775a04e095c',  # privatekey
+		    FALSE                         # live
+		);
 	}
 	
 	public function index(){
@@ -29,10 +36,10 @@ class Pagos_controller extends CI_Controller {
 			if (!empty((array)$Abono)) {
 				if(!empty((array)$Abono[0])){
 					$actualizacion = $this->Pagos_model->up_Abonos(
-						$Abono[0]->Id_Detalle_Carnet, 
-						$Abono[0]->Id_Cargo, 
-						$Abono[0]->Folio_Cargo, 
-						$Abono[0]->Cantidad, 
+						$Abono[0]->asistente_carnet_id, 
+						$Abono[0]->id_cargo, 
+						$Abono[0]->folio_Cargo, 
+						$Abono[0]->cantidad, 
 						$event_json['type']
 					);
 					if($actualizacion == 1){
@@ -64,47 +71,51 @@ class Pagos_controller extends CI_Controller {
 	}
 
 	public function generar_orden(){
-		//generamos una nueva orden
-		$client = new Client(
-		    'pk_test_9952f9b28224929214',  # publickey
-		    'sk_test_4fc2245775a04e095c',  # privatekey
-		    FALSE                         # live
-		);
 		$order_info = [
 			'order_id' => 1,
 			'order_name' => 'Carnet Basico',
 			'order_price' => 6.00,
-			'customer_name' => 'David',
+			'customer_name' => 'David Adrian Meza Valenzuela',
 			'customer_email' => 'davidmv1295@gmail.com',
 			'payment_type' => 'OXXO',
-			'currency' => 'MXN'
+			'currency' => 'MXN',
+			'expiration_time'=>1540533600
 		];
 		$order = Factory::getInstanceOf('PlaceOrderInfo', $order_info);
-		$order->expires_at=1484799158;
-		$neworder = $client->api->placeOrder($order);
-		$verify=$client->api->verifyOrder($neworder->id);
+		$order->customer_phone = 6677745430;
+		$neworder = $this->client->api->placeOrder($order);
+		$verify=$this->client->api->verifyOrder($neworder->id);
+		$description=$neworder->instructions->description;
+		$step_1=$neworder->instructions->step_1;
+		$step_2=$neworder->instructions->step_2;
+		$step_3=$neworder->instructions->step_3;
+		$note_extra_comition=$neworder->instructions->note_extra_comition;
+		$note_expiration_date=$neworder->instructions->note_expiration_date;
+		$descripcion_abono=$description.
+		'\n Paso 1.- '.$step_1.
+		'\n Paso 2.- '.$step_2.
+		'\n Paso 3.- '.$step_3.
+		'\n Nota extra de comisión.- '.$note_extra_comition.
+		'\n Nota extra de expiración .- '.$note_expiration_date;
 		$data=[
 			'asistente_carnet_id'=>1,
-			'id_cargo'=>$verify->id,
-			'folio_cargo'=>$verify->short_id,
+			'id_cargo'=>$neworder->id,
+			'folio_cargo'=>$neworder->short_id,
 			'customer_name'=>$verify->customer->customer_name,
 			'cantidad'=>$verify->amount,
-			'fecha_solicitud'=>$verify->created_at,
-			'fecha_expiracion'=>$verify->expires_at,
-			'fecha_pago'=>null,
+			'fecha_solicitud'=>date("Y-m-d H:i:s", substr($verify->created, 0, 10)),
+			'fecha_expiracion'=>date("Y-m-d H:i:s", substr($neworder->exp_date, 0, 10)),
 			'tienda'=>"OXXO",
 			'status'=>$verify->type,
-			'descripcion_abono'=>'SOLICITADO'
+			'descripcion_abono'=>$descripcion_abono
 		];
-		echo json_encode($data);
-		echo json_encode($verify);
 		if($this->Pagos_model->create($data)){
-			echo json_encode("ALL_OK");
+			$data['error']="ALL_OK";
 		}
 		else{
-			echo json_encode("NOT_CREATED");
+			$data['error']="NOT_CREATED";
 		}
-
+		echo json_encode($data);
 	}
 
 }

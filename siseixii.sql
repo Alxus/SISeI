@@ -156,7 +156,7 @@ CREATE TABLE `pago` (
   `folio_cargo` varchar(100) NOT NULL,
   `customer_name` varchar(120) NOT NULL,
   `cantidad` int(11) NOT NULL,
-  `fecha_solicitud` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `fecha_solicitud` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `fecha_expiracion` datetime NOT NULL,
   `fecha_pago` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `tienda` varchar(30) NOT NULL,
