@@ -61,6 +61,8 @@ $route['admin/panel']='Admin_controller';
 $route['admin/panel/usuarios']='Admin_controller/vista_usuarios';
 $route['admin/create_user']['POST']='Admin_controller/create_user/$data';
 $route['pago']='Pagos_controller';
+$route['admin/panel/talleres']='Talleres_controller';
+$route['admin/create_taller']='Talleres_controller/create_taller/$data';
 
 
 //Rutas Frontend
