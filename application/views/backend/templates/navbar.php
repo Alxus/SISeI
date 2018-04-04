@@ -4,6 +4,9 @@
     max-height: 2em; 
     margin-left: 1em;
   }
+  .hiddendiv{
+    display: none;
+  }
 </style>
 <!--Esta navbar la editaremos cuando agreguemos secciones-->
   <div class="navbar-fixed black-text">

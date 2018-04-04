@@ -156,7 +156,7 @@ CREATE TABLE `pago` (
   `folio_cargo` varchar(100) NOT NULL,
   `customer_name` varchar(120) NOT NULL,
   `cantidad` int(11) NOT NULL,
-  `fecha_solicitud` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `fecha_solicitud` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `fecha_expiracion` datetime NOT NULL,
   `fecha_pago` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `tienda` varchar(30) NOT NULL,
@@ -198,6 +198,30 @@ CREATE TABLE `pregunta` (
   `conferencia_id` int(11) NOT NULL,
   `pregunta` text NOT NULL,
   `respuesta` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+--
+-- Estructura de tabla para la tabla `taller`
+--
+
+CREATE TABLE `taller` (
+  `id` int(11) NOT NULL,
+  `ponente_id` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `descripcion` text NOT NULL,
+  `requisitos` text NOT NULL,
+  `fecha` date NOT NULL,
+  `hora` time NOT NULL,
+  `lugar` varchar(100) NOT NULL,
+  `limite` tinyint(1) NOT NULL,
+  `registrados` tinyint(1) NOT NULL,
+  `calificacion` int(11) NOT NULL,
+  `nivel` varchar(12) NOT NULL,
+  `imagen` varchar(255) NOT NULL,
+  `icono` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -285,6 +309,12 @@ ALTER TABLE `pregunta`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `taller`
+--
+ALTER TABLE `taller`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
@@ -352,6 +382,12 @@ ALTER TABLE `ponente`
 -- AUTO_INCREMENT de la tabla `pregunta`
 --
 ALTER TABLE `pregunta`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `taller`
+--
+ALTER TABLE `taller`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
