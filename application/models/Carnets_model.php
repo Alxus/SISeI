@@ -28,23 +28,16 @@ class Carnets_model extends CI_Model{
 	    $this->db->delete('carnet', array('id' => $id));
 	}
 
-	
-
     function get_carnets_by_id($id)
     {
         $this->db->where('id', $id);
         $query = $this->db->get('carnet');
         return $query->result_array();
     }
-    function update($id, $nombre, $precio, $limite, $descripcion, $imagen)
+    function update($id, $data)
     {
         $this->db->where('id', $id);
-        $this->db->set('nombre', $nombre);
-        $this->db->set('precio', $precio);
-        $this->db->set('limite', $limite);
-        $this->db->set('descripcion', $descripcion);
-        $this->db->set('imagen', $imagen);
-        return $this->db->update('carnet');
+        return $this->db->update('carnet', $data);
     }
 }
 ?>
