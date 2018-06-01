@@ -19,8 +19,8 @@ class Talleres_model extends CI_Model{
         return $this->db->affected_rows()!=0;
     }
 
-    public function find_taller($data){
-        return $this->db->get_where('taller',$data)->result_array();
+    public function get_taller($id){
+        return $this->db->get_where('taller',$id)->result_array();
     }
 
 }

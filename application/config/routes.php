@@ -63,6 +63,9 @@ $route['admin/create_user']['POST']='Admin_controller/create_user/$data';
 $route['pago']='Pagos_controller';
 $route['admin/panel/talleres']='Talleres_controller';
 $route['admin/create_taller']='Talleres_controller/create_taller/$data';
+$route['api/checkuser']['POST']='Asistentes_controller/checkuser/$data';
 
+//Rutas Api
 
-//Rutas Frontend
+$route['api/get_asistentes']='Api/get_asistentes';
+$route['api/getAsistenteById']['POST']='Api/getAsistenteById/$data';
