@@ -175,28 +175,4 @@
 		</div>
 		<!-- _________________________________________________________________________ -->
 	</div>
-
-    <!-- _________________________________Scripts_________________________________ -->
-    <script type="text/javascript" src="assets/js/jquery-3.3.1.min.js"></script>
-    <script src="assets/js/materialize.min.js"></script>  
-    <script src="assets/js/materialize.js"></script> 
-    <script>
-      	$(document).ready(function(){
-    		$('.modal').modal();
-  		});
-
-  		function funcionEditable() {
-    		document.getElementById("nombre_real").disabled = false;
-    		document.getElementById("apellido_real").disabled = false;
-    		document.getElementById("no_control").disabled = false;
-    		document.getElementById("tel").disabled = false;
-    		document.getElementById("email").disabled = false;
-    		document.getElementById("carrera").disabled = false;
-    		document.getElementById("sexo").disabled = false;
-    		document.getElementById("created_at").disabled = false;
-    		document.getElementById("updated_at").disabled = false;
-    		document.getElementById("btn_Guardar").disabled = false;
-    		document.getElementById("btn_Cancelar").disabled = false;
-		}
-	</script>
-	<!-- _________________________________________________________________________ -->
+    
