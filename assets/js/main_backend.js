@@ -1,4 +1,21 @@
+$(document).ready(function(){
+  $('.modal').modal();
+});
 
+
+function funcionEditable() {
+        document.getElementById("nombre_real").disabled = false;
+        document.getElementById("apellido_real").disabled = false;
+        document.getElementById("no_control").disabled = false;
+        document.getElementById("tel").disabled = false;
+        document.getElementById("email").disabled = false;
+        document.getElementById("carrera").disabled = false;
+        document.getElementById("sexo").disabled = false;
+        document.getElementById("created_at").disabled = false;
+        document.getElementById("updated_at").disabled = false;
+        document.getElementById("btn_Guardar").disabled = false;
+        document.getElementById("btn_Cancelar").disabled = false;
+    }
 
 $("#btnicon").change(function() {
   readURL(this,'#icon');
@@ -79,25 +96,3 @@ $('#users-form').submit(function(event){
     alert("Error en el servidor");
   });
 });
-
-$('#pago-form').submit(function(event){
-  event.preventDefault();
-  $.ajax({
-    type        : 'POST',
-    url         : $('#pago-form').attr( "action" ),
-    data        : {
-    },
-    dataType    : 'json',
-    encode          : false
-  }).done(function (json){
-    if(json!=null){
-      console.log(json.error);
-    }else{
-      alert('Ha ocurrido un error');
-    }
-  }).fail(function(xhr){
-    console.log(xhr);
-    alert("Error en el servidor");
-  });
-});
-
