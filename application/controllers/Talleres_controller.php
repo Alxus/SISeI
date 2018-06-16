@@ -30,7 +30,7 @@ class Talleres_controller extends CI_Controller {
 		$data['talleres']=$this->Talleres_model->get_talleres();
 		$this->load->view('backend/templates/header',$data);
 		$this->load->view('backend/templates/navbar');
-		$this->load->view('backend/formulario_talleres');
+		$this->load->view('backend/lista_talleres');
 		$this->load->view('backend/templates/footer');
 	}
 

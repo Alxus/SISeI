@@ -64,5 +64,9 @@ $route['pago']='Pagos_controller';
 $route['admin/panel/talleres']='Talleres_controller';
 $route['admin/create_taller']='Talleres_controller/create_taller/$data';
 $route['api/checkuser']['POST']='Asistentes_controller/checkuser/$data';
+$route['admin/panel/carnets']='Carnets_controller'; 
+$route['admin/create_carnet']='Carnets_controller/add/$data'; 
+$route['admin/update_carnet']='Carnets_controller/edit/$data'; 
 
+$route['admin/panel/asistentes']='Asistentes_controller';
 //Rutas Api

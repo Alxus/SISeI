@@ -81,6 +81,7 @@ $('#users-form').submit(function(event){
     if(json!=null){
       if(json.error=='ALL_OK'){
         alert("Usuario registrado");
+        window.location.href='admin/panel';
       }
       if(json.error=='BAD_POST'){
         alert("Verifique los datos");
@@ -96,3 +97,47 @@ $('#users-form').submit(function(event){
     alert("Error en el servidor");
   });
 });
+
+/*$('#talleres-form').submit(function(event){
+  event.preventDefault();
+  $.ajax({
+    type: "POST",
+    enctype: 'multipart/form-data',
+    processData: false,
+    contentType: false,
+    cache: false,
+    url         : $('#talleres-form').attr( "action" ),
+    data        : {
+      nombre: $('input[name=nombre]').val(),
+      descripcion: $('textarea[name=descripcion]').val(),
+      requisitos: $('textarea[name=requisitos]').val(),
+      lugar: $('input[name=lugar]').val(),
+      limite: $('input[name=limite]').val(),
+      fecha: $('input[name=fecha]').val(),
+      hora: $('input[name=hora]').val(),
+      nivel: $('input[name=nivel]').val(),
+      btnimg: $('input[name=btnimg]').val(),
+      btnicon: $('input[name=btnicon]').val(),
+      imagen: $('input[name=imagen]').val(),
+      icono: $('input[name=icono]').val(),
+    },
+  }).done(function (json){
+    if(json!=null){
+      if(json.error=='ALL_OK'){
+        alert("Taller agregado");
+        window.location.href='admin/panel/talleres';
+      }
+      if(json.error=='BAD_POST'){
+        alert("Verifique los datos");
+      }
+      if(json.error=='NOT_CREATED'){
+        alert("Error en la base de datos");
+      }
+    }else{
+      alert('Ha ocurrido un error');
+    }
+  }).fail(function(xhr){
+    console.log(xhr);
+    alert("Error en el servidor");
+  });
+});*/
