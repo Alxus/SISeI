@@ -69,4 +69,5 @@ $route['admin/create_carnet']='Carnets_controller/add/$data';
 $route['admin/update_carnet']='Carnets_controller/edit/$data'; 
 
 $route['admin/panel/asistentes']='Asistentes_controller';
+$route['admin/panel/usrlst']='Admin_controller/lista_usuarios';
 //Rutas Api

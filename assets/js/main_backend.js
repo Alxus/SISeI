@@ -1,5 +1,6 @@
 $(document).ready(function(){
   $('.modal').modal();
+  $('select').formSelect();
 });
 
 
@@ -50,7 +51,7 @@ $('#login-form').submit(function(event){
   }).done(function (json){
       if(json!=null){//Good
         if(json.error=='ALL_OK'){//Iniciada sesión correctamente
-          window.location.href='admin/panel';
+          window.location.href='index.php/admin/panel';
         }else{//Error de sesión
           alert('Inicio de sesión invalido');
         }
@@ -73,7 +74,7 @@ $('#users-form').submit(function(event){
       password: $('input[name=password]').val(),
       nombres: $('input[name=nombres]').val(),
       apellidos: $('input[name=apellidos]').val(),
-      tipo: $('input[name=tipo]').val()
+      tipo: $('select[name=tipo]').val()
     },
     dataType    : 'json',
     encode          : false
@@ -81,7 +82,7 @@ $('#users-form').submit(function(event){
     if(json!=null){
       if(json.error=='ALL_OK'){
         alert("Usuario registrado");
-        window.location.href='admin/panel';
+        window.location.href='admin/usrlst';
       }
       if(json.error=='BAD_POST'){
         alert("Verifique los datos");
