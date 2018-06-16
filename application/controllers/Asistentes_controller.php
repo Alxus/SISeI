@@ -25,6 +25,8 @@ class Asistentes_controller extends CI_Controller {
 	}
 
 	public function index(){
+		echo "Seccion pendiente, esperese al otro viernes joven :v";
+		return;
 		$result = $this->Asistente_model->getAsistentes();
 		$data = array('asistente'=>$result); //Cargo los datos de la consulta de asistentes para mandarsela al panel_asistentes
 		$datatitle['title']='Talleres';

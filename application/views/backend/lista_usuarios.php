@@ -1,4 +1,13 @@
- <table class="centered">
+<a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <?$this->load->view('backend/formulario_usuarios'):?>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+  </div>
+<table class="centered">
   <thead>
     <tr>
       <th>Username</th>

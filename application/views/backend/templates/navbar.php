@@ -17,8 +17,8 @@
           <li><a href=<?php echo site_url('admin/panel/asistentes');?>>Asistentes</a></li>
           <li><a href=<?php echo site_url('admin/panel/carnets');?>>Carnets</a></li>
           <?if($_SESSION['SISeI_User']['tipo']<=1):?>
-          <li><a href=<?php echo site_url('admin/panel/usuarios');?>>Usuarios</a></li>
-          <li><a href=<?php echo site_url('admin/panel/usuarios');?>>Ajustes</a></li>
+          <li><a href=<?php echo site_url('admin/panel/usrlst');?>>Usuarios</a></li>
+          <li><a href="#">Ajustes</a></li>
           <?endif;?>
           <li><a href=<?php echo site_url('logout');?>>Salir</a></li>
         </ul>

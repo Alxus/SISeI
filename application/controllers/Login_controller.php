@@ -38,6 +38,6 @@ class Login_controller extends CI_Controller {
 
 	public function logout(){
 		$this->authentication->logout();
-		redirect('admin');
+		redirect('default_controller');
 	}
 }
