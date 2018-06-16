@@ -1,13 +1,8 @@
-<div>
-<nav>
-  <div class="nav-wrapper">
-    <a href=<?php echo site_url('admin/panel/carnets');?> class="brand-logo"> Carnet</a>
-    <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <!-- Modal Trigger -->
-      <li> <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Nuevo Carnet</a></li>   
-    </ul>
-  </div>
-</nav>
+
+   <div class="row">
+      <div class="col s2 offset-s5"><a class="waves-effect waves-light btn modal-trigger" href="#modal1">Nuevo Carnet</a></div>
+   </div>
+      
 <div class="row">
       <div class="col s1">Id</div>
        <div class="col s1">Nombre</div>
@@ -36,7 +31,7 @@
     </div>
     <div class="divider"></div>
   <?php endforeach;?>  
- </div>  
+  
 
 <!-- Estructura Modal1 -->
 <div id="modal1" class="modal">

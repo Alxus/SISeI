@@ -46,7 +46,6 @@ class Carnets_controller extends CI_Controller{
             
         }
         //JSON de respuesta
-        echo json_encode($data);
         $this->index();
         
     }
@@ -110,7 +109,6 @@ class Carnets_controller extends CI_Controller{
                     
                 }
                 $this->index();
-                echo json_encode($data);
 
             }
 
