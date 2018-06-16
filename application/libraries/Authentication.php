@@ -22,6 +22,7 @@ class Authentication{
         if($usuario!=null){
             unset($usuario['password']);
             $_SESSION['SISeI_User']=$usuario;
+            if($this->CI->Usuario_model->updateAccessed($usuario['id']))
             return true;
         }
         return false;

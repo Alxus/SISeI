@@ -26,6 +26,7 @@ class Login_controller extends CI_Controller {
 			$data['username']=$this->input->post('username');
 			$data['password']=$this->input->post('password');
 			if($this->authentication->login($data)){
+				
 				$data['error']='ALL_OK';
 			}
 		}

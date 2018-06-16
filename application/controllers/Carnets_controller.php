@@ -3,6 +3,9 @@ class Carnets_controller extends CI_Controller{
     public function __construct()
     {
         parent::__construct();
+        if(!$this->authentication->check_user()){
+            redirect('admin');
+        }
         $this->load->model('Carnets_model');
         $this->form_validation->set_rules('nombre', 'Nombre', 'required');
         $this->form_validation->set_rules('precio', 'Precio', 'integer|required');
