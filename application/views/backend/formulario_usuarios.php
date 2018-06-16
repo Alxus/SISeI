@@ -21,7 +21,18 @@
 							<input id="apellidos" type="text" name="apellidos">
 							<label for="apellidos">Apellidos</label>
 						</div>
-						<input id="tipo" type="hidden" name="tipo" value="1">
+						<div class="input-field col s12">
+							<select name="tipo">
+								<option value="" disabled selected>Seleccione</option>
+								<?php if ($_SESSION['SISeI_User']['tipo']==0): ?>
+								<option value="1">Admin</option>
+								<?php endif ?>
+								<option value="2">Logistica</option>
+								<option value="3">Talleres y Conferencias</option>
+								<option value="3">Vendedor</option>
+							</select>
+							<label>Tipo</label>
+						</div>						
 						<button class="btn-flat right blue">Crear</button>
 					</form>
 				</div>

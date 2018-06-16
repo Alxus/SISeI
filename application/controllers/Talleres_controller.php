@@ -5,6 +5,9 @@ class Talleres_controller extends CI_Controller {
 	
 	public function __construct(){
 		parent::__construct();
+		if(!$this->authentication->check_user()){
+			redirect('admin');
+		}
 		//Cargamos los modelos que vamos a necesitar en el constructor
 		$this->load->model('Talleres_model');
 		//Reglas para validar formularios.
@@ -30,7 +33,7 @@ class Talleres_controller extends CI_Controller {
 		$data['talleres']=$this->Talleres_model->get_talleres();
 		$this->load->view('backend/templates/header',$data);
 		$this->load->view('backend/templates/navbar');
-		$this->load->view('backend/formulario_talleres');
+		$this->load->view('backend/lista_talleres');
 		$this->load->view('backend/templates/footer');
 	}
 

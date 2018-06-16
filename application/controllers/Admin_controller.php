@@ -5,9 +5,9 @@ class Admin_controller extends CI_Controller {
 	
 	public function __construct(){
 		parent::__construct();
-		/*if(!$this->authentication->check_user()){
+		if(!$this->authentication->check_user()){
 			redirect('admin');
-		}*/
+		}
 		//Cargamos los modelos que vamos a necesitar en el constructor
 		$this->load->model('Usuario_model');
 		//Reglas para validar formularios.
@@ -29,10 +29,27 @@ class Admin_controller extends CI_Controller {
 	}
 
 	public function vista_usuarios(){
+		if($_SESSION['SISeI_User']['tipo']>1){
+			redirect('admin');
+			return;
+		}
 		$data['title']='Crear usuario';
-		$this->load->view('backend/templates/header');
+		$this->load->view('backend/templates/header',$data);
 		$this->load->view('backend/templates/navbar');
 		$this->load->view('backend/formulario_usuarios');
+		$this->load->view('backend/templates/footer');
+	}
+
+	public function lista_usuarios(){
+		if($_SESSION['SISeI_User']['tipo']>1){
+			redirect('admin');
+			return;
+		}
+		$data['title']='Lista de usuarios';
+		$data['usuarios']=$this->Usuario_model->getAllUsers();
+		$this->load->view('backend/templates/header',$data);
+		$this->load->view('backend/templates/navbar');
+		$this->load->view('backend/lista_usuarios');
 		$this->load->view('backend/templates/footer');
 	}
 	//Metodo para crear un usuario del sistema.
