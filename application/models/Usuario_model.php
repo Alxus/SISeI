@@ -3,11 +3,11 @@ class Usuario_model extends CI_Model{
 
     public function __construct(){
         parent::__construct();
+        date_default_timezone_set( 'America/Mazatlan' );
     }
 
     public function create_user($data){
-        $this->db->insert('usuario',$data);
-        return $this->db->affected_rows()!=0;
+        return($this->db->where('username',$data['username'])->get('usuario')==null)?$this->db->insert('usuario',$data):false;
     }
 
     public function find_user($data){
@@ -19,7 +19,7 @@ class Usuario_model extends CI_Model{
     }
 
     public function updateAccessed($id){
-        $this->db->set('last_accessed', now());
+        $this->db->set('last_accessed',date("Y-m-d H:i:s"));
         $this->db->where('id', $id);
         return $this->db->update('usuario');
     }

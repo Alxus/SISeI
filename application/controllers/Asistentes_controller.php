@@ -21,19 +21,18 @@ class Asistentes_controller extends CI_Controller {
 		$this->form_validation->set_rules('created_at', 'Created_at', 'required');
 		$this->form_validation->set_rules('updated_at', 'Updated_at', 'required');
 		//reglas para subir imagenes
-		
+		date_default_timezone_set( 'America/Mazatlan' );
 	}
 
 	public function index(){
-		echo "Seccion pendiente, esperese al otro viernes joven :v";
-		return;
-		$result = $this->Asistente_model->getAsistentes();
-		$data = array('asistente'=>$result); //Cargo los datos de la consulta de asistentes para mandarsela al panel_asistentes
+		/*$result = $this->Asistente_model->getAsistentes();
+		$data = array('asistente'=>$result); *///Cargo los datos de la consulta de asistentes para mandarsela al panel_asistentes
 		$datatitle['title']='Talleres';
-		$data['talleres']=$this->Talleres_model->get_talleres();
+		//$data['talleres']=$this->Talleres_model->get_talleres();
 		$this->load->view('backend/templates/header',$datatitle);
 		$this->load->view('backend/templates/navbar');
-		$this->load->view('backend/panel_asistentes',$data);
+		echo "Seccion pendiente, esperese al otro viernes joven :v";
+		//$this->load->view('backend/panel_asistentes',$data);
 		$this->load->view('backend/templates/footer');
 	}
 
@@ -63,7 +62,6 @@ class Asistentes_controller extends CI_Controller {
 		$result_data  = NULL;
 		$Id_Asistente = NULL;
 		$lista_Insignias = NULL;
-		$Carnet = array();
 		$Masterkeys = NULL;
 
 		$asistente = $this->Asistentes_model->exist_Asistente($Fb_Id);
@@ -78,8 +76,7 @@ class Asistentes_controller extends CI_Controller {
 			$registro = $this->Asistentes_model->ingresar_Asistente($Data_Asistente);
 			if($registro['affected_rows'] > 0 ){
 				$Id_Asistente = $registro['Id_Asistente'];
-				$result_data = $Data_Asistente +  array('Id_Asistente' => $Id_Asistente,
-					'carnet' => $Carnet
+				$result_data = $Data_Asistente +  array('Id_Asistente' => $Id_Asistente
 				);         
 			}
 		}

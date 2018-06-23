@@ -25,7 +25,7 @@
 				<?php endif ?>
 				<option value="2">Logistica</option>
 				<option value="3">Talleres y Conferencias</option>
-				<option value="3">Vendedor</option>
+				<option value="4">Vendedor</option>
 			</select>
 			<label>Tipo</label>
 		</div>						

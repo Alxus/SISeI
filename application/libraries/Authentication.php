@@ -22,7 +22,7 @@ class Authentication{
         if($usuario!=null){
             unset($usuario['password']);
             $_SESSION['SISeI_User']=$usuario[0];
-            if($this->CI->Usuario_model->updateAccessed($usuario['id']))
+            if($this->CI->Usuario_model->updateAccessed($_SESSION['SISeI_User']['id']))
             return true;
         }
         return false;

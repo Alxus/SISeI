@@ -16,7 +16,7 @@ class Admin_controller extends CI_Controller {
 		$this->form_validation->set_rules('tipo', 'Tipo', 'required');
 		$this->form_validation->set_rules('nombres', 'Nombres', 'trim|required');
 		$this->form_validation->set_rules('apellidos', 'Apellidos', 'trim|required');
-		
+		date_default_timezone_set( 'America/Mazatlan' );
 	}
 	
 	public function index(){

@@ -14,10 +14,18 @@ h1, h2, h4{
 nav {
 	background-color: transparent;
 }
-nav ul a{
-	text-transform: uppercase;
-	color: black;
+
+.brand-logo img{
+  max-height: 2em; 
+  margin-left: 1em;
 }
+.hiddendiv{
+  display: none;
+}
+nav ul li a{
+  color: black;
+}
+
 .brand-logo img {
 	max-height: 2em;
 	margin-left: 1em;

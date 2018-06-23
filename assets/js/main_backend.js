@@ -1,6 +1,7 @@
 $(document).ready(function(){
   $('.modal').modal();
   $('select').formSelect();
+  $('.dropdown-trigger').dropdown({constrainWidth:false, coverTrigger:false});
 });
 
 
@@ -82,13 +83,13 @@ $('#users-form').submit(function(event){
     if(json!=null){
       if(json.error=='ALL_OK'){
         alert("Usuario registrado");
-        window.location.href='admin/usrlst';
+        window.location.href='/usrlst';
       }
       if(json.error=='BAD_POST'){
         alert("Verifique los datos");
       }
       if(json.error=='NOT_CREATED'){
-        alert("Error en la base de datos");
+        alert("El Nombre de usuario ya esta registrado.");
       }
     }else{
       alert('Ha ocurrido un error');
