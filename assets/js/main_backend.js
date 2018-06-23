@@ -1,23 +1,23 @@
 $(document).ready(function(){
   $('.modal').modal();
-  $('select').formSelect();
   $('.dropdown-trigger').dropdown({constrainWidth:false, coverTrigger:false});
+  $('select').formSelect({constrainWidth:true,coverTrigger:false});
 });
 
 
 function funcionEditable() {
-        document.getElementById("nombre_real").disabled = false;
-        document.getElementById("apellido_real").disabled = false;
-        document.getElementById("no_control").disabled = false;
-        document.getElementById("tel").disabled = false;
-        document.getElementById("email").disabled = false;
-        document.getElementById("carrera").disabled = false;
-        document.getElementById("sexo").disabled = false;
-        document.getElementById("created_at").disabled = false;
-        document.getElementById("updated_at").disabled = false;
-        document.getElementById("btn_Guardar").disabled = false;
-        document.getElementById("btn_Cancelar").disabled = false;
-    }
+  document.getElementById("nombre_real").disabled = false;
+  document.getElementById("apellido_real").disabled = false;
+  document.getElementById("no_control").disabled = false;
+  document.getElementById("tel").disabled = false;
+  document.getElementById("email").disabled = false;
+  document.getElementById("carrera").disabled = false;
+  document.getElementById("sexo").disabled = false;
+  document.getElementById("created_at").disabled = false;
+  document.getElementById("updated_at").disabled = false;
+  document.getElementById("btn_Guardar").disabled = false;
+  document.getElementById("btn_Cancelar").disabled = false;
+}
 
 $("#btnicon").change(function() {
   readURL(this,'#icon');
@@ -89,7 +89,7 @@ $('#users-form').submit(function(event){
         alert("Verifique los datos");
       }
       if(json.error=='NOT_CREATED'){
-        alert("El Nombre de usuario ya esta registrado.");
+        alert("Este usuario ya esta registrado.");
       }
     }else{
       alert('Ha ocurrido un error');

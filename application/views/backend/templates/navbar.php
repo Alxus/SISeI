@@ -1,3 +1,4 @@
+
 <div class="navbar-fixed black-text">
   <nav class="grey lighten-4">
     <div class="nav-wrapper">
@@ -7,6 +8,7 @@
         <li><a class='dropdown-trigger' href='#' data-target='eventos'>Evento<i class="material-icons right">arrow_drop_down</i></a></li>
         <li><a href=<?php echo site_url('admin/panel/carnets');?>>Carnets</a></li>
         <li><a href=<?php echo site_url('admin/panel/usrlst');?>>Usuarios</a></li>
+        <li><a href=<?php echo site_url('admin/panel/ventas');?>>Ventas</a></li>
         <li><a href="#">Ajustes</a></li>
         <li><a href=<?php echo site_url('logout');?>>Salir</a></li>
       </ul>
