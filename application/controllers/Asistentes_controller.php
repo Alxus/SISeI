@@ -25,13 +25,14 @@ class Asistentes_controller extends CI_Controller {
 	}
 
 	public function index(){
-		$result = $this->Asistente_model->getAsistentes();
-		$data = array('asistente'=>$result); //Cargo los datos de la consulta de asistentes para mandarsela al panel_asistentes
+		/*$result = $this->Asistente_model->getAsistentes();
+		$data = array('asistente'=>$result); *///Cargo los datos de la consulta de asistentes para mandarsela al panel_asistentes
 		$datatitle['title']='Talleres';
-		$data['talleres']=$this->Talleres_model->get_talleres();
+		//$data['talleres']=$this->Talleres_model->get_talleres();
 		$this->load->view('backend/templates/header',$datatitle);
 		$this->load->view('backend/templates/navbar');
-		$this->load->view('backend/panel_asistentes',$data);
+		echo "Seccion pendiente, esperese al otro viernes joven :v";
+		//$this->load->view('backend/panel_asistentes',$data);
 		$this->load->view('backend/templates/footer');
 	}
 
