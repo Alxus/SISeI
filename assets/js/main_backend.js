@@ -1,7 +1,7 @@
 $(document).ready(function(){
   $('.modal').modal();
-  $('select').formSelect();
   $('.dropdown-trigger').dropdown({constrainWidth:false, coverTrigger:false});
+  $('select').formSelect({constrainWidth:true,coverTrigger:false});
 });
 
 

@@ -70,3 +70,7 @@ $route['admin/update_carnet']='Carnets_controller/edit/$data';
 
 $route['admin/panel/asistentes']='Asistentes_controller';
 $route['admin/panel/usrlst']='Admin_controller/lista_usuarios';
+
+
+//Panel de ventas
+$route['admin/panel/ventas']='Ventas_controller'; 
