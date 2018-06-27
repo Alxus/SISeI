@@ -61,5 +61,9 @@ class Pagos_model extends CI_Model{
 		return $query->result();
 	}
 
+	public function getPagados(){
+		$this->db->select('COUNT(id) as total')->from('pago')->where('status=charge.success');
+		return $this->db->get()->result_array();
+	}
 
 }

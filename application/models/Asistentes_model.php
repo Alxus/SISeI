@@ -28,11 +28,30 @@ class Asistentes_model extends CI_Model{
         $result['Id_Asistente']  = $this->db->insert_id();              //El Id que se le asignaró al asistente solo necesario la primera vez
         return $result;
     }
+
     public function get_Asistente($id){
         $where['id']=$id;
         return $this->db->get_where('asistente', $where)->result_array();
     }
-    public function get_Asistentes(){
-        return $this->db->get('asistente')->result_array();
+    
+    public function get_Asistentes_ventas(){
+        $this->db->select('a.*, ac.*,c.nombre as carnet');
+        $this->db->from('asistente as a');
+        $this->db->join('asistente_carnet as ac','a.id=ac.asistente_id','left');
+        $this->db->join('carnet as c','c.id=ac.carnet_id','left');
+        return $this->db->get()->result_array();
+    }
+
+    public function abono_asistente($data){
+        return $this->db->insert('asistente_carnet',$data);
+    }
+
+    public function getPagados(){
+        $this->db->select('COUNT(id) as total')->from('asistente')->where('estado=PAGADO');
+        return $this->db->get()->result_array();
+    }
+
+    public function getbyemail($email){
+        return $this->db->where('email',$email)->get('asistente')->result_array();
     }
 }
