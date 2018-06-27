@@ -9,18 +9,32 @@
   	</div>
   </div>
   <?endif;?>
-  <div class="container row">
-  	<?php foreach ($talleres as $t):?>
-  		<div class="col s12 m6 l4">
-  			<div class="card">
-  				<div class="card-image">
-  					<img src=<?=$t['imagen'];?>>
-  				</div>
-  				<div class="card-content">
-  					<span class="card-title"><?=$t['nombre'];?></span>
-  					<p><?=$t['descripcion'];?></p>
-  				</div>
-  			</div>
-  		</div>
-  	<?php endforeach;?>
-  </div>
+  <?if($_SESSION['SISeI_User']['tipo']<=2):?>
+  <a class="btn blue" target="_blank" href=<?=site_url('admin/panel/talleres/pdf');?>>Imprimir lista</a>
+  <?endif;?>
+  <table class="centered">
+    <thead>
+      <th>Id</th>
+      <th>Nombre</th>
+      <th>Tallerista</th>
+      <th>Descripcion</th>
+      <th>Fecha</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </thead>
+    <tbody>
+      <?foreach($talleres as $t):?>
+      <tr>
+        <td><?=$t['id'];?></td>
+        <td><?=$t['nombre'];?></td>
+        <td><?=$t['tallerista'];?></td>
+        <td><?=$t['descripcion'];?></td>
+        <td><?=$t['fecha'];?></td>
+        <td><a class="btn-floating blue"href="#"><i class="material-icons">edit</i></a></td>
+        <td><a class="btn-floating red eliminar" href="#"><i class="material-icons">delete</i></a></td>
+        <td><a class="btn-floating green "href=<?=site_url('admin/panel/talleres/info/'.$t['id']);?>><i class="material-icons">info_outline</i></a></td>
+      </tr>
+      <?endforeach;?>
+    </tbody>
+  </table>

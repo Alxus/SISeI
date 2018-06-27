@@ -2,6 +2,7 @@ $(document).ready(function(){
   $('.modal').modal();
   $('.dropdown-trigger').dropdown({constrainWidth:false, coverTrigger:false});
   $('select').formSelect({constrainWidth:true,coverTrigger:false});
+  $('.sidenav').sidenav();
 });
 
 
@@ -99,6 +100,21 @@ $('#users-form').submit(function(event){
     alert("Error en el servidor");
   });
 });
+
+/*$('.eliminar').on('click',function(){
+  if(confirm('Desea eliminar esta madre?')){
+    window.location.href="talleres";
+    alert('Borrado');
+  }
+
+  M.toast({html: '<span>¿Desea elminar el taller?</span>'+
+    '<button class="btn-flat toast-action">Sí</button>'+
+    '<button class="btn-flat toast-action">No</button>',
+    classes:''})
+});
+*/
+
+
 
 /*$('#talleres-form').submit(function(event){
   event.preventDefault();

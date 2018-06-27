@@ -1,5 +1,5 @@
 /************ General ************/
-html {
+html, pre {
 	font-family: 'Roboto', sans-serif;
 }
 h1, h2, h4{
@@ -97,6 +97,37 @@ footer {
 	display: flex;
 	flex-wrap: wrap;
 	max-height: calc(100vh - 70px);
-    margin-bottom: unset!important;
-    overflow-y: hidden;
+	margin-bottom: unset!important;
+	overflow-y: hidden;
+}
+#infotaller{
+	margin-top: 64px;
+	z-index: 0;
+	width: 350px;
+	box-shadow: none;
+	position: absolute;
+}
+
+.sidenav .user-view {
+	position: relative;
+	padding: 100px 32px 20px;
+	margin-bottom: 8px;
+}
+#infotaller li span{
+	margin-right: 10px;
+}
+#infotaller li p{
+	margin-bottom: 0px;
+	margin-top: 0px;
+	margin-left: 10px;
+	overflow: unset;
+}
+.infor{
+	padding-left: 400px;
+}
+
+@media only screen and (max-width : 992px) {
+	.infor {
+		padding-left: 0;
+	}
 }

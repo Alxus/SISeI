@@ -17,6 +17,7 @@ class Admin_controller extends CI_Controller {
 		$this->form_validation->set_rules('nombres', 'Nombres', 'trim|required');
 		$this->form_validation->set_rules('apellidos', 'Apellidos', 'trim|required');
 		date_default_timezone_set( 'America/Mazatlan' );
+		$this->load->library('Pdf');
 	}
 	
 	public function index(){
@@ -72,6 +73,47 @@ class Admin_controller extends CI_Controller {
 			$data['error']="BAD_POST";
 		}
 		//JSON de respuesta
+		echo json_encode($data);
+	}
+
+	public function printlst(){
+		$data['users']=$this->Usuario_model->getAllUsers();
+		$Datos=array();
+		$i=0;
+		foreach ($data['users'] as $key) {
+			$Datos[$i]['Id']=$key['id'];
+			$Datos[$i]['UserName']=$key['username'];
+			if($key['tipo']==0)$Datos[$i]['Tipo']='Root';
+			else if($key['tipo']==1)$Datos[$i]['Tipo']='Admin';
+			else if($key['tipo']==2)$Datos[$i]['Tipo']='Logistica';
+			else if($key['tipo']==3)$Datos[$i]['Tipo']='T y C';
+			else if($key['tipo']==4)$Datos[$i]['Tipo']='Vendedor';
+			$Datos[$i]['Nombre']=$key['nombres'].' '.$key['apellidos'];
+			$Datos[$i]['Ultimo Acceso']=$key['last_accessed'];
+			$i++;
+		}
+		$this->load->library('Pdf');
+		$this->pdf->SetFont('Arial', '', 12);
+		$this->pdf->AddPage();
+		$this->pdf->Cell(0,0,'Lisa de usuarios',0,0,'C');
+		$this->pdf->Ln(5);
+		$header=array_keys($Datos[0]);
+		$this->pdf->SetFillColor(33 , 150 , 243);
+		$this->pdf->Cell(10,7,$header[0],1,0,'C',true);
+		$this->pdf->Cell(30,7,$header[1],1,0,'C',true);
+		$this->pdf->Cell(30,7,$header[2],1,0,'C',true);
+		$this->pdf->Cell(70,7,$header[3],1,0,'C',true);
+		$this->pdf->Cell(50,7,$header[4],1,0,'C',true);
+		$this->pdf->Ln();
+		foreach($Datos as $row){
+			$this->pdf->Cell(10,6,$row['Id'],1,0,'C');
+			$this->pdf->Cell(30,6,$row['UserName'],1,0,'C');
+			$this->pdf->Cell(30,6,$row['Tipo'],1,0,'C');
+			$this->pdf->Cell(70,6,$row['Nombre'],1,0,'C');
+			$this->pdf->Cell(50,6,$row['Ultimo Acceso'],1,0,'C');
+			$this->pdf->Ln();
+		}
+		$this->pdf->Output('lista_usuarios.pdf', 'I');
 		echo json_encode($data);
 	}
 }

@@ -9,7 +9,8 @@ class Ventas_controller extends CI_Controller {
 			redirect('admin');
 		}
 		//Cargamos los modelos que vamos a necesitar en el constructor
-		$this->load->model('Asistentes_model');
+		$this->load->model('usuario_model');
+		
 	}
 	
 	public function index(){

@@ -10,6 +10,7 @@ class Talleres_controller extends CI_Controller {
 		}
 		//Cargamos los modelos que vamos a necesitar en el constructor
 		$this->load->model('Talleres_model');
+		$this->load->library('Pdf');
 		//Reglas para validar formularios.
 		$this->form_validation->set_rules('nombre', 'Nombre', 'trim|required');
 		$this->form_validation->set_rules('descripcion', 'Descripcion', 'required');
@@ -76,4 +77,37 @@ class Talleres_controller extends CI_Controller {
 	public function lista_talleres(){
 		echo json_encode($this->Talleres_model->get_talleres());
 	}
+
+	public function info($id){
+		$data['taller']=$this->Talleres_model->get_taller($id);
+		$data['title']=$data['taller']['nombre'];
+		$this->load->view('backend/templates/header',$data);
+		$this->load->view('backend/templates/navbar');
+		$this->load->view('backend/info_taller');
+		$this->load->view('backend/templates/footer');
+	}
+
+	public function printlst(){
+		$data['talleres']=$this->Talleres_model->get_talleresPDF();
+		$header=array_keys($data['talleres'][0]);
+		$this->pdf->SetFillColor(33 , 150 , 243);
+		$this->pdf->AliasNbPages();
+		$this->pdf->AddPage();
+		$this->pdf->SetFont('Arial','B',12);
+		$this->pdf->MultiCell(0,10,'Lista de Talleres');
+		$this->pdf->SetFont('Arial','B',10);
+		$this->pdf->tablewidths = array(30, 30, 30, 30, 30, 20, 25);
+		for($i=0; $i<sizeof($header); $i++){
+			$this->pdf->Cell($this->pdf->tablewidths[$i],7,$header[$i],1,0,'C',true);
+		}
+		for ($i=0; $i<sizeof($data['talleres']);$i++) {
+			$date = date_timestamp_get(date_create($data['talleres'][$i]['Fecha']));
+			$data['talleres'][$i]['Fecha']=strftime('%a, %d/%b/%Y %l:%M %p', $date);
+		}
+		$this->pdf->Ln();
+		$this->pdf->SetFont('Arial','',10);
+		$this->pdf->morepagestable($data['talleres'],5);
+		$this->pdf->Output('lista_talleres.pdf', 'I');
+	}
+
 }

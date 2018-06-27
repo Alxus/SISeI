@@ -9,6 +9,9 @@
   </div>
 </div>
 <?endif;?>
+<?if($_SESSION['SISeI_User']['tipo']<=2):?>
+  <a class="btn" target="_blank" href=<?=site_url('admin/panel/usrlst/pdf');?>>Imprimir lista</a>
+<?endif;?>
 <table class="centered">
   <thead>
     <tr>
