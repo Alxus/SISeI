@@ -69,14 +69,16 @@ $route['admin/panel/carnets']='Carnets_controller';
 $route['admin/create_carnet']='Carnets_controller/add/$data'; 
 $route['admin/update_carnet']='Carnets_controller/edit/$data'; 
 
+$route['admin/panel/conferencia']='Conferencias_controller';
+$route['admin/create_conferencia']='Conferencias_controller/add/$data'; 
+$route['admin/update_conferencia']='Conferencias_controller/edit/$data'; 
+
 $route['admin/panel/asistentes']='Asistentes_controller';
 $route['admin/panel/usrlst']='Admin_controller/lista_usuarios';
-
-
 //Panel de ventas
 $route['admin/panel/ventas']='Ventas_controller'; 
 $route['admin/panel/ventas/Abono']['POST']='Ventas_controller/Abono/$data'; 
 
 //Listas
-$route['admin/panel/usrlst/pdf']='Admin_controller/printlst';
 $route['admin/panel/talleres/pdf']='Talleres_controller/printlst';
+$route['admin/panel/usrlst/pdf']='Admin_controller/printlst';

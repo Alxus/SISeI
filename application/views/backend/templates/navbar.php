@@ -18,5 +18,5 @@
 
 <ul id='eventos' class='dropdown-content'>
   <li><a href=<?echo site_url('admin/panel/talleres');?>>Talleres</a></li>
-  <li><a href="#!">Conferencias</a></li>
+  <li><a href=<?php echo site_url('admin/panel/conferencia');?>>Conferencias</a></li>
 </ul>
