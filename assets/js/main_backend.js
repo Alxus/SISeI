@@ -84,8 +84,8 @@ $('#users-form').submit(function(event){
     if(json!=null){
       if(json.error=='ALL_OK'){
         alert("Usuario registrado");
-        window.location.href='/usrlst';
-      }
+        location.reload(true)  
+     }
       if(json.error=='BAD_POST'){
         alert("Verifique los datos");
       }

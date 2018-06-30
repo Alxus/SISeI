@@ -7,7 +7,7 @@ class Usuario_model extends CI_Model{
     }
 
     public function create_user($data){
-        return($this->db->where('username',$data['username'])->get('usuario')==null)?$this->db->insert('usuario',$data):false;
+        return($this->db->where('username',$data['username'])->get('usuario')->result_array()==null)?$this->db->insert('usuario',$data):false;
     }
 
     public function find_user($data){
