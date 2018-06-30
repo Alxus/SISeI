@@ -21,7 +21,7 @@ class Asistentes_controller extends CI_Controller {
 		$this->form_validation->set_rules('created_at', 'Created_at', 'required');
 		$this->form_validation->set_rules('updated_at', 'Updated_at', 'required');
 		//reglas para subir imagenes
-		
+		date_default_timezone_set( 'America/Mazatlan' );
 	}
 
 	public function index(){
@@ -62,7 +62,6 @@ class Asistentes_controller extends CI_Controller {
 		$result_data  = NULL;
 		$Id_Asistente = NULL;
 		$lista_Insignias = NULL;
-		$Carnet = array();
 		$Masterkeys = NULL;
 
 		$asistente = $this->Asistentes_model->exist_Asistente($Fb_Id);
@@ -77,8 +76,7 @@ class Asistentes_controller extends CI_Controller {
 			$registro = $this->Asistentes_model->ingresar_Asistente($Data_Asistente);
 			if($registro['affected_rows'] > 0 ){
 				$Id_Asistente = $registro['Id_Asistente'];
-				$result_data = $Data_Asistente +  array('Id_Asistente' => $Id_Asistente,
-					'carnet' => $Carnet
+				$result_data = $Data_Asistente +  array('Id_Asistente' => $Id_Asistente
 				);         
 			}
 		}

@@ -8,6 +8,7 @@
         <li><a class='dropdown-trigger' href='#' data-target='eventos'>Evento<i class="material-icons right">arrow_drop_down</i></a></li>
         <li><a href=<?php echo site_url('admin/panel/carnets');?>>Carnets</a></li>
         <li><a href=<?php echo site_url('admin/panel/usrlst');?>>Usuarios</a></li>
+        <li><a href=<?php echo site_url('admin/panel/ventas');?>>Ventas</a></li>
         <li><a href="#">Ajustes</a></li>
         <li><a href=<?php echo site_url('logout');?>>Salir</a></li>
       </ul>
@@ -17,5 +18,5 @@
 
 <ul id='eventos' class='dropdown-content'>
   <li><a href=<?echo site_url('admin/panel/talleres');?>>Talleres</a></li>
-  <li><a href="#!">Conferencias</a></li>
+  <li><a href=<?php echo site_url('admin/panel/conferencia');?>>Conferencias</a></li>
 </ul>
