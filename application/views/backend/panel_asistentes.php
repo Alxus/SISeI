@@ -5,7 +5,7 @@
 				<ul>
     				<li><div class="user-view">
       						<div class="background"></div>
-      						<a href="#user"><img class="circle responsive-img" src="assets/img/sisei.jpg"></a>
+      						<a href="#user"><img class="circle responsive-img" src="http://www.sisei.com.mx/assets/images/sisei.jpg"></a>
       						<a href="#name"><span class="white-text name"><H3 align="center">SISeI XXII</H1></span></a><BR/>
     					</div>
     				</li>
@@ -17,11 +17,24 @@
     	</div>
     	<!-- _________________________________________________________________________ -->
 
+
     	<!-- __________________________Pestaña de asistentes__________________________ -->
     	<div class="container col s9">
+
+    		<nav>
+		      	<div class="nav-wrapper grey darken-4">
+			      	<div style="padding: 5px"></div>
+			         <a class="brand-logo center"><a href="#modalRegistro" class="col s4 offset-s4 waves-effect waves-light btn center modal-trigger">Registrar Asistente</a></a>
+			        <ul id="nav-mobile" class="left hide-on-med-and-down">
+			          
+			        </ul>
+		     	</div>
+			</nav>
+
+			<div style="padding: 3px"></div>
 		    <nav>
 		      <div class="nav-wrapper grey darken-4">
-		        <a href="#" class="brand-logo center">ASISTENTES</a>
+		        <a href="#" class="brand-logo center">LISTA ASISTENTES</a>
 		        <ul id="nav-mobile" class="left hide-on-med-and-down">
 		          
 		        </ul>
@@ -29,149 +42,118 @@
 		    </nav>
 
     		<ul class="collection">
-			<?php foreach($asistente->result() as $fila){ ?> <!-- Rellena el listado de asistentes -->
+			<?php foreach($asistentes as $aux){ ?> <!-- Rellena el listado de asistentes -->
 					<li class="collection-item avatar z-depth-3">
-					    <img src="assets/img/asistente.jpg" class="circle"><!--Esta imagen sera cambiada por la de face-->
-					    <span class="title"><?php echo $fila->nombre_real." ".$fila->apellido_real;?></span>
-					    <p><?php echo $fila->no_control;?><br>
-					        <?php echo $fila->carrera;?>
+					    <img src="http://www.sisei.com.mx/assets/images/defaultUser.jpg" class="circle"><!--Esta imagen sera cambiada por la de face-->
+					    <span class="title"><?php echo $aux['nombre_real']." ".$aux['apellido_real'];?></span>
+					    <p><?php echo $aux['no_control'];?><br>
+					        <?php echo $aux['carrera'];?>
 					    </p>
-					    <a href="#modal1" class="secondary-content modal-trigger"><i class="medium material-icons">control_point</i> </a>
+					    <a href="" class="secondary-content modal-trigger">
+					    <table class="responsive-table">
+					    	<tbody>
+					    		<tr>
+							        <td><a href="<?php echo base_url();?>index.php/Asistentes_controller/details?id=<?php echo $aux['id'];?>"><i class="material-icons" style="font-size: 35px">control_point</i></a></td>
+							        <td><i class="material-icons" style="font-size: 35px">settings</i></td>
+							        <td><i class="material-icons" style="font-size: 35px">delete</i></td>
+
+					    	</tbody>
+					    </table>
+						</a>
+					    <!-- <a href="" class="secondary-content modal-trigger">
+					    	<i class="material-icons" style="font-size: 35px">control_point</i>
+					    	<i class="material-icons" style="font-size: 35px">settings</i>
+					    	<i class="material-icons" style="font-size: 35px">delete</i>
+					    </a> -->
+
 					</li>
 			<?php } ?>
 			</ul>
 		</div>
 		<!-- _________________________________________________________________________ -->
 
-		<!-- _____________________________Modal Structure_____________________________ -->
-		<div id="modal1" class="modal ">
+
+
+		<!-- ________________________Modal Registro Structure_________________________ -->
+		<div id="modalRegistro" class="modal ">
 		    <div class="modal-content">
-		      	<h6>
-			      	<ul class="collection">
-						<li class="collection-item avatar">
-						    <img src="assets/img/asistente.jpg" class="circle"><!--Esta imagen sera cambiada por la de face-->
-						    <span class="title"><?php echo $fila->nombre_real." ".$fila->apellido_real;?></span>
-						    <a href="#modal1" class="secondary-content modal-trigger"><button onclick="funcionEditable()" class="small material-icons">build</button> </a>
-						</li>
-					</ul>
-				</h6>
 				<div class="row">
+
+					<nav>
+				      <div class="nav-wrapper grey darken-4">
+				        <a href="" class="brand-logo center">REGISTRO</a>
+				        <ul id="nav-mobile" class="left hide-on-med-and-down">
+				          
+				        </ul>
+				      </div>
+				    </nav>
+				    <div style="padding: 5px"></div>
+
 					<div class="row">
-					    <form class="col s12">
+					    <form id="asistentes-form" class="col s12" method="POST" action=<?php echo site_url('admin/create_asistente');?> enctype="multipart/form-data">
 
 					      <div class="row">
+
+						  <div class="row">
 					        <div class="input-field col s6">
-					          <input disabled value="<?php echo $fila->facebook_name;?>" id="facebook_name" type="text" class="validate">
-					          <label for="first_name">Facebook Name</label>
+					          <input id="nombre_real" name="nombre_real" type="text" class="validate" required="" aria-required="true">
+					          <label for="nombre_real">Nombre Real</label>
 					        </div>
 
 					        <div class="input-field col s6">
-					          <input disabled value="<?php echo $fila->facebook_first_name;?>" id="facebook_first_name" type="text" class="validate">
-					          <label for="last_name">Facebook First Name</label>
+					          <input id="apellido_real" name="apellido_real" type="text" class="validate" required="" aria-required="true">
+					          <label for="apellido_real">Apellido Real</label>
 					        </div>
 					      </div>
 
 						  <div class="row">
 					        <div class="input-field col s6">
-					          <input disabled value="<?php echo $fila->nombre_real;?>" id="nombre_real" type="text" class="validate">
-					          <label for="first_name">Nombre Real</label>
+					          <input id="no_control" name="no_control" type="text" class="validate" required="" aria-required="true">
+					          <label for="no_control">No. Control</label>
 					        </div>
 
 					        <div class="input-field col s6">
-					          <input disabled value="<?php echo $fila->apellido_real;?>" id="apellido_real" type="text" class="validate">
-					          <label for="last_name">Apellido Real</label>
-					        </div>
-					      </div>
-
-						  <div class="row">
-					        <div class="input-field col s6">
-					          <input disabled value="<?php echo $fila->no_control;?>" id="no_control" type="text" class="validate">
-					          <label for="first_name">No. Control</label>
-					        </div>
-
-					        <div class="input-field col s6">
-					          <input disabled value="<?php echo $fila->tel;?>" id="tel" type="text" class="validate">
-					          <label for="last_name">Telefono</label>
+					          <input id="tel" name="tel" type="text" class="validate" required="" aria-required="true">
+					          <label for="tel">Telefono</label>
 					        </div>
 					      </div>
 
 					      <div class="row">
 					        <div class="input-field col s6">
-					          <input disabled value="<?php echo $fila->email;?>" id="email" type="text" class="validate">
-					          <label for="first_name">Email</label>
+					          <input id="email" name="email" type="text" class="validate" required="" aria-required="true"
+					          <label for="email">Email</label>
 					        </div>
 
 					        <div class="input-field col s3">
-					          <input disabled value="<?php echo $fila->carrera;?>" id="carrera" type="text" class="validate">
-					          <label for="first_name">Carrera</label>
+					          <input id="carrera" name="carrera" type="number" class="validate" required="" aria-required="true">
+					          <label for="carrera">Carrera</label>
 					        </div>
 
 					        <div class="input-field col s3">
-					          <input disabled value="<?php echo $fila->sexo;?>" id="sexo" type="text" class="validate">
-					          <label for="last_name">Sexo</label>
+					          <input id="sexo" name="sexo" type="number" class="validate" required="" aria-required="true">
+					          <label for="sexo">Sexo</label>
 					        </div>
 					      </div>
 
 					      <div class="row">
-					        <div class="input-field col s6">
-					          <input disabled value="<?php echo $fila->created_at;?>" id="created_at" type="text" class="validate">
-					          <label for="first_name">Created Date</label>
+					        <div class="input-field col s3">
+					          <input id="talla" name="talla"  type="number" class="validate" required="" aria-required="true">
+					          <label for="talla">Talla</label>
 					        </div>
 
-					        <div class="input-field col s6">
-					          <input disabled value="<?php echo $fila->updated_at;?>" id="updated_at" type="text" class="validate">
-					          <label for="last_name">Updated Date</label>
+					        <div class="input-field col s2">
+					          <input id="pro" name="pro" type="number" class="validate" required="" aria-required="true">
+					          <label for="pro">Pro</label>
 					        </div>
 					      </div>
-					    </form>
 					  </div>
-					<!--<table class="col s6">
-				        <thead>
-				          <tr>
-				              <th>Nombre Facebook</th>
-				              <td><?php echo $fila->facebook_name;?></td>
-				          </tr>
-				          <tr>
-				              <th>Primer Nombre Facebook</th>
-				               <td><?php echo $fila->facebook_first_name;?></td>
-				          </tr>
-				          <tr>
-				              <th>Link de Facebook</th>
-				               <td><?php echo $fila->facebook_link;?></td>
-				          </tr>
-				          <tr>
-				              <th>Telefono</th>
-				               <td><?php echo $fila->tel;?></td>
-				          </tr>
-				          <tr>
-				              <th>Email</th>
-				               <td><?php echo $fila->email;?></td>
-				          </tr>
-				          <tr>
-				              <th>Carrera</th>
-				               <td><?php echo $fila->carrera;?></td>
-				          </tr>
-				          <tr>
-				              <th>Sexo</th>
-				               <td><?php echo $fila->sexo;?></td>
-				          </tr>
-				          <tr>
-				              <th>Fecha Alta</th>
-				               <td><?php echo $fila->created_at;?></td>
-				          </tr>
-				          <tr>
-				              <th>Fecha Actualizacion</th>
-				               <td><?php echo $fila->updated_at;?></td>
-				          </tr>
-				        </thead>
-				    </table> -->
 				</div>
 		    </div>
 		    <div class="modal-footer row">
-		       	<div class="col s2 offset-s4"><button id="btn_Guardar" disabled class="waves-effect waves-light btn">Guardar</button></div>
-		       	<div class="col s2"><button id="btn_Cancelar" disabled class="waves-effect waves-light btn">Cancelar</button></div>
-		       	<div class="col s2 offset-s10"><a id="btn_Eliminar" class="red modal-action modal-close waves-effect waves-light btn">Eliminar</a></div>
+		       	<div class="col s2 offset-s4"><button id="btn_Guardar" class="waves-effect waves-light btn" type="submit" name="action">Guardar</button></div>
+		       	<div class="col s2"><button id="btn_Cancelar" href="!#" class="modal-close waves-effect waves-light btn">Cancelar</button></div>
 		    </div>
+		 </form>
 		</div>
 		<!-- _________________________________________________________________________ -->
 	</div>

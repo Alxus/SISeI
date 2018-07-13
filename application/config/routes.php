@@ -65,9 +65,15 @@ $route['admin/panel/talleres']='Talleres_controller';
 $route['admin/create_taller']='Talleres_controller/create_taller/$data';
 $route['admin/panel/talleres/info/(:num)']='Talleres_controller/info/$1';
 $route['api/checkuser']['POST']='Asistentes_controller/checkuser/$data';
+
 $route['admin/panel/carnets']='Carnets_controller'; 
 $route['admin/create_carnet']='Carnets_controller/add/$data'; 
 $route['admin/update_carnet']='Carnets_controller/edit/$data'; 
+
+$route['admin/panel/asistentes']='Asistentes_controller'; 
+$route['admin/create_asistente']='Asistentes_controller/add/$data'; 
+$route['admin/asistente_details']='Asistentes_controller/details/$data';
+/*$route['admin/update_carnet']='Asistentes_controller/edit/$data'; */
 
 $route['admin/panel/conferencia']='Conferencias_controller';
 $route['admin/create_conferencia']='Conferencias_controller/add/$data'; 
