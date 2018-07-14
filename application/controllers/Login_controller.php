@@ -24,7 +24,7 @@ class Login_controller extends CI_Controller {
 	public function login(){
 		if($this->form_validation->run()){
 			$data['username']=$this->input->post('username');
-			$data['password']=$this->input->post('password');
+			$data['password']=$this->encryption->encrypt($this->input->post('password'));
 			if($this->authentication->login($data)){
 				
 				$data['error']='ALL_OK';

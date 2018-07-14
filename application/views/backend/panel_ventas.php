@@ -66,9 +66,9 @@
 			<div class="input-field col s6">
 				<select name="carnet">
 					<option value="" disabled selected>Seleccione</option>
-					<option value="1">Sistemas</option>
-					<option value="2">Mecatronica</option>
-					<option value="3">TyCs</option>
+					<<?php foreach ($carnets as $c): ?>
+						<option value=<?=$c['id'];?>><?=$c['nombre']?></option>
+					<?php endforeach ?>
 				</select>
 				<label>Carnet</label>
 			</div>

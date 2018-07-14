@@ -11,7 +11,11 @@ class Usuario_model extends CI_Model{
     }
 
     public function find_user($data){
-        return $this->db->get_where('usuario',$data)->result_array();
+        $query=$this->db->where('username',$data['username'])->get('usuario')->result_array()[0];
+        if($this->encryption->decrypt($query['password'])==$this->encryption->decrypt($data['password'])){
+            return $query;
+        }
+        return null;
     }
 
     public function getAllUsers(){

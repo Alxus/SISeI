@@ -57,7 +57,7 @@ class Admin_controller extends CI_Controller {
 	public function create_user(){
 		if($this->form_validation->run()){//La validacion del formulario fue exitosa
 			$data['username']=$this->input->post('username');
-			$data['password']=$this->input->post('password');
+			$data['password']=$this->encryption->encrypt($this->input->post('password'));
 			$data['tipo']=$this->input->post('tipo');
 			$data['nombres']=$this->input->post('nombres');
 			$data['apellidos']=$this->input->post('apellidos');

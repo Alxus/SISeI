@@ -21,7 +21,7 @@ class Authentication{
         $usuario=$this->CI->Usuario_model->find_user($data);
         if($usuario!=null){
             unset($usuario['password']);
-            $_SESSION['SISeI_User']=$usuario[0];
+            $_SESSION['SISeI_User']=$usuario;
             if($this->CI->Usuario_model->updateAccessed($_SESSION['SISeI_User']['id']))
             return true;
         }
