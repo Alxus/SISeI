@@ -55,11 +55,11 @@
             </div>
             <div class="input-field col s12">
               
-              <input id="fecha" type="text" class="datepicker" name="fecha" required="" aria-required="true"/>
+              <input id="fecha" type="date" class="datepicker" name="fecha" required="" aria-required="true"/>
               <label for="fecha">Fecha</label>
             </div>
             <div class="input-field col s12">
-              <input id="hora" type="text" name="hora" class="timepicker" required="" aria-required="true" />
+              <input id="hora" type="time" name="hora" class="timepicker" required="" aria-required="true" />
               <label for="hora">Hora</label>
             </div>
             

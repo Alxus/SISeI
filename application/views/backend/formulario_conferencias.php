@@ -12,11 +12,11 @@
               <label for="nombre">Nombre</label>
             </div>
             <div class="input-field col s12">
-              <input id="fecha" type="text" name="fecha" class="datepicker" value="<?php echo $conferencia['fecha']; ?>" required="" aria-required="true" >
+              <input id="fecha" type="date" name="fecha" class="datepicker" value="<?php echo $conferencia['fecha']; ?>" required="" aria-required="true" >
               <label for="fecha">Fecha</label>
             </div>
             <div class="input-field col s12">
-              <input id="hora" type="text" name="hora" class="timepicker" value="<?php echo $conferencia['hora']; ?>" required="" aria-required="true">
+              <input id="hora" type="time" name="hora" class="timepicker" value="<?php echo $conferencia['hora']; ?>" required="" aria-required="true">
               <label for="hora">Hora</label>
             </div>
             <div class="row">
