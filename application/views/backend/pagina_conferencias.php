@@ -62,12 +62,7 @@
               <input id="hora" type="text" name="hora" class="timepicker" required="" aria-required="true" />
               <label for="hora">Hora</label>
             </div>
-            <div class="input-field col s12">
-              <input id="calificacion" type="number" name="calificacion" class="validate" required="" aria-required="true">
-              <label for="calificacion">Calificacion</label>
-             
-             
-            </div>
+            
             <div class="row">
               <div class="file-field input-field col s7">
                 <div class="btn">

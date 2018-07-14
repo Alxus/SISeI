@@ -11,7 +11,6 @@ class Conferencias_controller extends CI_Controller{
         $this->form_validation->set_rules('nombre', 'Nombre', 'required');
         $this->form_validation->set_rules('fecha', 'Fecha', 'required');
         $this->form_validation->set_rules('hora', 'Hora', 'required');
-        $this->form_validation->set_rules('calificacion', 'Calificacion', 'required');
         $this->form_validation->set_rules('imagen', 'Imagen', 'required'); 
         $this->form_validation->set_rules('icono', 'Icono', 'required'); 
         $config['upload_path'] = './assets/img/';
@@ -33,7 +32,7 @@ class Conferencias_controller extends CI_Controller{
             $data['nombre']=$this->input->post('nombre');
             $data['fecha']=$this->input->post('fecha');
             $data['hora']=$this->input->post('hora');
-            $data['calificacion']=$this->input->post('calificacion');
+            $data['calificacion']=NULL;
 
             if($this->upload->do_upload('btnimg')){
                 $data['imagen']=base_url().'assets/img/'.$this->upload->data('file_name');
@@ -58,7 +57,8 @@ class Conferencias_controller extends CI_Controller{
 
         //JSON de respuesta
         $this->index();
-        
+        echo json_encode($data);
+ 
     }
         public function delete()
         {
@@ -83,12 +83,10 @@ class Conferencias_controller extends CI_Controller{
             $data['fecha'] = $fecha;
             $hora = $this->input->post('hora');
             $data['hora'] = $hora;
-            $calificacion = $this->input->post('calificacion');
-            $data['calificacion'] = $calificacion;
             $imagen = $this->input->post('imagen');
             $data['imagen'] = $imagen;
             $icono = $this->input->post('icono');
-            $data['icono'] = $icono;
+            $data['icono'] = $icono; 
             if(count($resultado) > 0)
             {
                 $data['conferencia'] = $resultado[0];
@@ -100,7 +98,7 @@ class Conferencias_controller extends CI_Controller{
             }
             else
             {
-                $id = $this->input->post('id');
+               $id = $this->input->post('id');
                 if ($this->form_validation->run())                        
                 {
                     if($this->upload->do_upload('btnimg')){
