@@ -11,15 +11,15 @@ class Asistentes_controller extends CI_Controller {
 		//Cargamos los modelos que vamos a necesitar en el constructor
 		$this->load->model('Asistentes_model');
 		//Reglas para validar formularios.
-		$this->form_validation->set_rules('nombre_real', 'Nombre_real', 'trim|required');
+		$this->form_validation->set_rules('nombre_real', 'Nombre_real', 'required');
 		$this->form_validation->set_rules('apellido_real', 'Apellido_real', 'required');
 		$this->form_validation->set_rules('no_control', 'No_control', 'required');
 		$this->form_validation->set_rules('tel', 'Tel', 'required');
 		$this->form_validation->set_rules('email', 'Email', 'required');
 		$this->form_validation->set_rules('carrera', 'Carrera', 'integer|required');
 		$this->form_validation->set_rules('sexo', 'Sexo', 'integer|required');
-		$this->form_validation->set_rules('created_at', 'Created_at', 'required');
-		$this->form_validation->set_rules('updated_at', 'Updated_at', 'required');
+		$this->form_validation->set_rules('talla', 'Talla', 'integer|required');
+		$this->form_validation->set_rules('pro', 'Pro', 'integer|required');
 		//reglas para subir imagenes
 		date_default_timezone_set( 'America/Mazatlan' );
 	}
@@ -27,14 +27,51 @@ class Asistentes_controller extends CI_Controller {
 	public function index(){
 		/*$result = $this->Asistente_model->getAsistentes();
 		$data = array('asistente'=>$result); *///Cargo los datos de la consulta de asistentes para mandarsela al panel_asistentes
-		$datatitle['title']='Talleres';
-		//$data['talleres']=$this->Talleres_model->get_talleres();
+		$datatitle['title']='Asistentes';
+		$data['asistentes']=$this->Asistentes_model->getAsistentes();
 		$this->load->view('backend/templates/header',$datatitle);
 		$this->load->view('backend/templates/navbar');
-		echo "Seccion pendiente, esperese al otro viernes joven :v";
-		//$this->load->view('backend/panel_asistentes',$data);
+		$this->load->view('backend/panel_asistentes', $data);
 		$this->load->view('backend/templates/footer');
 	}
+
+	public function add(){
+        if(/*$this->form_validation->run()*/true){//La validacion del formulario fue exitosa
+            $data['nombre_real']=$this->input->post('nombre_real');
+            $data['apellido_real']=$this->input->post('apellido_real');
+            $data['no_control']=$this->input->post('no_control');
+            $data['tel']=$this->input->post('tel');
+            $data['email']=$this->input->post('email');
+            $data['carrera']=$this->input->post('carrera');
+            $data['sexo']=$this->input->post('sexo');
+            $data['talla']=$this->input->post('talla');
+            $data['pro']=$this->input->post('pro');
+
+            if($this->Asistentes_model->add($data)){
+                $data['error']="ALL_OK";//el usuario fue agregado a la db sin problemas
+                echo '<script language="javascript">';
+           		echo 'alert("Se agrego el asistente con exito")';
+            	echo '</script>';
+            }
+            else{
+                $data['error']="NOT_CREATED";//ocurrio un error  
+                echo '<script language="javascript">';
+           		echo 'alert("No fue posible agregar el asistente con exito")';
+            	echo '</script>';          
+            }
+            $this->index();
+        }
+        else{
+            //La validacion no fue exitosa
+            $data['error']="BAD_POST";
+            echo '<script language="javascript">';
+           	echo 'alert("Error en validación.")';
+            echo '</script>';
+            
+        }
+        //JSON de respuesta 
+        //echo json_encode($data);
+    }
 
 
 	public function checkuser(){
@@ -82,4 +119,16 @@ class Asistentes_controller extends CI_Controller {
 		}
 		return $result_data;
 	}
+
+	public function details(){
+        $id = $this->input->get('id');
+        //$id = $this->input->post('id');
+        $resultado = $this->Asistentes_model->get_asistente_by_id($id);
+        $data['asistente'] = $resultado[0];
+        $data['title'] = 'Detalles del Asistente';
+                $this->load->view('backend/templates/header', $data);
+                $this->load->view('backend/templates/navbar');
+                $this->load->view('backend/asistente_details', $data);
+                $this->load->view('backend/templates/footer');
+    }
 }

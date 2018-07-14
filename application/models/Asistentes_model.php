@@ -5,7 +5,7 @@ class Asistentes_model extends CI_Model{
         parent::__construct();
     }
 
-    public function getAsistentes()
+    /*public function getAsistentes()
     { 
         $query = $this->db->get('asistente');//Consulta que regresa todos los asistentes de la BD
         if ($query->num_rows()>0){ //verifica que la consulta regrese datos
@@ -13,6 +13,19 @@ class Asistentes_model extends CI_Model{
         }else{
             return FALSE;
         }   
+    }*/
+
+    public function getAsistentes($nombre = FALSE)
+    {
+        if ($nombre === FALSE)
+        {
+            $this->db->order_by('id', 'asc');
+            $query = $this->db->get('asistente');
+            return $query->result_array();
+        }
+        $this->db->order_by('id', 'asc');
+        $query = $this->db->get_where('asistente', array('nombre' => $nombre));
+        return $query->result_array();
     }
 
     public function exist_Asistente($Fb_Id){
@@ -29,7 +42,12 @@ class Asistentes_model extends CI_Model{
         return $result;
     }
 
-    public function get_Asistente($id){
+    public function add($data){
+         $this->db->insert('asistente',$data);
+         return $this->db->affected_rows()!=0;
+   }
+
+    public function get_asistente_by_id($id){
         $where['id']=$id;
         return $this->db->get_where('asistente', $where)->result_array();
     }
