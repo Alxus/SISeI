@@ -19,7 +19,7 @@ class Ventas_controller extends CI_Controller {
 		$data['Asistentes']=$this->Asistentes_model->get_Asistentes_ventas();
 		$data['Carnets']=$this->Carnets_model->get();
 		$this->load->view('backend/templates/header',$data);
-		$this->load->view('backend/templates/navbar_ventas');
+		$this->load->view('backend/templates/navbar');
 		$this->load->view('backend/panel_ventas');
 		$this->load->view('backend/templates/footer');
 	}
@@ -28,7 +28,10 @@ class Ventas_controller extends CI_Controller {
 		$data['facebook_id']=$this->input->post('fb');
 		$data['email']=$this->input->post('email');
 		$data['carnet_id']=$this->input->post('carnet');
-		$asistente=$this->Asistentes_model->getbByEmail_OR_FbId($data)[0];
+		$asistente=$this->Asistentes_model->getbByEmail_OR_FbId($data);
+		if (isset($asistente[0])) {
+			$asistente=$asistente[0];
+		}
 		//El usuario no se encuentra en nuestra BD
 		if($asistente==null){
 			$asistente['nombre_real']=$this->input->post('nombre');
@@ -38,15 +41,14 @@ class Ventas_controller extends CI_Controller {
 			$asistente['carrera']=($this->input->post('carrera')!=null)?$this->input->post('carrera'):0;
 			$asistente['sexo']=$this->input->post('sexo');
 			$asistente['talla']=$this->input->post('talla');
-			$aux=$this->random_str(10);
-			$asistente['password']=$this->encryption->encrypt($aux);
+			$asistente['password']=$this->encryption->encrypt($this->random_str(10));
 			$asistente['email']=$this->input->post('email');
 			$result=$this->Asistentes_model->ingresar_Asistente($asistente);
-			$asistente['password']=$aux;
 			if($result['affected_rows']==1){
 				$precio=$this->Carnets_model->get_carnets_by_id($this->input->post('carnet'))[0]['precio'];
 				$abono['asistente_id']=$result['Id_Asistente'];
 				$abono['carnet_id']=$this->input->post('carnet');
+				$asistente['debia']=$precio;
 				$abono['debe']=$precio-$this->input->post('abono');
 				$abono['estado']=($abono['debe']==0)?'PAGADO':'APARTADO';
 			}
@@ -56,7 +58,6 @@ class Ventas_controller extends CI_Controller {
 			$abono['carnet_id']=$asistente['carnet_id'];
 			$abono['debe']=$asistente['debe']-$this->input->post('abono');
 			$abono['estado']=($abono['debe']==0)?'PAGADO':'APARTADO';
-			$asistente['password']=$this->encryption->decrypt($asistente['password']);
 		}
 		if($abono['estado']=='PAGADO' && ($this->Pagos_model->getPagados()[0]['total']+$this->Asistentes_model->getPagados()[0]['total'])<50){
 			$asistente['pro']=true;
@@ -85,10 +86,16 @@ class Ventas_controller extends CI_Controller {
 		$this->pdf->SetFont('Arial','',10);
 		$this->pdf->MultiCell(0,10,'Nombre: '.$asistente['nombre_real'].' '.$asistente['apellido_real']);
 		$this->pdf->MultiCell(0,10,'Correo: '.$asistente['email']);
-		$this->pdf->MultiCell(0,10,'Contraseña: '.$asistente['password']);
-		$this->pdf->MultiCell(0,10,'Total Abono: '.$this->input->post('abono'));		
-		$this->pdf->MultiCell(0,10,'Saldo anterior: '.$asistente['debe']);
-		$this->pdf->MultiCell(0,10,'Saldo actual: '.$asistente['comprobante']['debe']);
+		$this->pdf->MultiCell(0,10,'Contraseña: '.$this->encryption->decrypt($asistente['password']));
+		$this->pdf->MultiCell(0,10,'Total Abono: $'.$this->input->post('abono'));
+		if(isset($asistente['debe'])){		
+			$this->pdf->MultiCell(0,10,'Adeudo anterior: $'.$asistente['debe']);
+		}
+		else{
+			$this->pdf->MultiCell(0,10,'Adeudo anterior: $'.$asistente['debia']);
+		}
+		$this->pdf->MultiCell(0,10,'Adeudo actual: $'.$asistente['comprobante']['debe']);
+		
 		$this->pdf->Output('comprobante_pago.pdf', 'I');
 	}
 

@@ -94,4 +94,13 @@ class Asistentes_model extends CI_Model{
         }
         return null;
     }
+
+    public function getAsistenteByNC($data){
+        $where['no_control']=$data;
+        return $this->db->get_where('asistente',$where)->result_array();
+    }
+
+    public function getAsistenteByNombre($data){
+        return $this->db->get_where('asistente',$data)->result_array();
+    }
 }

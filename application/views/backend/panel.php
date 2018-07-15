@@ -1,2 +1,3 @@
-
-<h1>Aqui va el panel administrativo :v</h1>
+<div class="container">
+	<h1>Bienvenido <?=$_SESSION['SISeI_User']['username'];?></h1>
+</div>

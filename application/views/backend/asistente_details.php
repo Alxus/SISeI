@@ -19,7 +19,6 @@
 					</ul>
 				</h6>
 				<div class="row">
-					<div class="row">
 					    <form class="col s10 offset-s1">
 
 					      <div class="row">
@@ -87,11 +86,10 @@
 					        </div>
 					      </div>
 					    </form>
-					  </div>
 				</div>
 		    </div>
-		    <div class="modal-footer row">
-		       	<div class="col s3 offset-s10"><a href=<?php echo site_url('admin/panel/asistentes');?> id="btn_Eliminar" class="red modal-action modal-close waves-effect waves-light btn">Regresar al listado</a></div>
+		    <div class="right-align">
+		       	<a href=<?php echo site_url('admin/panel/asistentes');?> id="btn_Eliminar" class="red modal-action modal-close waves-effect waves-light btn">Regresar al listado</a>
 		    </div>
 		</div>
 	</div>
