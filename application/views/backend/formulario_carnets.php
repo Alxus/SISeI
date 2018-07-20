@@ -19,6 +19,13 @@
               <input id="descripcion" type="text" name="descripcion" value="<?php echo $carnet['descripcion']; ?>" required="" aria-required="true">
               <label for="descripcion">Descripcion</label>
             </div>
+            <div class= "input-field col s12">
+             <select name="tipo">
+              <option value="<?php echo $carnet['tipo']; ?>" disabled selected>Seleccione</option>
+              <option value=1>Normal</option>
+              <option value=2>Promocion</option>
+            </select>
+            <label>Tipo de carnet</label>
             <div class="row">
               <div class="file-field input-field col s7">
                 <div class="btn">

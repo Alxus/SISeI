@@ -12,6 +12,7 @@
           <p>Precio: <?php echo $carnet['precio']; ?> </p>
           <p>Limite: <?php echo $carnet['limite']; ?> </p>
           <p>Descripcion: <?php echo $carnet['descripcion']; ?> </p>
+           <p>Tipo: <?php echo $carnet['tipo']; ?> </p>
           <p>Created_At: <?php echo $carnet['created_at']; ?> </p>
           <p>Updated_At: <?php echo $carnet['updated_at']; ?> </p>
          
