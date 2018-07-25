@@ -144,7 +144,7 @@ class Asistentes_controller extends CI_Controller {
      public function searchAsistenteByName(){
     	$data['nombre_real']=$this->input->post('nombres');
     	$data['apellido_real']=$this->input->post('apellidos');
-    	$asistente=$this->Asistentes_model->getAsistenteByNombre($search);
+    	$asistente=$this->Asistentes_model->getAsistenteByNombre($data);
         if (isset($asistente[0])) {
             $asistente=$asistente[0];
         }

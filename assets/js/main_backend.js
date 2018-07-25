@@ -134,12 +134,11 @@ $('#formSearch').submit(function(event){
         $('input[name=email]').val(json.email).prop( "readonly", true );
         $('input[name=tel]').val(json.tel).prop( "readonly", true );
         $('input[name=noControl]').val(json.noControl).prop( "readonly", true );
-        $('select[name=carrera]').val(json.carrera).addClass('browser-default').prop( "readonly", true );
+        $('select[name=carrera]').val(json.carrera).prop( "readonly", true );
         //$('input[name=carnet]').val(json.carnet);
-        $('select[name=sexo]').val(json.sexo).addClass('browser-default').prop( "readonly", true );
-        $('select[name=talla]').val(json.talla).addClass('browser-default').prop( "readonly", true );
+        $('select[name=sexo]').val(json.sexo).prop( "readonly", true );
+        $('select[name=talla]').val(json.talla).prop( "readonly", true );
         $('label').addClass('active');
-        $('.select-dropdown').remove();
       }else{
         alert('No se encontró el asistente');
       }

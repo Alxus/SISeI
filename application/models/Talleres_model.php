@@ -27,7 +27,7 @@ class Talleres_model extends CI_Model{
         $this->db->from('taller as t');
         $this->db->join('ponente as p','t.ponente_id=p.id');
         $this->db->where('t.id',$id);
-        return $this->db->get()->result_array()[0];
+        return $this->db->get()->row_array()[0];
     }
 
 

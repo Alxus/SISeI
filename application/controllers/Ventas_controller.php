@@ -29,9 +29,6 @@ class Ventas_controller extends CI_Controller {
 		$data['email']=$this->input->post('email');
 		$data['carnet_id']=$this->input->post('carnet');
 		$asistente=$this->Asistentes_model->getbByEmail_OR_FbId($data);
-		if (isset($asistente[0])) {
-			$asistente=$asistente[0];
-		}
 		//El usuario no se encuentra en nuestra BD
 		if($asistente==null){
 			$asistente['nombre_real']=$this->input->post('nombre');
@@ -45,7 +42,7 @@ class Ventas_controller extends CI_Controller {
 			$asistente['email']=$this->input->post('email');
 			$result=$this->Asistentes_model->ingresar_Asistente($asistente);
 			if($result['affected_rows']==1){
-				$precio=$this->Carnets_model->get_carnets_by_id($this->input->post('carnet'))[0]['precio'];
+				$precio=$this->Carnets_model->get_carnets_by_id($this->input->post('carnet'))['precio'];
 				$abono['asistente_id']=$result['Id_Asistente'];
 				$abono['carnet_id']=$this->input->post('carnet');
 				$asistente['debia']=$precio;
@@ -59,7 +56,7 @@ class Ventas_controller extends CI_Controller {
 			$abono['debe']=$asistente['debe']-$this->input->post('abono');
 			$abono['estado']=($abono['debe']==0)?'PAGADO':'APARTADO';
 		}
-		if($abono['estado']=='PAGADO' && ($this->Pagos_model->getPagados()[0]['total']+$this->Asistentes_model->getPagados()[0]['total'])<50){
+		if($abono['estado']=='PAGADO' && ($this->Pagos_model->getPagados()['total']+$this->Asistentes_model->getPagados()['total'])<50){
 			$asistente['pro']=true;
 		}
 		$this->Asistentes_model->abono_asistente($abono);
