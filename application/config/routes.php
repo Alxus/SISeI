@@ -64,9 +64,11 @@ $route['pago']='Pagos_controller';
 $route['admin/panel/talleres']='Talleres_controller';
 $route['admin/create_taller']='Talleres_controller/create_taller/$data';
 $route['admin/panel/talleres/info/(:num)']='Talleres_controller/info/$1';
-$route['admin/panel/talleres/update']='Talleres_controller/edit/$data';
-$route['admin/panel/talleres/borrar/(:num)']='Talleres_controller/delete/$1';
 $route['api/checkuser']['POST']='Asistentes_controller/checkuser/$data';
+
+$route['admin/panel/ponentes']='Ponentes_controller'; 
+$route['admin/create_ponente']='Ponentes_controller/add/$data'; 
+$route['admin/update_ponente']='Ponentes_controller/edit/$data'; 
 
 $route['admin/panel/carnets']='Carnets_controller'; 
 $route['admin/create_carnet']='Carnets_controller/add/$data'; 
