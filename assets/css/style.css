@@ -98,7 +98,6 @@ footer {
 	flex-wrap: wrap;
 	max-height: calc(100vh - 70px);
 	margin-bottom: unset!important;
-	overflow-y: hidden;
 }
 #infotaller{
 	margin-top: 64px;
@@ -108,11 +107,6 @@ footer {
 	position: absolute;
 }
 
-.sidenav .user-view {
-	position: relative;
-	padding: 100px 32px 20px;
-	margin-bottom: 8px;
-}
 #infotaller li span{
 	margin-right: 10px;
 }

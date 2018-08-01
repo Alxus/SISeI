@@ -49,7 +49,7 @@ class Asistentes_model extends CI_Model{
 
     public function get_asistente_by_id($id){
         $where['id']=$id;
-        return $this->db->get_where('asistente', $where)->result_array();
+        return $this->db->get_where('asistente', $where)->row_array();
     }
     
     public function get_Asistentes_ventas(){
@@ -72,7 +72,7 @@ class Asistentes_model extends CI_Model{
 
     public function getPagados(){
         $this->db->select('COUNT(id) as total')->from('asistente')->where('estado=PAGADO');
-        return $this->db->get()->result_array();
+        return $this->db->get()->row_array();
     }
 
     public function getbByEmail_OR_FbId($data){
@@ -82,7 +82,7 @@ class Asistentes_model extends CI_Model{
             $this->db->join('asistente_carnet as ac','a.id=ac.asistente_id');
             $this->db->join('carnet as c','c.id=ac.carnet_id');
             $this->db->where('a.facebook_id',$data['facebook_id']);
-            return $this->db->get()->result_array();        
+            return $this->db->get()->row_array();        
         }
         if($data['email']!=null){
             $this->db->select('a.*, ac.*, c.nombre as nc');
@@ -90,8 +90,17 @@ class Asistentes_model extends CI_Model{
             $this->db->join('asistente_carnet as ac','a.id=ac.asistente_id');
             $this->db->join('carnet as c','c.id=ac.carnet_id');
             $this->db->where('a.email',$data['email']);
-            return $this->db->get()->result_array(); 
+            return $this->db->get()->row_array(); 
         }
         return null;
+    }
+
+    public function getAsistenteByNC($data){
+        $where['no_control']=$data;
+        return $this->db->get_where('asistente',$where)->row_array();
+    }
+
+    public function getAsistenteByNombre($data){
+        return $this->db->get_where('asistente',$data)->row_array();
     }
 }

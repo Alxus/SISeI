@@ -32,7 +32,7 @@ class Carnets_model extends CI_Model{
     {
         $this->db->where('id', $id);
         $query = $this->db->get('carnet');
-        return $query->result_array();
+        return $query->row_array();
     }
     function update($id, $data)
     {

@@ -1,6 +1,6 @@
     <div class="row d">
     	<!-- _________________________Pestaña de informacion_________________________ -->
-    	<div class="col s3 grey darken-4">
+    	<div class="col s3 grey darken-4 hide-on-med-and-down">
     		<!-- Vacio -->
 				<ul>
     				<li><div class="user-view">
@@ -19,7 +19,7 @@
 
 
     	<!-- __________________________Pestaña de asistentes__________________________ -->
-    	<div class="container col s9">
+    	<div class="container col s12 m9">
 
     		<nav>
 		      	<div class="nav-wrapper grey darken-4">
@@ -149,9 +149,9 @@
 					  </div>
 				</div>
 		    </div>
-		    <div class="modal-footer row">
-		       	<div class="col s2 offset-s4"><button id="btn_Guardar" class="waves-effect waves-light btn" type="submit" name="action">Guardar</button></div>
-		       	<div class="col s2"><button id="btn_Cancelar" href="!#" class="modal-close waves-effect waves-light btn">Cancelar</button></div>
+		    <div class="modal-footer right-align">
+		       	<div><button id="btn_Guardar" class="waves-effect waves-light btn" type="submit" name="action">Guardar</button></div>
+		       	<div><button id="btn_Cancelar" href="!#" class="modal-close waves-effect waves-light btn">Cancelar</button></div>
 		    </div>
 		 </form>
 		</div>

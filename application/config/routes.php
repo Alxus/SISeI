@@ -84,7 +84,10 @@ $route['admin/panel/usrlst']='Admin_controller/lista_usuarios';
 //Panel de ventas
 $route['admin/panel/ventas']='Ventas_controller'; 
 $route['admin/panel/ventas/Abono']['POST']='Ventas_controller/Abono/$data'; 
+$route['admin/searchAsistenteByNC']['POST']='Asistentes_controller/searchAsistenteByNc/$data'; 
+$route['admin/searchAsistenteByName']['POST']='Asistentes_controller/searchAsistenteByName/$data'; 
 
 //Listas
 $route['admin/panel/talleres/pdf']='Talleres_controller/printlst';
 $route['admin/panel/usrlst/pdf']='Admin_controller/printlst';
+

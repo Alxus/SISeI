@@ -3,22 +3,23 @@ $(document).ready(function(){
   $('.dropdown-trigger').dropdown({constrainWidth:false, coverTrigger:false});
   $('select').formSelect({constrainWidth:true,coverTrigger:false});
   $('.sidenav').sidenav();
+  $('.collapsible').collapsible();
 });
 
-
-function funcionEditable() {
-  document.getElementById("nombre_real").disabled = false;
-  document.getElementById("apellido_real").disabled = false;
-  document.getElementById("no_control").disabled = false;
-  document.getElementById("tel").disabled = false;
-  document.getElementById("email").disabled = false;
-  document.getElementById("carrera").disabled = false;
-  document.getElementById("sexo").disabled = false;
-  document.getElementById("created_at").disabled = false;
-  document.getElementById("updated_at").disabled = false;
-  document.getElementById("btn_Guardar").disabled = false;
-  document.getElementById("btn_Cancelar").disabled = false;
-}
+var nc;
+var nm='<div id="searchByNombre" class="center">'+
+'<label><i class="material-icons">search</i> Buscar por asistente nombre completo</label>'+
+'<div class="input-field col s6">'+
+'<input id="nombres" type="text" name="nombres">'+
+'<label for="nombres">Nombres</label>'+
+'</div>'+
+'<div class="input-field col s6">'+
+'<input id="apellidos" type="text" name="apellidos">'+
+'<label for="apellidos">Apellidos</label>'+
+'</div>'+
+'</div>'+
+'</div>';
+var base_url=window.location.protocol + "//" + window.location.host + "/"+"SISeIXII/index.php/";
 
 $("#btnicon").change(function() {
   readURL(this,'#icon');
@@ -85,7 +86,7 @@ $('#users-form').submit(function(event){
       if(json.error=='ALL_OK'){
         alert("Usuario registrado");
         location.reload(true)  
-     }
+      }
       if(json.error=='BAD_POST'){
         alert("Verifique los datos");
       }
@@ -99,6 +100,73 @@ $('#users-form').submit(function(event){
     console.log(xhr);
     alert("Error en el servidor");
   });
+});
+
+$('input[name=filtro]').on('click',function(){
+  if($('input[name=filtro]').is(':checked')){
+   nc = $('#searchByNC').detach();
+   $('#inputBusqueda').prepend(nm);
+   $('#formSearch').attr( "action",base_url+"admin/searchAsistenteByName" );
+ }
+ else{
+  nm = $('#searchByNombre').detach();
+  $('#inputBusqueda').prepend(nc);
+  $('#formSearch').attr( "action", base_url+"admin/searchAsistenteByNC" );
+}
+});
+
+$('#formSearch').submit(function(event){
+  event.preventDefault();
+  if(!$('input[name=filtro]').is(':checked')){
+    $.ajax({
+      type        : 'POST',
+      url         : $('#formSearch').attr( "action" ),
+      data        : {
+        dato: $('input[name=dato]').val()
+      },
+      dataType    : 'json',
+      encode          : false
+    }).done(function (json){
+      if(json!=null){
+        $('input[name=fb]').val(json.id_facebook).prop( "readonly", true );
+        $('input[name=nombre]').val(json.nombre_real).prop( "readonly", true );
+        $('input[name=apellido]').val(json.apellido_real).prop( "readonly", true );
+        $('input[name=email]').val(json.email).prop( "readonly", true );
+        $('input[name=tel]').val(json.tel).prop( "readonly", true );
+        $('input[name=noControl]').val(json.noControl).prop( "readonly", true );
+        $('select[name=carrera]').val(json.carrera).prop( "readonly", true );
+        //$('input[name=carnet]').val(json.carnet);
+        $('select[name=sexo]').val(json.sexo).prop( "readonly", true );
+        $('select[name=talla]').val(json.talla).prop( "readonly", true );
+        $('label').addClass('active');
+      }else{
+        alert('No se encontró el asistente');
+      }
+    }).fail(function(xhr){
+      console.log(xhr);
+      alert("Error en el servidor");
+    });
+  }else{
+    $.ajax({
+      type        : 'POST',
+      url         : $('#formSearch').attr( "action" ),
+      data        : {
+        nombres: $('input[name=nombres]').val(),
+        apellidos: $('input[name=apellidos]').val()        
+      },
+      dataType    : 'json',
+      encode          : false
+    }).done(function (json){
+      if(json!=null){
+        console.log(json);
+      }else{
+        alert('No se encontró el asistente');
+      }
+    }).fail(function(xhr){
+      console.log(xhr);
+      alert("Error en el servidor");
+    });
+  }
 });
 
 /*$('.eliminar').on('click',function(){
