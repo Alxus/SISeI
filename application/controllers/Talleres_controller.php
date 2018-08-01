@@ -39,40 +39,111 @@ class Talleres_controller extends CI_Controller {
 	}
 
 	public function create_taller(){
-		if($this->form_validation->run()){
-			$data['ponente_id']=0;
-			$data['nombre']=$this->input->post('nombre');
-			$data['descripcion']=$this->input->post('descripcion');
-			$data['requisitos']=$this->input->post('requisitos');
-			$data['lugar']=$this->input->post('lugar');
-			$data['fecha']=$this->input->post('fecha');
-			$data['hora']=$this->input->post('hora');
-			$data['limite']=$this->input->post('limite');
-			$data['nivel']=$this->input->post('nivel');
-			if($this->upload->do_upload('btnimg')){
-				$data['imagen']=base_url().'assets/img/'.$this->upload->data('file_name');
-				if($this->upload->do_upload('btnicon')){
-					$data['icono']=base_url().'assets/img/'.$this->upload->data('file_name');
-					if($this->Talleres_model->create_taller($data)){
-						$data['error']="ALL_OK";
+		 if($this->form_validation->run()){
+		      $data['ponente_id']=0;
+		      $data['nombre']=$this->input->post('nombre');
+		      $data['descripcion']=$this->input->post('descripcion');
+		      $data['requisitos']=$this->input->post('requisitos');
+		      $data['lugar']=$this->input->post('lugar');
+		      $data['fecha']=$this->input->post('fecha');
+		      $data['hora']=$this->input->post('hora');
+		      $data['limite']=$this->input->post('limite');
+		      $data['nivel']=$this->input->post('nivel');
+		      if($this->upload->do_upload('btnimg')){
+		        $data['imagen']=base_url().'assets/img/'.$this->upload->data('file_name');
+		        if($this->upload->do_upload('btnicon')){
+		          $data['icono']=base_url().'assets/img/'.$this->upload->data('file_name');
+		          if($this->Talleres_model->create_taller($data)){
+		            $data['error']="ALL_OK";
+		          }
+		          else{
+		            $data['error']="NOT_CREATED";
+		          }
+		        }
+		        else{
+		          $data['error']=$this->upload->display_errors();
+		        }
+		      }
+		      else{
+		        $data['error']=$this->upload->display_errors();
+		      }
+		    }
+		    else{
+		      $data['error']="BAD_POST";
+		    }
+		    echo json_encode($data);
+	}
+
+	public function edit(){
+			$id = $this->input->get('id');
+            $resultado = $this->Talleres_model->get_taller_by_id($id);
+            $nombre = $this->input->post('nombre');
+            $data['nombre'] = $nombre;
+            $descripcion = $this->input->post('descripcion');
+            $data['descripcion'] = $descripcion;
+            $requisitos = $this->input->post('requisitos');
+            $data['requisitos'] = $requisitos;
+            $lugar = $this->input->post('lugar');
+            $data['lugar'] = $lugar;
+            $fecha = $this->input->post('fecha');
+            $data['fecha'] = $fecha;
+            $hora = $this->input->post('hora');
+            $data['hora'] = $hora;
+            $limite = $this->input->post('limite');
+            $data['limite'] = $limite;
+            $nivel = $this->input->post('nivel');
+            $data['nivel'] = $nivel;
+
+            if(count($resultado) > 0)
+            {
+                $data['taller'] = $resultado[0];
+                $data['title'] = 'Modificar Taller';
+                $this->load->view('backend/templates/header', $data);
+                $this->load->view('backend/templates/navbar');
+                $this->load->view('backend/formulario_tallerupdate.php', $data);
+                $this->load->view('backend/templates/footer');
+            }
+            else
+            {
+                $id = $this->input->post('id');
+                if ($this->form_validation->run())                        
+                {
+	                if($this->upload->do_upload('btnimg')){
+						$data['imagen']=base_url().'assets/img/'.$this->upload->data('file_name');
+						if($this->upload->do_upload('btnicon')){
+							$data['icono']=base_url().'assets/img/'.$this->upload->data('file_name');
+							if($this->Talleres_model->update_taller($data)){
+
+								$data['error']="ALL_OK";
+							}
+							else{
+								$data['error']="NOT_CREATED";
+							}
+						}
+						else{
+						$data['error']=$this->upload->display_errors();	
+						}
 					}
 					else{
-						$data['error']="NOT_CREATED";
+					$data['error']=$this->upload->display_errors();
 					}
 				}
 				else{
-					$data['error']=$this->upload->display_errors();
+				$data['error']="BAD_POST";
 				}
-			}
-			else{
-				$data['error']=$this->upload->display_errors();
-			}
-		}
-		else{
-			$data['error']="BAD_POST";
-		}
-		echo json_encode($data);
-	}
+				echo json_encode($data);
+
+     	  }
+     }
+
+	public function delete($id)
+        {
+            $this->Talleres_model->delete_taller($id);
+            $this->index();
+            echo '<script language="javascript">';
+            echo 'alert("Se a borrado el taller con exito")';
+            echo '</script>';
+        }
 
 	public function lista_talleres(){
 		echo json_encode($this->Talleres_model->get_talleres());

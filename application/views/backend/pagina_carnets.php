@@ -59,6 +59,15 @@
               <input id="descripcion" type="text" name="descripcion" class="validate" required="" aria-required="true">
               <label for="descripcion">Descripcion</label>
             </div>
+            <div class= "input-field col s12">
+             <select name="tipo" value =1>
+              <option value="" disabled selected>Seleccione</option>
+              <option value=1>Normal</option>
+              <option value=2>Promocion</option>
+            </select>
+            <label>Tipo de carnet</label>
+            
+            </div>
             <div class="row">
               <div class="file-field input-field col s7">
                 <div class="btn">

@@ -34,7 +34,7 @@ class Carnets_controller extends CI_Controller{
             if($this->upload->do_upload('btnimg')){
                 $data['imagen']=base_url().'assets/img/'.$this->upload->data('file_name');
             }
-
+            $data['tipo']=$this->input->post('tipo');
             if($this->Carnets_model->add($data)){
                  $data['error']="ALL_OK";//el usuario fue agregado a la db sin problemas
               
@@ -76,6 +76,8 @@ class Carnets_controller extends CI_Controller{
             $data['limite'] = $limite;
             $descripcion = $this->input->post('descripcion');
             $data['descripcion'] = $descripcion;
+             $tipo = $this->input->post('tipo');
+            $data['tipo'] = $tipo;
             $imagen = $this->input->post('imagen');
             $data['imagen'] = $imagen;
             if(count($resultado) > 0)

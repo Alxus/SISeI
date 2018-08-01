@@ -66,6 +66,10 @@ $route['admin/create_taller']='Talleres_controller/create_taller/$data';
 $route['admin/panel/talleres/info/(:num)']='Talleres_controller/info/$1';
 $route['api/checkuser']['POST']='Asistentes_controller/checkuser/$data';
 
+$route['admin/panel/ponentes']='Ponentes_controller'; 
+$route['admin/create_ponente']='Ponentes_controller/add/$data'; 
+$route['admin/update_ponente']='Ponentes_controller/edit/$data'; 
+
 $route['admin/panel/carnets']='Carnets_controller'; 
 $route['admin/create_carnet']='Carnets_controller/add/$data'; 
 $route['admin/update_carnet']='Carnets_controller/edit/$data'; 

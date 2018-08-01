@@ -40,7 +40,7 @@
 				<input id="btnimg" name="btnimg" type="file">
 			</div>
 			<div class="file-path-wrapper hide-on-med-and-down">
-				<input hidden id="imagen" name="imagen" class="file-path validate" type="text">
+				<input id="imagen" name="imagen" class="file-path validate" type="text">
 			</div>
 		</div>
 		<div class="file-field input-field col s6">
@@ -49,7 +49,7 @@
 				<input id="btnicon" name="btnicon" type="file">
 			</div>
 			<div class="file-path-wrapper hide-on-med-and-down">
-				<input hidden id="icono" name="icono" class="file-path validate" type="text">
+				<input id="icono" name="icono" class="file-path validate" type="text">
 			</div>
 		</div>
 		<div class="col s6">

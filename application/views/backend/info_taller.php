@@ -1,5 +1,5 @@
 
-<ul id="infotaller" class="sidenav sidenav-fixed hide-on-med-and-down">
+<ul id="infotaller" class="sidenav sidenav-fixed">
 	<li><div class="user-view">
 		<div class="background">
 			<img class="responsive-img" src=<?=$taller['imagen']?>>
@@ -12,22 +12,12 @@
 	<li><p>Calificacíón <span class="new badge blue" data-badge-caption=""><?=$taller['calificacion']?></span></p></li>
 	<li><p>Creado:<span class="right"><?=$taller['created_at']?></span></p></li>
 	<li><p>Ultima actualización:<span class="right"><?=$taller['updated_at']?></span></p></li>
-	<li><td><a class="btn blue"href="#!"><i class="material-icons white-text">edit</i>Editar</a></td></li>
-	<li><td><a class="btn red eliminar" href="#!"><i class="material-icons white-text">delete</i>Eliminar</a></td></li>
+	<li><td><a class="btn blue" href="<?php echo base_url();?>index.php/Talleres_controller/edit?id=<?php echo $taller['id'];?>"><i class="material-icons white-text">edit</i>Editar</a></td></li>
+	<li><td><a class="btn red eliminar" href=<?=site_url('admin/panel/talleres/borrar/'.$taller['id']);?>><i class="material-icons white-text">delete</i>Eliminar</a></td></li>
 </ul>
 <div class="infor">
 	<h3 class="center"><?=$taller['nombre']?></h3>
 	<div class="section">
-		<img class="responsive-img hide-on-med-and-up" width="320" src=<?=$taller['imagen']?>>
-		<img class="responsive-img hide-on-med-and-up" width="320" src=<?=$taller['icono']?>>
-		<ul class="hide-on-med-and-up">
-			<li><p>Limite<span class="new badge blue" data-badge-caption=""><?=$taller['limite']?></span></p></li>
-			<li><p>Registrados<span class="new badge blue" data-badge-caption=""><?=$taller['registrados']?></span></p></li>
-			<li><p>Nivel<span class="new badge blue" data-badge-caption=""><?=$taller['nivel']?></span></p></li>
-			<li><p>Calificacíón <span class="new badge blue" data-badge-caption=""><?=$taller['calificacion']?></span></p></li>
-			<li><p>Creado:<span class="right"><?=$taller['created_at']?></span></p></li>
-			<li><p>Ultima actualización:<span class="right"><?=$taller['updated_at']?></span></p></li>
-		</ul>
 		<h4>Información general</h4>
 		<h5>Descripción</h5>
 		<p><?=$taller['descripcion']?></p>
@@ -40,10 +30,6 @@
 		<pre><?=$taller['requisitos']?></pre>
 	</div>
 	<div class="divider"></div>
-	<h4>Lugar y Fecha</h4>
-	<p><?=$taller['lugar']." el ".$taller['fecha']." a las ".$taller['hora'];?></p>
-	<div class="row center hide-on-med-and-up">
-		<a class="btn blue"href="#!"><i class="material-icons white-text">edit</i>Editar</a>
-		<a class="btn red eliminar" href="#!"><i class="material-icons white-text">delete</i>Eliminar</a>
-	</div>
+	<h4>Fecha y lugar</h4>
+	<p><?=$taller['fecha']." a las ".$taller['hora']." en ".$taller['lugar']?></p>
 </div>
