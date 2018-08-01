@@ -9,6 +9,7 @@
         <li><a href=<?php echo site_url('admin/panel/carnets');?>>Carnets</a></li>
         <li><a href=<?php echo site_url('admin/panel/usrlst');?>>Usuarios</a></li>
         <li><a href=<?php echo site_url('admin/panel/ventas');?>>Ventas</a></li>
+        <li><a href=<?php echo site_url('admin/panel/ponentes');?>>Ponentes</a></li>
         <li><a href="#">Ajustes</a></li>
         <li><a href=<?php echo site_url('logout');?>>Salir</a></li>
       </ul>
