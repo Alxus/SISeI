@@ -2,7 +2,7 @@
 	<h5 class="card-title center">Modificar Taller</h5>
 	<form class="row" id="talleres-form" method="POST" action=<?php echo site_url('admin/panel/talleres/update/');?> class="col s12" enctype="multipart/form-data">
 		<div class="input-field col s12">
-			<input id="nombre" type="text" name="nombre" value="<?php echo $taller['id']; ?>">
+			<input id="nombre" type="text" name="nombre" value="<?php echo $taller['nombre']; ?>">
 			<label for="nombre">Nombre</label>
 		</div>
 		<div class="input-field col s12">

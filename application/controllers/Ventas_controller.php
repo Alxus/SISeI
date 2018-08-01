@@ -12,6 +12,16 @@ class Ventas_controller extends CI_Controller {
 		$this->load->model('Carnets_model');
 		$this->load->model('Pagos_model');
 		$this->load->library('Pdf');
+		$this->form_validation->set_rules('nombre', 'Nombre_real', 'trim|required');
+		$this->form_validation->set_rules('apellido', 'Apellido_real', 'trim|required');
+		$this->form_validation->set_rules('noControl', 'No_control', 'numeric|required');
+		$this->form_validation->set_rules('tel', 'Tel', 'required');
+		$this->form_validation->set_rules('email', 'Email', 'valid_email|required');
+		$this->form_validation->set_rules('carrera', 'Carrera', 'integer|required');
+		$this->form_validation->set_rules('sexo', 'Sexo', 'integer|required');
+		$this->form_validation->set_rules('talla', 'Talla', 'integer|required');
+		$this->form_validation->set_rules('abono', 'abono', 'numeric|required');
+		$this->form_validation->set_rules('carnet', 'carnet', 'integer|required');
 	}
 	
 	public function index(){
@@ -25,43 +35,49 @@ class Ventas_controller extends CI_Controller {
 	}
 
 	public function Abono(){
-		$data['facebook_id']=$this->input->post('fb');
-		$data['email']=$this->input->post('email');
-		$data['carnet_id']=$this->input->post('carnet');
-		$asistente=$this->Asistentes_model->getbByEmail_OR_FbId($data);
-		//El usuario no se encuentra en nuestra BD
-		if($asistente==null){
-			$asistente['nombre_real']=$this->input->post('nombre');
-			$asistente['apellido_real']=$this->input->post('apellido');
-			$asistente['no_control']=$this->input->post('noControl');
-			$asistente['tel']=$this->input->post('tel');
-			$asistente['carrera']=($this->input->post('carrera')!=null)?$this->input->post('carrera'):0;
-			$asistente['sexo']=$this->input->post('sexo');
-			$asistente['talla']=$this->input->post('talla');
-			$asistente['password']=$this->encryption->encrypt($this->random_str(10));
-			$asistente['email']=$this->input->post('email');
-			$result=$this->Asistentes_model->ingresar_Asistente($asistente);
-			if($result['affected_rows']==1){
-				$precio=$this->Carnets_model->get_carnets_by_id($this->input->post('carnet'))['precio'];
-				$abono['asistente_id']=$result['Id_Asistente'];
-				$abono['carnet_id']=$this->input->post('carnet');
-				$asistente['debia']=$precio;
-				$abono['debe']=$precio-$this->input->post('abono');
+		if($this->form_validation->run()){
+			$data['facebook_id']=$this->input->post('fb');
+			$data['email']=$this->input->post('email');
+			$data['carnet_id']=$this->input->post('carnet');
+			$asistente=$this->Asistentes_model->getbByEmail_OR_FbId($data);
+			//El usuario no se encuentra en nuestra BD
+			if($asistente==null){
+				$asistente['nombre_real']=$this->input->post('nombre');
+				$asistente['apellido_real']=$this->input->post('apellido');
+				$asistente['no_control']=$this->input->post('noControl');
+				$asistente['tel']=$this->input->post('tel');
+				$asistente['carrera']=($this->input->post('carrera')!=null)?$this->input->post('carrera'):0;
+				$asistente['sexo']=$this->input->post('sexo');
+				$asistente['talla']=$this->input->post('talla');
+				$asistente['password']=$this->encryption->encrypt($this->random_str(10));
+				$asistente['email']=$this->input->post('email');
+				$result=$this->Asistentes_model->ingresar_Asistente($asistente);
+				if($result['affected_rows']==1){
+					$precio=$this->Carnets_model->get_carnets_by_id($this->input->post('carnet'))['precio'];
+					$abono['asistente_id']=$result['Id_Asistente'];
+					$abono['carnet_id']=$this->input->post('carnet');
+					$asistente['debia']=$precio;
+					$abono['debe']=$precio-$this->input->post('abono');
+					$abono['estado']=($abono['debe']==0)?'PAGADO':'APARTADO';
+				}
+			}
+			else{
+				$abono['asistente_id']=$asistente['id'];
+				$abono['carnet_id']=$asistente['carnet_id'];
+				$abono['debe']=$asistente['debe']-$this->input->post('abono');
 				$abono['estado']=($abono['debe']==0)?'PAGADO':'APARTADO';
 			}
+			if($abono['estado']=='PAGADO' && ($this->Pagos_model->getPagados()['total']+$this->Asistentes_model->getPagados()['total'])<50){
+				$asistente['pro']=true;
+			}
+			$this->Asistentes_model->abono_asistente($abono);
+			$asistente['comprobante']=$abono;
+			$this->printComprobante($asistente);
+		}else{
+			echo '<script language="javascript">';
+			echo 'alert("Verifique los datos del asistente.")';
+			echo '</script>';
 		}
-		else{
-			$abono['asistente_id']=$asistente['id'];
-			$abono['carnet_id']=$asistente['carnet_id'];
-			$abono['debe']=$asistente['debe']-$this->input->post('abono');
-			$abono['estado']=($abono['debe']==0)?'PAGADO':'APARTADO';
-		}
-		if($abono['estado']=='PAGADO' && ($this->Pagos_model->getPagados()['total']+$this->Asistentes_model->getPagados()['total'])<50){
-			$asistente['pro']=true;
-		}
-		$this->Asistentes_model->abono_asistente($abono);
-		$asistente['comprobante']=$abono;
-		$this->printComprobante($asistente);
 	}
 
 	public function random_str($length, $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'){
@@ -93,7 +109,7 @@ class Ventas_controller extends CI_Controller {
 		}
 		$this->pdf->MultiCell(0,10,'Adeudo actual: $'.$asistente['comprobante']['debe']);
 		
-		$this->pdf->Output('comprobante_pago.pdf', 'I');
+		$this->pdf->Output('comprobante_'.$asistente['nombre_real'].'_'.$asistente['apellido_real'].'.pdf', 'I');
 	}
 
 }
