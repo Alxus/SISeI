@@ -32,12 +32,25 @@ class Conferencias_model extends CI_Model{
     {
         $this->db->where('id', $id);
         $query = $this->db->get('conferencia');
-        return $query->result_array();
+        return $query->row_array();
     }
     function update($id, $data)
     {
         $this->db->where('id', $id);
         return $this->db->update('conferencia', $data);
+    }
+
+
+    public function get_conferenciasPDF(){
+        $this->db->select('c.nombre as Conferencia,
+            CONCAT(p.nombres," ",p.apellidos) as Conferencista,
+            c.descripcion as Descripcion,
+            CONCAT(c.fecha," ",c.hora)as Fecha,
+            c.ubicacion as Ubicacion'
+        );
+        $this->db->from('conferencia as c');
+        $this->db->join('ponente as p','c.ponente_id=p.id');
+        return $this->db->get()->result_array();
     }
 }
 ?>

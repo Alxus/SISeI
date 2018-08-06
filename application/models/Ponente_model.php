@@ -46,12 +46,26 @@ class Ponente_model extends CI_Model{
     {
         $this->db->where('id', $id);
         $query = $this->db->get('ponente');
-        return $query->result_array();
+        return $query->row_array();
     }
     function update($id, $data)
     {
         $this->db->where('id', $id);
         return $this->db->update('ponente', $data);
+    }
+
+
+    public function get_ponentesPDF(){
+        $this->db->select('p.id as "No.",
+            CONCAT(p.nombres," ",p.apellidos) as Ponente,
+            p.descripcion as Descripcion,
+            t.nombre as Taller,
+            c.nombre as Conferencia'
+        );
+        $this->db->from('ponente as p');
+        $this->db->join('taller as t','t.ponente_id=p.id');
+        $this->db->join('conferencia as c','c.ponente_id=p.id','left');
+        return $this->db->get()->result_array();
     }
 }
 ?>

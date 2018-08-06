@@ -94,9 +94,9 @@ class Talleres_controller extends CI_Controller {
             $nivel = $this->input->post('nivel');
             $data['nivel'] = $nivel;
 
-            if(count($resultado) > 0)
+            if($resultado!=null)
             {
-                $data['taller'] = $resultado[0];
+                $data['taller'] = $resultado;
                 $data['title'] = 'Modificar Taller';
                 $this->load->view('backend/templates/header', $data);
                 $this->load->view('backend/templates/navbar');
@@ -178,6 +178,27 @@ class Talleres_controller extends CI_Controller {
 		$this->pdf->Ln();
 		$this->pdf->SetFont('Arial','',10);
 		$this->pdf->morepagestable($data['talleres'],5);
+		$this->pdf->Output('lista_talleres.pdf', 'I');
+	}
+
+	public function printlstA($id){
+		$data['asistentes']=$this->Talleres_model->get_asistentesPDF($id);
+		$taller = $this->Talleres_model->get_taller_by_id($id);
+		$header=array_keys($data['asistentes'][0]);
+		$this->pdf->SetFillColor(33 , 150 , 243);
+		$this->pdf->AliasNbPages();
+		$this->pdf->AddPage();
+		$this->pdf->SetFont('Arial','B',16);
+		$this->pdf->MultiCell(0,10,"Taller: ".$taller['nombre'],0,"C");
+		$this->pdf->MultiCell(0,10,'Lista de Asistentes',0,"C");
+		$this->pdf->SetFont('Arial','B',12);
+		$this->pdf->tablewidths = array(12, 25, 153);
+		for($i=0; $i<sizeof($header); $i++){
+			$this->pdf->Cell($this->pdf->tablewidths[$i],7,$header[$i],1,0,'C',true);
+		}
+		$this->pdf->Ln();
+		$this->pdf->SetFont('Arial','',12);
+		$this->pdf->tablaAsistentes($data['asistentes'],8,"C",true);
 		$this->pdf->Output('lista_talleres.pdf', 'I');
 	}
 

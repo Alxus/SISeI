@@ -71,7 +71,7 @@ class Asistentes_model extends CI_Model{
     }
 
     public function getPagados(){
-        $this->db->select('COUNT(id) as total')->from('asistente')->where('estado=PAGADO');
+        $this->db->select('COUNT(id) as total')->from('asistente_carnet')->where('estado="PAGADO"');
         return $this->db->get()->row_array();
     }
 
@@ -102,5 +102,19 @@ class Asistentes_model extends CI_Model{
 
     public function getAsistenteByNombre($data){
         return $this->db->get_where('asistente',$data)->row_array();
+    }
+
+    public function get_AsistentesPDF(){
+       $this->db->select('id as "No.",
+            ifnull(no_Control,"N/A") as "No. Control",
+            CONCAT(apellido_real," ",nombre_real) Nombre,
+            ifnull(carrera,"N/A") as Carrera,
+            sexo as Sexo,
+            talla as Talla,
+            pro as Pro'
+        );
+        $this->db->from('asistente');
+        $this->db->order_by('Nombre');
+        return $this->db->get()->result_array();
     }
 }
