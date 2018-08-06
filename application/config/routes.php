@@ -94,4 +94,11 @@ $route['admin/searchAsistenteByName']['POST']='Asistentes_controller/searchAsist
 //Listas
 $route['admin/panel/talleres/pdf']='Talleres_controller/printlst';
 $route['admin/panel/usrlst/pdf']='Admin_controller/printlst';
+$route['admin/panel/asistentes/pdf']='Asistentes_controller/printlst';
+$route['admin/panel/conferencias/pdf']='Conferencias_controller/printlst';
+$route['admin/panel/ponentes/pdf']='Ponentes_controller/printlst';
+$route['admin/panel/taller/pdf/(:num)']='Talleres_controller/printlstA/$1';
+
+
+
 

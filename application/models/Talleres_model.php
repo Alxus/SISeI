@@ -27,7 +27,7 @@ class Talleres_model extends CI_Model{
         $this->db->from('taller as t');
         $this->db->join('ponente as p','t.ponente_id=p.id');
         $this->db->where('t.id',$id);
-        return $this->db->get()->result_array()[0];
+        return $this->db->get()->row_array();
     }
 
     public function delete_taller($id)
@@ -40,7 +40,7 @@ class Talleres_model extends CI_Model{
     {
         $this->db->where('id', $id);
         $query = $this->db->get('taller');
-        return $query->result_array();
+        return $query->row_array();
     }
 
     public function get_talleresPDF(){
@@ -54,6 +54,20 @@ class Talleres_model extends CI_Model{
         );
         $this->db->from('taller as t');
         $this->db->join('ponente as p','t.ponente_id=p.id');
+        return $this->db->get()->result_array();
+    }
+
+
+     public function get_asistentesPDF($id){
+        $this->db->select('a.id as No,
+            ifnull(no_Control,"N/A") as "No. Control",
+            CONCAT(apellido_real," ",nombre_real) Nombre'
+        );
+        $this->db->from('asistente as a');
+        $this->db->join('asistente_taller as at','at.asistente_id=a.id');
+        $this->db->join('taller as t','t.id=at.taller_id');
+        $this->db->where('t.id='.$id);
+        $this->db->order_by('No');
         return $this->db->get()->result_array();
     }
 

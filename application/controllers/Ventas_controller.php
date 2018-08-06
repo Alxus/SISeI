@@ -90,25 +90,34 @@ class Ventas_controller extends CI_Controller {
 	}
 
 	public function printComprobante($asistente){
+		$data['cliente']=$asistente['nombre_real'].' '.$asistente['apellido_real'];
+		$data['vendedor']=$_SESSION['SISeI_User']['nombres']." ".$_SESSION['SISeI_User']['apellidos'];
+		$data['correo']=$asistente['email'];
+		$data['password']=$this->encryption->decrypt($asistente['password']);
+		$data['debe']=$asistente['debe'];
+		$data['actual']=$asistente['comprobante']['debe'];
 		$this->pdf->AliasNbPages();
-		$this->pdf->AddPage();
-		$this->pdf->SetFont('Arial','B',12);
-		$this->pdf->MultiCell(0,10,'Comprobante de pago');
+		$this->pdf->Recibo();
 		$this->pdf->SetFont('Arial','B',10);
-		$this->pdf->Ln();
+		$this->pdf->Ln(30);
 		$this->pdf->SetFont('Arial','',10);
-		$this->pdf->MultiCell(0,10,'Nombre: '.$asistente['nombre_real'].' '.$asistente['apellido_real']);
-		$this->pdf->MultiCell(0,10,'Correo: '.$asistente['email']);
-		$this->pdf->MultiCell(0,10,'Contraseña: '.$this->encryption->decrypt($asistente['password']));
-		$this->pdf->MultiCell(0,10,'Total Abono: $'.$this->input->post('abono'));
-		if(isset($asistente['debe'])){		
-			$this->pdf->MultiCell(0,10,'Adeudo anterior: $'.$asistente['debe']);
+		$this->pdf->MultiCell(0,10,'Nombre del cliente: '.$data['cliente']);
+		$this->pdf->MultiCell(0,10,'Nombre del vendedor: '.$data['vendedor']);
+		$this->pdf->MultiCell(0,10,'Correo: '.$data['correo']);
+		$this->pdf->MultiCell(0,10,'Contraseña: '.$data['password']);
+		if(isset($datos['debe'])){		
+			$this->pdf->MultiCell(0,10,'Adeudo anterior: $'.$data['debe']);
 		}
-		else{
-			$this->pdf->MultiCell(0,10,'Adeudo anterior: $'.$asistente['debia']);
-		}
-		$this->pdf->MultiCell(0,10,'Adeudo actual: $'.$asistente['comprobante']['debe']);
-		
+		$this->pdf->MultiCell(0,10,'Adeudo actual: $'.$data['actual']);
+		$datos = array();
+		$datos['data'][0]="Comprobante de pago por la compra de su carnet para la XII edicion de SISeI, macroevento organizado por el comité organizador del Simposio Internacional de Sistemas e Informática SISeI.\n\nNOTA: No perder este comprobante y seguir las instrucciones previamente mencionadas por el organizador encargado de su registro.\n";
+		$datos['data'][1]="";
+		$this->pdf->tablewidths = array(125, 60);
+		$this->pdf->tablaRecibo($datos,5);
+		$this->pdf->Image(base_url().'assets/img/logo_cosisei.png',150,65,32);
+		$this->pdf->SetFont('Arial','I',8);
+		$this->pdf->SetTextColor(78, 93, 114);
+		$this->pdf->Cell(170, 80,"Sello de COSISeI",0,0,"R",false);
 		$this->pdf->Output('comprobante_'.$asistente['nombre_real'].'_'.$asistente['apellido_real'].'.pdf', 'I');
 	}
 

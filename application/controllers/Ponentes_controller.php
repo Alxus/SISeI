@@ -7,6 +7,7 @@ class Ponentes_controller extends CI_Controller{
             redirect('admin');
         }
         $this->load->model('Ponente_model');
+        $this->load->library('Pdf');
         $this->form_validation->set_rules('nombres', 'Nombres', 'required');
         $this->form_validation->set_rules('apellidos', 'Apellidos', 'required');
         $this->form_validation->set_rules('tel', 'Tel', 'required');
@@ -66,9 +67,9 @@ class Ponentes_controller extends CI_Controller{
             $data['email']=$this->input->post('email');
             $data['linkedin']=$this->input->post('linkedin');
             $data['descripcion']=$this->input->post('descripcion');
-            if(count($resultado) > 0)
+            if($resultado!=null)
             {
-                $data['ponente'] = $resultado[0];
+                $data['ponente'] = $resultado;
                 $data['title'] = 'Modificar Ponente';
                 $this->load->view('backend/templates/header', $data);
                 $this->load->view('backend/templates/navbar');
@@ -106,8 +107,7 @@ class Ponentes_controller extends CI_Controller{
         public function details(){
              $id = $this->input->get('id');
             //$id = $this->input->post('id');
-            $resultado = $this->Ponente_model->get_ponente_by_id($id);
-            $data['ponente'] = $resultado[0];
+            $data['ponente'] = $this->Ponente_model->get_ponente_by_id($id);
             $data['taller'] = $this->Ponente_model->getnombretaller($id);
             $data['conferencia'] = $this->Ponente_model->getnombreconferencia($id);
             $data['title'] = 'Detalles del Ponente';
@@ -116,5 +116,28 @@ class Ponentes_controller extends CI_Controller{
                 $this->load->view('backend/info_ponente', $data);
                 $this->load->view('backend/templates/footer');
         }
+
+
+
+
+        public function printlst(){
+        $data['ponentes']=$this->Ponente_model->get_ponentesPDF();
+        $header=array_keys($data['ponentes'][0]);
+        $this->pdf->SetFillColor(33 , 150 , 243);
+        $this->pdf->AliasNbPages();
+        $this->pdf->AddPage();
+        $this->pdf->SetFont('Arial','B',12);
+        $this->pdf->MultiCell(0,10,'Lista de Ponentes');
+        $this->pdf->SetFont('Arial','B',10);
+        $this->pdf->tablewidths = array(10, 50, 50, 40, 40);
+        for($i=0; $i<sizeof($header); $i++){
+            $this->pdf->Cell($this->pdf->tablewidths[$i],7,$header[$i],1,0,'C',true);
+        }
+        $this->pdf->Ln();
+        $this->pdf->SetFont('Arial','',10);
+        $this->pdf->morepagestable($data['ponentes'],5);
+        $this->pdf->Output('lista_talleres.pdf', 'I');
+    }
+
     }
 ?>

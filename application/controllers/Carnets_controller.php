@@ -121,8 +121,7 @@ class Carnets_controller extends CI_Controller{
         public function details(){
              $id = $this->input->get('id');
             //$id = $this->input->post('id');
-            $resultado = $this->Carnets_model->get_carnets_by_id($id);
-            $data['carnet'] = $resultado[0];
+            $data['carnet'] = $this->Carnets_model->get_carnets_by_id($id);;
             $data['title'] = 'Detalles del Carnet';
                 $this->load->view('backend/templates/header', $data);
                 $this->load->view('backend/templates/navbar');
