@@ -19,6 +19,8 @@ class Conferencias_controller extends CI_Controller{
         $config['allowed_types'] = 'gif|jpg|png|jpeg|ico';
         $config['remove_spaces'] = TRUE;
         $this->upload->initialize($config);
+        date_default_timezone_set( 'America/Mazatlan' );
+        setlocale(LC_ALL , "es_CO.UTF-8");
     }
     public function index(){
         $data['title'] = 'Lista de Conferencias';

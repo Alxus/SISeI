@@ -94,7 +94,6 @@ class PDF extends FPDF {
       foreach($hue AS $col => $txt) {
         $this->page = $currpage;
         $this->SetXY($l,$h);
-        $this->MultiCell($this->tablewidths[$col],$lineheight,$txt,0,$align);
         if($strip){
           $this->SetFillColor(213 , 213 , 213);
           $this->MultiCell($this->tablewidths[$col],$lineheight,$txt,"T",$align,$k%2==0);
