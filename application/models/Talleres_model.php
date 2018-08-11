@@ -53,7 +53,9 @@ class Talleres_model extends CI_Model{
     }
 
     public function get_talleresPDF(){
-        $this->db->select('t.nombre as Taller,
+        $this->db->select('
+            t.id as "No.",
+            t.nombre as Taller,
             CONCAT(p.nombres," ",p.apellidos) as Tallerista,
             t.descripcion as Descripcion,
             t.requisitos as Requisitos,

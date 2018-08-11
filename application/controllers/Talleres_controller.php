@@ -170,7 +170,7 @@ class Talleres_controller extends CI_Controller {
 		$this->pdf->SetFont('Arial','B',12);
 		$this->pdf->MultiCell(0,10,'Lista de Talleres');
 		$this->pdf->SetFont('Arial','B',10);
-		$this->pdf->tablewidths = array(30, 30, 30, 30, 30, 20, 25);
+		$this->pdf->tablewidths = array(10, 30, 30, 30, 30, 30, 12, 25);
 		for($i=0; $i<sizeof($header); $i++){
 			$this->pdf->Cell($this->pdf->tablewidths[$i],7,$header[$i],1,0,'C',true);
 		}
@@ -180,7 +180,7 @@ class Talleres_controller extends CI_Controller {
 		}
 		$this->pdf->Ln();
 		$this->pdf->SetFont('Arial','',10);
-		$this->pdf->morepagestable($data['talleres'],5);
+		$this->pdf->morepagestable($data['talleres'],5,"C",false);
 		$this->pdf->Output('lista_talleres.pdf', 'I');
 	}
 
