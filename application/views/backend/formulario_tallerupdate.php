@@ -1,6 +1,15 @@
 <div class="container">
 	<h5 class="card-title center">Modificar Taller</h5>
 	<form class="row" id="talleres-form" method="POST" action=<?php echo site_url('admin/panel/talleres/update/');?> class="col s12" enctype="multipart/form-data">
+		<div class= "input-field col s12">
+              <input type="hidden" name="id" value="<?php echo $taller['id']; ?>" required="" aria-required="true">
+              <select name="ponente_id" value =1>
+                  <?php foreach ($Ponentes as $auxi):?> 
+                     <option value=<?php echo $auxi['id']; ?> <?php echo ($auxi['id']==$taller['ponente_id']) ? 'Selected' : ''; ?>><?php echo $auxi['nombres']." ".$auxi['apellidos']; ?></option>
+                  <?php endforeach;?>    
+            </select>
+            <label>Ponente</label>
+            </div>
 		<div class="input-field col s12">
 			<input id="nombre" type="text" name="nombre" value="<?php echo $taller['nombre']; ?>">
 			<label for="nombre">Nombre</label>

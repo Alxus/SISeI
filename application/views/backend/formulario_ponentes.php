@@ -29,8 +29,8 @@
 	              <label for="descripcion">Descripcion</label>
 	            </div>
 	           <div class="row">
-		         <div class="col s2 offset-s4"> <button href="#!" class=" modal-action modal-close waves-effect waves-green btn-small" input="submit"> Modificar</button> </div>
-		         <div class="col s2"> <a href="<?php echo site_url('admin/panel/ponentes');?>" class=" modal-action modal-close waves-effect waves-green btn-small" > Cancelar</a> </div>
+		         <div class="col s2 offset-s4"> <button href="#!" class="btn-flat red white-text" input="submit"> Modificar</button> </div>
+		         <div class="col s2"> <a href="<?php echo site_url('admin/panel/ponentes');?>" class="btn-flat red white-text" > Cancelar</a> </div>
 		       </div>
 	    </form>
 	</div>

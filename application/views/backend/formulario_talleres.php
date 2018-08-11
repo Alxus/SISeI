@@ -1,6 +1,15 @@
 	
 <h5 class="card-title center">Crear Taller</h5>
 <form class="row" id="talleres-form" method="POST" action=<?php echo site_url('admin/create_taller');?> class="col s12" enctype="multipart/form-data">
+	<div class= "input-field col s12">
+               <select name="ponente_id" required="" aria-required="true">
+                  <option value="" disabled selected>Seleccione</option>
+                  <?php foreach ($Ponentes as $auxi):?> 
+                     <option value=<?php echo $auxi['id']; ?>><?php echo $auxi['nombres']." ".$auxi['apellidos']; ?></option>
+                  <?php endforeach;?>    
+            </select>
+            <label>Ponente</label>
+            </div>
 	<div class="input-field col s12">
 		<input id="nombre" type="text" name="nombre">
 		<label for="nombre">Nombre</label>

@@ -30,6 +30,15 @@ class Talleres_model extends CI_Model{
         return $this->db->get()->row_array();
     }
 
+
+     public function getPonentes()
+    {
+        $this->db->order_by('id', 'asc');
+        $this->db->select('id, nombres, apellidos');
+        $query = $this->db->get('ponente');
+        return $query->result_array();
+    }
+    
     public function delete_taller($id)
     {
         $this->db->delete('taller', array('id' => $id));

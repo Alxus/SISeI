@@ -10,16 +10,19 @@ class Conferencias_model extends CI_Model{
    		 return $this->db->affected_rows()!=0;
    }
 
-	public function get($nombre = FALSE)
+	public function get()
     {
-        if ($nombre === FALSE)
-        {
-            $this->db->order_by('id', 'asc');
-            $query = $this->db->get('conferencia');
-            return $query->result_array();
-        }
+       $this->db->select('t.*,CONCAT(p.nombres," ",p.apellidos) as tallerista');
+        $this->db->from('conferencia as t');
+        $this->db->join('ponente as p','t.ponente_id=p.id');
+        return $this->db->get()->result_array();
+    }
+
+    public function getPonentes()
+    {
         $this->db->order_by('id', 'asc');
-        $query = $this->db->get_where('conferencia', array('nombre' => $nombre));
+        $this->db->select('id, nombres, apellidos');
+        $query = $this->db->get('ponente');
         return $query->result_array();
     }
 
@@ -30,9 +33,11 @@ class Conferencias_model extends CI_Model{
 
     function get_conferencia_by_id($id)
     {
-        $this->db->where('id', $id);
-        $query = $this->db->get('conferencia');
-        return $query->row_array();
+        $this->db->select('t.*,CONCAT(p.nombres," ",p.apellidos) as tallerista');
+        $this->db->from('conferencia as t');
+        $this->db->join('ponente as p','t.ponente_id=p.id');
+        $this->db->where('t.id',$id);
+        return $this->db->get()->row_array();
     }
     function update($id, $data)
     {

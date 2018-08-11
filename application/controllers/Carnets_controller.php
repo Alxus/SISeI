@@ -31,18 +31,20 @@ class Carnets_controller extends CI_Controller{
             $data['precio']=$this->input->post('precio');
             $data['limite']=$this->input->post('limite');
             $data['descripcion']=$this->input->post('descripcion');
-            if($this->upload->do_upload('btnimg')){
-                $data['imagen']=base_url().'assets/img/'.$this->upload->data('file_name');
-            }
             $data['tipo']=$this->input->post('tipo');
-            if($this->Carnets_model->add($data)){
-                 $data['error']="ALL_OK";//el usuario fue agregado a la db sin problemas
-              
+            if($this->upload->do_upload('btnimg')){
+                $data['imagen']=base_url().'assets/img/'.$this->upload->data('file_name');  
+                if($this->Carnets_model->add($data)){
+                     $data['error']="ALL_OK";//el usuario fue agregado a la db sin problemas
+                }    
+                else{
+                    $data['error']="NOT_CREATED";//ocurrio un error            
+                }
             }
             else{
-                $data['error']="NOT_CREATED";//ocurrio un error            
+                $this->index();
             }
-            $this->index();
+            
         }
         else{
             //La validacion no fue exitosa
@@ -82,7 +84,7 @@ class Carnets_controller extends CI_Controller{
             $data['imagen'] = $imagen;
             if(count($resultado) > 0)
             {
-                $data['carnet'] = $resultado[0];
+                $data['carnet'] = $resultado;
                 $data['title'] = 'Modificar Carnet';
                 $this->load->view('backend/templates/header', $data);
                 $this->load->view('backend/templates/navbar');
@@ -96,23 +98,24 @@ class Carnets_controller extends CI_Controller{
                 {
                     if($this->upload->do_upload('btnimg')){
                         $data['imagen']=base_url().'assets/img/'.$this->upload->data('file_name');
-                    }
-                    if($this->Carnets_model->update($id, $data)){
-                        $data['error']="ALL_OK";
-                        
-                        
-                    }
-                    else
-                    {
+                        if($this->Carnets_model->update($id, $data)){
+                            $data['error']="ALL_OK";
+                        }
+                        else          
+                        {
                         $data['error']="NOT_CREATED";//ocurrio un error
+                        }
+                    }
+                    else{
+                        $data['error']=$this->upload->display_errors(); 
                     }
                 }
                 else
                 {
                     $data['error']="BAD_POST";
-                    
+                        
                 }
-                $this->index();
+            $this->index();
 
             }
 
