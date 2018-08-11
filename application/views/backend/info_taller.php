@@ -12,6 +12,9 @@
 	<li><p>Calificacíón <span class="new badge blue" data-badge-caption=""><?=$taller['calificacion']?></span></p></li>
 	<li><p>Creado:<span class="right"><?=$taller['created_at']?></span></p></li>
 	<li><p>Ultima actualización:<span class="right"><?=$taller['updated_at']?></span></p></li>
+	<?if($_SESSION['SISeI_User']['tipo']<=2):?>
+	<li><td><a class="btn blue" target="_blank" href=<?=site_url('admin/panel/taller/pdf/'.$taller['id'])?>>Imprimir lista</a></td></li>
+	<?endif;?>
 	<li><td><a class="btn blue" href="<?php echo base_url();?>index.php/Talleres_controller/edit?id=<?php echo $taller['id'];?>"><i class="material-icons white-text">edit</i>Editar</a></td></li>
 	<li><td><a class="btn red eliminar" href=<?=site_url('admin/panel/talleres/borrar/'.$taller['id']);?>><i class="material-icons white-text">delete</i>Eliminar</a></td></li>
 </ul>
