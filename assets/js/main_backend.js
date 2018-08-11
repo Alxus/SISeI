@@ -20,13 +20,16 @@ var nm='<div id="searchByNombre" class="center">'+
 '</div>'+
 '</div>';
 var base_url=window.location.protocol + "//" + window.location.host + "/"+"SISeIXII/index.php/";
-
+$("#btnlog").change(function() {
+  readURL(this,'#log');
+});
 $("#btnicon").change(function() {
   readURL(this,'#icon');
 });
 $("#btnimg").change(function() {
   readURL(this,'#img');
-});    
+});
+
 //Funcion para que se vea una preview de la imagen a subir
 function readURL(input,target) {
   if (input.files && input.files[0]) {
@@ -37,7 +40,6 @@ function readURL(input,target) {
     reader.readAsDataURL(input.files[0]);
   }
 }
-
 
 //funciones para los forms con ajax
 $('#login-form').submit(function(event){

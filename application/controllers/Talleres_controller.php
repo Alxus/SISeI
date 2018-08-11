@@ -32,6 +32,7 @@ class Talleres_controller extends CI_Controller {
 	public function index(){
 		$data['title']='Talleres';
 		$data['talleres']=$this->Talleres_model->get_talleres();
+		$data['Ponentes'] = $this->Talleres_model->getPonentes();
 		$this->load->view('backend/templates/header',$data);
 		$this->load->view('backend/templates/navbar');
 		$this->load->view('backend/lista_talleres');
@@ -97,6 +98,7 @@ class Talleres_controller extends CI_Controller {
             if($resultado!=null)
             {
                 $data['taller'] = $resultado;
+                $data['Ponentes'] = $this->Talleres_model->getPonentes();
                 $data['title'] = 'Modificar Taller';
                 $this->load->view('backend/templates/header', $data);
                 $this->load->view('backend/templates/navbar');
@@ -136,8 +138,9 @@ class Talleres_controller extends CI_Controller {
      	  }
      }
 
-	public function delete($id)
+	public function delete()
         {
+        	$id = $this->input->get('id');
             $this->Talleres_model->delete_taller($id);
             $this->index();
             echo '<script language="javascript">';

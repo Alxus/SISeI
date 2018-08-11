@@ -1,6 +1,6 @@
 
 <div class="container">
-    <h4>Modificar Carnet</h4>
+    <h4 class="center-align">Modificar Carnet</h4>
    <form id="talleres-form" method="POST" action=<?php echo site_url('admin/update_carnet');?>  enctype="multipart/form-data">
             <div class="input-field col s12">
               <input type="hidden" name="id" value="<?php echo $carnet['id']; ?>" required="" aria-required="true">
@@ -21,9 +21,8 @@
             </div>
             <div class= "input-field col s12">
              <select name="tipo">
-              <option value="<?php echo $carnet['tipo']; ?>" disabled selected>Seleccione</option>
-              <option value=1>Normal</option>
-              <option value=2>Promocion</option>
+              <option value=1 <?php echo ($carnet['tipo']==1) ? 'Selected' : ''; ?>>Normal</option>
+              <option value=2 <?php echo ($carnet['tipo']==2) ? 'Selected' : ''; ?>>Promocion</option>
             </select>
             <label>Tipo de carnet</label>
             <div class="row">
@@ -38,9 +37,15 @@
               </div>
               <div class="col s5">
                 <img id="img" src="<?php echo $carnet['imagen']; ?>" class="responsive-img">
+            </div>
+            <div class="row">
+              <div class="col s2 offset-s4">
+                <button type="submit" class="btn-flat red white-text">Modificar</button>
               </div>
-             <div class="col s2 offset-s5"> <button href="#!" class=" modal-action modal-close waves-effect waves-green btn-small" input="submit"> Modificar</button> </div>
-          
-
+              <div class="col s2">    
+                <a href=<?php echo site_url('admin/panel/carnets');?> class="btn-flat red white-text">Cancelar</a>
+              </div>
+            </div>
+          </form>   
   </div>
 </div>

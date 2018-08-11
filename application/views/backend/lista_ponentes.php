@@ -62,11 +62,14 @@
             
            
   </div>
-  <div class="modal-footer">
-    <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-    <i class="material-icons right">send</i>
-  </button>
-    <a href="#!" class="modal-close waves-effect waves-green btn-small">Cerrar</a>
-    </form>
+  <div class="row">
+    <div class="col s2 offset-s4">
+      <button type="submit" class="btn">Crear<i class="material-icons right">send</i></button>
+     </div>
+    <div class="col s2">    
+      <a href="#!" class="btn modal-close">Cerrar</a>
+    </div>
   </div>
+</form>
+</div>
 </div>

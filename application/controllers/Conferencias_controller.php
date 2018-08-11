@@ -14,6 +14,7 @@ class Conferencias_controller extends CI_Controller{
         $this->form_validation->set_rules('hora', 'Hora', 'required');
         $this->form_validation->set_rules('imagen', 'Imagen', 'required'); 
         $this->form_validation->set_rules('icono', 'Icono', 'required'); 
+        $this->form_validation->set_rules('logo', 'Logo', 'required'); 
         $config['upload_path'] = './assets/img/';
         $config['allowed_types'] = 'gif|jpg|png|jpeg|ico';
         $config['remove_spaces'] = TRUE;
@@ -22,6 +23,7 @@ class Conferencias_controller extends CI_Controller{
     public function index(){
         $data['title'] = 'Lista de Conferencias';
         $data['Conferencias'] = $this->Conferencias_model->get();
+        $data['Ponentes'] = $this->Conferencias_model->getPonentes();
         $this->load->view('backend/templates/header',$data);
         $this->load->view('backend/templates/navbar');
         $this->load->view('backend/pagina_conferencias', $data);
@@ -31,23 +33,35 @@ class Conferencias_controller extends CI_Controller{
         if($this->form_validation->run()){//La validacion del formulario fue exitosa
             $data['ponente_id']=$this->input->post('ponente_id');
             $data['nombre']=$this->input->post('nombre');
+            $data['descripcion']=$this->input->post('descripcion');
+            $data['ubicacion']=$this->input->post('ubicacion');
             $data['fecha']=$this->input->post('fecha');
             $data['hora']=$this->input->post('hora');
             $data['calificacion']=0;
             if($this->upload->do_upload('btnimg')){
                 $data['imagen']=base_url().'assets/img/'.$this->upload->data('file_name');
+                if($this->upload->do_upload('btnicon')){
+                    $data['icono']=base_url().'assets/img/'.$this->upload->data('file_name');
+                    if($this->upload->do_upload('btnlog')){
+                        $data['logo']=base_url().'assets/img/'.$this->upload->data('file_name');
+                        if($this->Conferencias_model->add($data)){
+                             $data['error']="ALL_OK";//el usuario fue agregado a la db sin problemas
+                         }
+                         else{
+                            $data['error']="NOT_CREATED";//ocurrio un error            
+                        }
+                    }
+                    else{
+                        $data['error']=$this->upload->display_errors(); 
+                    }
+                }
+                else{
+                    $data['error']=$this->upload->display_errors(); 
+                }    
             }
-            if($this->upload->do_upload('btnimg')){
-                $data['icono']=base_url().'assets/img/'.$this->upload->data('file_name');
-            }
-            if($this->Conferencias_model->add($data)){
-                 $data['error']="ALL_OK";//el usuario fue agregado a la db sin problemas
-
-             }
-             else{
-                $data['error']="NOT_CREATED";//ocurrio un error            
-            }
-            
+            else{
+                $data['error']=$this->upload->display_errors(); 
+            }       
         }
         else{
             //La validacion no fue exitosa
@@ -67,7 +81,7 @@ class Conferencias_controller extends CI_Controller{
         $this->Conferencias_model->delete($id);
         $this->index();
         echo '<script language="javascript">';
-        echo 'alert("Se a borrado el carnet con exito")';
+        echo 'alert("Se a borrado la conferencia con exito")';
         echo '</script>';
     }
 
@@ -78,16 +92,17 @@ class Conferencias_controller extends CI_Controller{
         $data['ponente_id'] = $ponente_id;
         $nombre = $this->input->post('nombre');
         $data['nombre'] = $nombre;
+        $descripcion = $this->input->post('descripcion');
+        $data['descripcion'] = $descripcion;
+        $ubicacion = $this->input->post('ubicacion');
+        $data['ubicacion'] = $ubicacion;
         $fecha = $this->input->post('fecha');
         $data['fecha'] = $fecha;
         $hora = $this->input->post('hora');
         $data['hora'] = $hora;
-        $imagen = $this->input->post('imagen');
-        $data['imagen'] = $imagen;
-        $icono = $this->input->post('icono');
-        $data['icono'] = $icono; 
         if($resultado!=null){
             $data['conferencia'] = $resultado;
+            $data['Ponentes'] = $this->Conferencias_model->getPonentes();
             $data['title'] = 'Modificar Conferencia';
             $this->load->view('backend/templates/header', $data);
             $this->load->view('backend/templates/navbar');
@@ -99,17 +114,32 @@ class Conferencias_controller extends CI_Controller{
          if ($this->form_validation->run()){
             if($this->upload->do_upload('btnimg')){
                 $data['imagen']=base_url().'assets/img/'.$this->upload->data('file_name');
-            }
-            if($this->upload->do_upload('btnimg')){
-                $data['icono']=base_url().'assets/img/'.$this->upload->data('file_name');
-            }
-            if($this->Conferencias_model->update($id, $data)){
-                $data['error']="ALL_OK";
-            }
+            
+                if($this->upload->do_upload('btnicon')){
+                    $data['icono']=base_url().'assets/img/'.$this->upload->data('file_name');
+            
+                    if($this->upload->do_upload('btnlog')){
+                        $data['logo']=base_url().'assets/img/'.$this->upload->data('file_name');
+            
+                        if($this->Conferencias_model->update($id, $data)){
+                            $data['error']="ALL_OK";
+                        }
+                        else{
+                            $data['error']="NOT_CREATED";
+                        }
+                    }
+                    else{
+                        $data['error']=$this->upload->display_errors(); 
+                    }
+                }
+                else{
+                    $data['error']=$this->upload->display_errors(); 
+                } 
+            }   
             else{
-                $data['error']="NOT_CREATED";
-            }
-        }
+                $data['error']=$this->upload->display_errors(); 
+            }      
+        }     
         else{
            $data['error']="BAD_POST";
        }

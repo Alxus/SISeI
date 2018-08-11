@@ -32,7 +32,7 @@
         <td><?=$t['descripcion'];?></td>
         <td><?=$t['fecha'];?></td>
         <td><a class="btn-floating blue" href="<?php echo base_url();?>index.php/Talleres_controller/edit?id=<?php echo $t['id'];?>" ><i class="material-icons">edit</i></a></td>
-        <td><a class="btn-floating red eliminar" href=<?=site_url('admin/panel/talleres/borrar/'.$t['id']);?>><i class="material-icons">delete</i></a></td>
+        <td><a class="btn-floating red eliminar" href="<?php echo base_url();?>index.php/Talleres_controller/delete?id=<?php echo $t['id'];?>"><i class="material-icons">delete</i></a></td>
         <td><a class="btn-floating green "href=<?=site_url('admin/panel/talleres/info/'.$t['id']);?>><i class="material-icons">info_outline</i></a></td>
       </tr>
       <?php endforeach;?>
