@@ -5,9 +5,6 @@ class Admin_controller extends CI_Controller {
 	
 	public function __construct(){
 		parent::__construct();
-		if(!$this->authentication->check_user()){
-			redirect('admin');
-		}
 		//Cargamos los modelos que vamos a necesitar en el constructor
 		$this->load->model('Usuario_model');
 		//Reglas para validar formularios.
@@ -21,6 +18,10 @@ class Admin_controller extends CI_Controller {
 	}
 	
 	public function index(){
+		if(!$this->authentication->check_user()){
+      redirect(base_url());
+      return;
+    }
 		$data['title']='Panel';
 		//Pasamos esta variable como parametro al header para darle titulo a la pagina
 		$this->load->view('backend/templates/header',$data);
@@ -30,6 +31,10 @@ class Admin_controller extends CI_Controller {
 	}
 
 	public function vista_usuarios(){
+		if(!$this->authentication->check_user()){
+      redirect(base_url());
+      return;
+    }
 		if($_SESSION['SISeI_User']['tipo']>1){
 			redirect('admin');
 			return;

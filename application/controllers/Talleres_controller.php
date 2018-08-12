@@ -5,9 +5,6 @@ class Talleres_controller extends CI_Controller {
 	
 	public function __construct(){
 		parent::__construct();
-		if(!$this->authentication->check_user()){
-			redirect('admin');
-		}
 		//Cargamos los modelos que vamos a necesitar en el constructor
 		$this->load->model('Talleres_model');
 		$this->load->library('Pdf');
@@ -29,9 +26,14 @@ class Talleres_controller extends CI_Controller {
 		$this->upload->initialize($config);
 		date_default_timezone_set( 'America/Mazatlan' );
 		setlocale(LC_ALL , "es_CO.UTF-8");
+		$this->load->model('Comentarios_model');
 	}
 	
 	public function index(){
+		if(!$this->authentication->check_user()){
+      redirect(base_url());
+      return;
+    }
 		$data['title']='Talleres';
 		$data['talleres']=$this->Talleres_model->get_talleres();
 		$data['Ponentes'] = $this->Talleres_model->getPonentes();
@@ -155,7 +157,12 @@ class Talleres_controller extends CI_Controller {
 	}
 
 	public function info($id){
+		if(!$this->authentication->check_user()){
+      redirect(base_url());
+      return;
+    }
 		$data['taller']=$this->Talleres_model->get_taller($id);
+		$data['comentarios'] = $this->Comentarios_model->get_coments_taller($id);
 		$data['title']=$data['taller']['nombre'];
 		$this->load->view('backend/templates/header',$data);
 		$this->load->view('backend/templates/navbar');

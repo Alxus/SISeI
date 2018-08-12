@@ -36,3 +36,17 @@
 	<h4>Fecha y lugar</h4>
 	<p><?=$taller['fecha']." a las ".$taller['hora']." en ".$taller['lugar']?></p>
 </div>
+<div id="Coments">
+	<div class="row">
+		<ul class="collection with-header">
+			<li class="collection-header"><h4>Comentarios</h4></li>
+			<?foreach($comentarios as $c):?>
+			<li class="collection-item avatar">
+				<img src="http://www.sisei.com.mx/assets/images/defaultUser.jpg" alt="" class="circle">
+				<span class="title"><b><?=$c['autor']?></b></span>
+				<p><?=$c['contenido']?></p>
+			</li>
+			<?endforeach;?>
+		</ul>
+	</div>
+</div>
