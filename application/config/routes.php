@@ -77,6 +77,7 @@ $route['admin/update_carnet']='Carnets_controller/edit/$data';
 $route['admin/panel/asistentes']='Asistentes_controller'; 
 $route['admin/create_asistente']='Asistentes_controller/add/$data'; 
 $route['admin/asistente_details']='Asistentes_controller/details/$data';
+$route['api/get_asistente/(:num)']='Asistentes_controller/get_asistente_by_id/$1';
 /*$route['admin/update_carnet']='Asistentes_controller/edit/$data'; */
 
 $route['admin/panel/conferencia']='Conferencias_controller';
@@ -90,8 +91,10 @@ $route['admin/panel/ventas']='Ventas_controller';
 $route['admin/panel/ventas/Abono']['POST']='Ventas_controller/Abono/$data'; 
 $route['admin/searchAsistenteByNC']['POST']='Asistentes_controller/searchAsistenteByNc/$data'; 
 $route['admin/searchAsistenteByName']['POST']='Asistentes_controller/searchAsistenteByName/$data';
+$route['admin/panel/ventas/pdf']='Ventas_controller/printComprobante'; 
 //Comentarios
 $route['api/coment']['POST']='Comentarios_controller/create/$data'; 
+
 
 
 //Listas

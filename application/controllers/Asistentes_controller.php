@@ -117,6 +117,9 @@ public function searchAsistenteByName(){
  $asistente=$this->Asistentes_model->getAsistenteByNombre($data);
  echo json_encode($asistente);
 }
+public function get_asistente_by_id($id){
+  echo json_encode($this->Asistentes_model->get_asistente_by_id($id));
+}
 
 public function printlst(){
   if(!$this->authentication->check_user()){
@@ -149,10 +152,10 @@ public function printlst(){
      break;
    }
    switch ( $data['asistentes'][$i]['Pro']) {
-     case 0:
+     case 1:
      $data['asistentes'][$i]['Pro']="Sí";
      break;
-     case 1:
+     case 0:
      $data['asistentes'][$i]['Pro']="No";
      break;
    }
