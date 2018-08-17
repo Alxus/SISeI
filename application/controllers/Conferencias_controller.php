@@ -3,9 +3,6 @@ class Conferencias_controller extends CI_Controller{
     public function __construct()
     {
         parent::__construct();
-        if(!$this->authentication->check_user()){
-            redirect('admin');
-        }
         $this->load->model('Conferencias_model');
         $this->load->library('Pdf');
         $this->form_validation->set_rules('ponente_id', 'Ponente_Id', 'required');
@@ -19,8 +16,16 @@ class Conferencias_controller extends CI_Controller{
         $config['allowed_types'] = 'gif|jpg|png|jpeg|ico';
         $config['remove_spaces'] = TRUE;
         $this->upload->initialize($config);
+        date_default_timezone_set( 'America/Mazatlan' );
+        setlocale(LC_ALL , "es_CO.UTF-8");
+        $this->load->model('Comentarios_model');
+
     }
     public function index(){
+        if(!$this->authentication->check_user()){
+      redirect(base_url());
+      return;
+    }
         $data['title'] = 'Lista de Conferencias';
         $data['Conferencias'] = $this->Conferencias_model->get();
         $data['Ponentes'] = $this->Conferencias_model->getPonentes();
@@ -43,7 +48,7 @@ class Conferencias_controller extends CI_Controller{
                 if($this->upload->do_upload('btnicon')){
                     $data['icono']=base_url().'assets/img/'.$this->upload->data('file_name');
                     if($this->upload->do_upload('btnlog')){
-                        $data['logo']=base_url().'assets/img/'.$this->upload->data('file_name');
+                        $data['logo_empresa']=base_url().'assets/img/'.$this->upload->data('file_name');
                         if($this->Conferencias_model->add($data)){
                              $data['error']="ALL_OK";//el usuario fue agregado a la db sin problemas
                          }
@@ -119,7 +124,7 @@ class Conferencias_controller extends CI_Controller{
                     $data['icono']=base_url().'assets/img/'.$this->upload->data('file_name');
             
                     if($this->upload->do_upload('btnlog')){
-                        $data['logo']=base_url().'assets/img/'.$this->upload->data('file_name');
+                        $data['logo_empresa']=base_url().'assets/img/'.$this->upload->data('file_name');
             
                         if($this->Conferencias_model->update($id, $data)){
                             $data['error']="ALL_OK";
@@ -148,8 +153,13 @@ class Conferencias_controller extends CI_Controller{
 }
 
 public function details(){
+    if(!$this->authentication->check_user()){
+      redirect(base_url());
+      return;
+    }
    $id = $this->input->get('id');
    $data['conferencias'] = $this->Conferencias_model->get_conferencia_by_id($id);
+   $data['comentarios'] = $this->Comentarios_model->get_coments_conf($id);
    $data['title'] = 'Detalles de la Conferencia';
    $this->load->view('backend/templates/header', $data);
    $this->load->view('backend/templates/navbar');

@@ -16,7 +16,7 @@
               <label for="limite">Limite</label>
             </div>
             <div class="input-field col s12">
-              <input id="descripcion" type="text" name="descripcion" value="<?php echo $carnet['descripcion']; ?>" required="" aria-required="true">
+              <textarea id="descripcion" name="descripcion" class="materialize-textarea" required="" aria-required="true" ><?php echo $carnet['descripcion']; ?></textarea>
               <label for="descripcion">Descripcion</label>
             </div>
             <div class= "input-field col s12">

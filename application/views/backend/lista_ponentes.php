@@ -1,5 +1,8 @@
 <div class="row">
       <div class="col s2 offset-s5"><a class="waves-effect waves-light btn modal-trigger" href="#modal1">Nuevo Ponente</a></div>
+      <?if($_SESSION['SISeI_User']['tipo']<=2):?>
+  <a class="btn blue" target="_blank" href=<?=site_url('admin/panel/ponentes/pdf');?>>Imprimir lista</a>
+  <?endif;?>
    </div>
    <div class="container">
      <table class="responsive-table">
@@ -56,7 +59,7 @@
               <label for="linkedin">Linkedin</label>
             </div>
               <div class="input-field col s12">
-              <input id="descripcion" type="text" name="descripcion" class="validate" required="" aria-required="true">
+              <textarea id="descripcion" name="descripcion" class="materialize-textarea" required="" aria-required="true" ></textarea>
               <label for="descripcion">Descripcion</label>
             </div>
             
