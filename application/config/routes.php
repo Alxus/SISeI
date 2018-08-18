@@ -64,7 +64,6 @@ $route['pago']='Pagos_controller';
 $route['admin/panel/talleres']='Talleres_controller';
 $route['admin/create_taller']='Talleres_controller/create_taller/$data';
 $route['admin/panel/talleres/info/(:num)']='Talleres_controller/info/$1';
-$route['api/checkuser']['POST']='Asistentes_controller/checkuser/$data';
 
 $route['admin/panel/ponentes']='Ponentes_controller'; 
 $route['admin/create_ponente']='Ponentes_controller/add/$data'; 
@@ -90,8 +89,9 @@ $route['admin/panel/ventas']='Ventas_controller';
 $route['admin/panel/ventas/Abono']['POST']='Ventas_controller/Abono/$data'; 
 $route['admin/searchAsistenteByNC']['POST']='Asistentes_controller/searchAsistenteByNc/$data'; 
 $route['admin/searchAsistenteByName']['POST']='Asistentes_controller/searchAsistenteByName/$data';
+$route['admin/panel/ventas/pdf']='Ventas_controller/printComprobante'; 
 //Comentarios
-$route['api/coment']['POST']='Comentarios_controller/create/$data'; 
+
 
 
 //Listas
@@ -103,5 +103,14 @@ $route['admin/panel/ponentes/pdf']='Ponentes_controller/printlst';
 $route['admin/panel/taller/pdf/(:num)']='Talleres_controller/printlstA/$1';
 
 
+//RUTAS API
+$route['api/checkuser']['POST']='Asistentes_controller/checkuser/$data';
+
+$route['api/get_asistente/(:num)']='Asistentes_controller/get_asistente_by_id/$1';
+
+$route['api/coment']['POST']='Comentarios_controller/create/$data'; 
+
+$route['api/get_conferencias']='Conferencias_controller/get_conferencias';
+$route['api/get_talleres']='Talleres_controller/get_talleres';
 
 

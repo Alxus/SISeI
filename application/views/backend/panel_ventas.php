@@ -2,30 +2,32 @@
 	<div class="col s12 m7 l8 hide-on-small-only">
 		<div class="card">
 			<div class="card-content">
-				<table>
+				<table id="tablaAsist" class="centered">
 					<thead>
 						<tr>
 							<th>No. Control</th>
 							<th>Nombre</th>
-							<th>Apellido</th>
 							<th>Carnet</th>
 							<th>Estado</th>
 							<th>Debe</th>
+							<th></th>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody id="listAsist">
 						<?foreach($Asistentes as $a):?>
 						<tr>
 							<td><?=$a['no_control']!=null?$a['no_control']:'N/A';?></td>
-							<td><?=$a['nombre_real'];?></td>
-							<td><?=$a['apellido_real'];?></td>
+							<td><?=$a['nombre_real'].' '.$a['apellido_real']?></td>
 							<td><?=$a['carnet']!=null?$a['carnet']:'N/A';?></td>
 							<td><?=$a['estado']!=null?$a['estado']:'N/A';?></td>
 							<td><?=$a['debe']!=null?'$ '.$a['debe']:'$ 0';?></td>
+							<td><a id="<?=$a['id']?>" class="btn waves-effect btn-flat green btnCobrar white-text">Seleccionar</a></td>
 						</tr>
 						<?endforeach;?>
 					</tbody>
 				</table>
+			</div>
+			<div id="return" class="card-action">
 			</div>
 		</div>
 	</div>
@@ -91,24 +93,32 @@
 							<label for="noControl">No. Control</label>
 						</div>
 						<div class="input-field col s6">
-							<select name="carrera">
+							<select name="carrera" class="browser-default">
 								<option value="" disabled selected>Seleccione</option>
 								<option value="1">Sistemas</option>
-								<option value="2">Mecatronica</option>
-								<option value="3">TyCs</option>
+								<option value="2">TICs</option>
+								<option value="3">Electrónica</option>
+								<option value="4">Mecatrónica</option>
+								<option value="5">Eléctrica</option>
+								<option value="6">Mecánica</option>
+								<option value="7">Ambiental</option>
+								<option value="8">Bioquímica</option>
+								<option value="9">Renovables</option>
+								<option value="10">Gestíon</option>
+								<option value="11">Industrial</option>
 							</select>
-							<label>Carrera</label>
+							<label class="active">Carrera</label>
 						</div>
 					</div>
 					<div class="row">
 						<div class="input-field col s6">
-							<select name="carnet">
+							<select id="carnet" class="browser-default" name="carnet">
 								<option value="" disabled selected>Seleccione</option>
 								<?php foreach ($Carnets as $c): ?>
 									<option value=<?=$c['id'];?>><?=$c['nombre']?></option>
 								<?php endforeach ?>
 							</select>
-							<label>Carnet</label>
+							<label class="active">Carnet</label>
 						</div>
 						<div class="input-field col s6">
 							<input id="abono" type="text" name="abono">
@@ -117,15 +127,15 @@
 					</div>
 					<div class="row">
 						<div class="input-field col s6">
-							<select name="sexo">
+							<select id="sexo" class="browser-default" name="sexo">
 								<option value="" disabled selected>Seleccione</option>
 								<option value="0">Hombre</option>
 								<option value="1">Mujer</option>
 							</select>
-							<label>Sexo</label>
+							<label class="active">Sexo</label>
 						</div>
 						<div class="input-field col s6">
-							<select name="talla">
+							<select id="talla" class="browser-default" name="talla">
 								<option value="" disabled selected>Seleccione</option>
 								<option value="1">Extra Chica</option>
 								<option value="2">Chica</option>
@@ -133,7 +143,7 @@
 								<option value="4">Grande</option>
 								<option value="5">Extra Grande</option>
 							</select>
-							<label>Talla</label>
+							<label class="active">Talla</label>
 						</div>
 					</div>
 					<div class="card-action">

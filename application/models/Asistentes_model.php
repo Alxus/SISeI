@@ -48,12 +48,19 @@ class Asistentes_model extends CI_Model{
    }
 
     public function get_asistente_by_id($id){
-        $where['id']=$id;
-        return $this->db->get_where('asistente', $where)->row_array();
+        $this->db->select('a.*, ac.debe, ac.carnet_id, ac.estado, c.nombre as nc');
+        $this->db->from('asistente as a');
+        $this->db->join('asistente_carnet as ac','a.id=ac.asistente_id',"left");
+        $this->db->join('carnet as c','c.id=ac.carnet_id',"left");
+        $this->db->where('a.id=',$id);
+        return $this->db->get()->row_array();
     }
-    
+    public function pro($data){
+        return $this->db->where('id',$data['id'])->update('asistente',array('pro'=>$data['pro']));
+    }
+
     public function get_Asistentes_ventas(){
-        $this->db->select('a.*, ac.*,c.nombre as carnet');
+        $this->db->select('a.*, ac.debe, ac.carnet_id, ac.estado,c.nombre as carnet');
         $this->db->from('asistente as a');
         $this->db->join('asistente_carnet as ac','a.id=ac.asistente_id','left');
         $this->db->join('carnet as c','c.id=ac.carnet_id','left');
@@ -77,7 +84,7 @@ class Asistentes_model extends CI_Model{
 
     public function getbByEmail_OR_FbId($data){
         if($data['facebook_id']!=null){
-            $this->db->select('a.*, ac.*, c.nombre as nc');
+            $this->db->select('a.*, ac.debe, ac.carnet_id, ac.estado, c.nombre as nc');
             $this->db->from('asistente as a');
             $this->db->join('asistente_carnet as ac','a.id=ac.asistente_id');
             $this->db->join('carnet as c','c.id=ac.carnet_id');
@@ -85,7 +92,7 @@ class Asistentes_model extends CI_Model{
             return $this->db->get()->row_array();        
         }
         if($data['email']!=null){
-            $this->db->select('a.*, ac.*, c.nombre as nc');
+            $this->db->select('a.*, ac.debe, ac.carnet_id, ac.estado, c.nombre as nc');
             $this->db->from('asistente as a');
             $this->db->join('asistente_carnet as ac','a.id=ac.asistente_id');
             $this->db->join('carnet as c','c.id=ac.carnet_id');
@@ -97,11 +104,21 @@ class Asistentes_model extends CI_Model{
 
     public function getAsistenteByNC($data){
         $where['no_control']=$data;
-        return $this->db->get_where('asistente',$where)->row_array();
+        $this->db->select('a.*, ac.debe, ac.carnet_id, ac.estado, c.nombre as nc');
+        $this->db->from('asistente as a');
+        $this->db->join('asistente_carnet as ac','a.id=ac.asistente_id',"left");
+        $this->db->join('carnet as c','c.id=ac.carnet_id',"left");
+        $this->db->where($where);
+        return $this->db->get()->result_array();
     }
 
     public function getAsistenteByNombre($data){
-        return $this->db->get_where('asistente',$data)->row_array();
+        $this->db->select('a.*, ac.debe, ac.carnet_id, ac.estado, c.nombre as nc');
+            $this->db->from('asistente as a');
+            $this->db->join('asistente_carnet as ac','a.id=ac.asistente_id',"left");
+            $this->db->join('carnet as c','c.id=ac.carnet_id',"left");
+            $this->db->where($data);
+        return $this->db->get()->result_array();
     }
 
     public function get_AsistentesPDF(){

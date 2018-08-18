@@ -63,7 +63,7 @@ class Ponente_model extends CI_Model{
             c.nombre as Conferencia'
         );
         $this->db->from('ponente as p');
-        $this->db->join('taller as t','t.ponente_id=p.id');
+        $this->db->join('taller as t','t.ponente_id=p.id','left');
         $this->db->join('conferencia as c','c.ponente_id=p.id','left');
         return $this->db->get()->result_array();
     }

@@ -24,12 +24,11 @@
     		<nav>
     			<div class="nav-wrapper grey darken-4">
     				<div style="padding: 5px"></div>
-    				<a class="brand-logo center"><a href="#modalRegistro" class="col s4 offset-s4 waves-effect waves-light btn center modal-trigger">Registrar Asistente</a></a>
-    				<?if($_SESSION['SISeI_User']['tipo']<=2):?>
-    				<a class="btn blue" target="_blank" href=<?=site_url('admin/panel/asistentes/pdf');?>>Imprimir lista</a>
+    		
+    				<ul id="nav-mobile" class="center">
+    							<?if($_SESSION['SISeI_User']['tipo']<=2):?>
+    				<a class="brand-logo center"><a class="btn center" target="_blank" href=<?=site_url('admin/panel/asistentes/pdf');?>>Imprimir lista</a></a>
     				<?endif;?>
-    				<ul id="nav-mobile" class="left hide-on-med-and-down">
-    					
     				</ul>
     			</div>
     		</nav>
@@ -77,7 +76,7 @@
 
 
 
-		<!-- ________________________Modal Registro Structure_________________________ -->
+		<!-- ________________________Modal Registro Structure_________________________
 		<div id="modalRegistro" class="modal ">
 			<div class="modal-content">
 				<div class="row">
@@ -158,6 +157,6 @@
 					</div>
 				</form>
 			</div>
-			<!-- _________________________________________________________________________ -->
+			 _________________________________________________________________________ -->
 		</div>
 		

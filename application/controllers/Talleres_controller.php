@@ -214,4 +214,10 @@ class Talleres_controller extends CI_Controller {
 		$this->pdf->Output('lista_talleres.pdf', 'I');
 	}
 
+	 public function get_talleres(){
+        header('Content-type: application/json');
+        header('Access-Control-Allow-Origin: *');
+        echo json_encode($this->Talleres_model->get_talleres());
+    }
+
 }

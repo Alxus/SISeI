@@ -29,7 +29,7 @@ $("#btnicon").change(function() {
 $("#btnimg").change(function() {
   readURL(this,'#img');
 });
-
+var listaorig = $('#listAsist');
 //Funcion para que se vea una preview de la imagen a subir
 function readURL(input,target) {
   if (input.files && input.files[0]) {
@@ -130,17 +130,11 @@ $('#formSearch').submit(function(event){
       encode          : false
     }).done(function (json){
       if(json!=null){
-        $('input[name=fb]').val(json.id_facebook).prop( "readonly", true );
-        $('input[name=nombre]').val(json.nombre_real).prop( "readonly", true );
-        $('input[name=apellido]').val(json.apellido_real).prop( "readonly", true );
-        $('input[name=email]').val(json.email).prop( "readonly", true );
-        $('input[name=tel]').val(json.tel).prop( "readonly", true );
-        $('input[name=noControl]').val(json.noControl).prop( "readonly", true );
-        $('select[name=carrera]').val(json.carrera).prop( "readonly", true );
-        //$('input[name=carnet]').val(json.carnet);
-        $('select[name=sexo]').val(json.sexo).prop( "readonly", true );
-        $('select[name=talla]').val(json.talla).prop( "readonly", true );
-        $('label').addClass('active');
+        if(JSON.stringify(json)!='[]'){
+        results(json);
+      }else{
+        alert('No se encontró el asistente');
+      }
       }else{
         alert('No se encontró el asistente');
       }
@@ -160,17 +154,90 @@ $('#formSearch').submit(function(event){
       encode          : false
     }).done(function (json){
       if(json!=null){
-        console.log(json);
+        console.log($.parseJSON('[]'));
+        if(json!=$.parseJSON
+          ('[]')){
+        results(json);
       }else{
         alert('No se encontró el asistente');
       }
-    }).fail(function(xhr){
-      console.log(xhr);
-      alert("Error en el servidor");
-    });
-  }
+     }else{
+      alert('No se encontró el asistente');
+    }
+  }).fail(function(xhr){
+    console.log(xhr);
+    alert("Error en el servidor");
+  });
+}
 });
 
+$('body').on('click', '.btnCobrar', function (){
+    call($(this).attr('id'));
+});
+
+$('body').on('click', '#btnReturn', function (){
+    regresar();
+});
+
+function call(id){
+   $.get( base_url+"api/get_asistente/"+id,function( json ) {
+    if(json.estado=="PAGADO"){
+      alert('Este asistente ya pago');
+      return;
+    }
+    setear(json);
+    $('input[name=dato]').val('');
+    $('input[name=nombres]').val('');
+    $('input[name=apellidos]').val('');
+    $('#lisresult').remove();
+    $('#tablaAsist').append(listaorig);
+    $('.collapsible').collapsible("close");
+  },"json");
+}
+
+function regresar(){
+  $('input[name=dato]').val('');
+  $('input[name=nombres]').val('');
+  $('input[name=apellidos]').val('');
+  $('#lisresult').remove();
+  $('#tablaAsist').append(listaorig);
+  $('#btnReturn').remove();
+  $('.collapsible').collapsible("close");
+}
+
+function setear(json){
+ $('input[name=fb]').val(json.facebook_id).prop( "readonly", true );
+ $('input[name=nombre]').val(json.nombre_real).prop( "readonly", true );
+ $('input[name=apellido]').val(json.apellido_real).prop( "readonly", true );
+ $('input[name=email]').val(json.email).prop( "readonly", true );
+ $('input[name=tel]').val(json.tel).prop( "readonly", true );
+ $('input[name=noControl]').val(json.no_control).prop( "readonly", true );
+ $('select[name=carrera]').val(json.carrera).prop( "readonly", true );
+ $('select[name=carnet]').val(json.carnet_id);
+ $('select[name=sexo]').val(json.sexo).prop( "readonly", true );
+ $('select[name=talla]').val(json.talla).prop( "readonly", true );
+ $('label').addClass('active');      
+}
+
+function results(json){
+  $('#listAsist').remove();
+  $('#lisresult').remove();
+  $('#btnReturn').remove();
+  var newList = '<tbody id="lisresult">';
+  for (var i = 0; i < json.length; i++) {
+    newList+='<tr>'+
+  '<td>'+(json[i].no_control!=null?json[i].no_control:'N/A')+'</td>'+
+  '<td>'+json[i].nombre_real+' '+json[i].apellido_real+'</td>'+
+  '<td>'+(json[i].carnet!=null?json[i].carnet:'N/A')+'</td>'+
+  '<td>'+(json[i].estado!=null?json[i].estado:'N/A')+'</td>'+
+  '<td>'+(json[i].debe!=null?'$ '+json[i].debe:'$ 0')+'</td>'+
+  '<td><a id="'+json[i].id+'" class="btn waves-effect btn-flat green btnCobrar white-text">Seleccionar</a></td>'+
+  '</tr>';
+  }
+  newList+='</tbody>';
+  $('#tablaAsist').append(newList);
+  $('#return').append('<a id="btnReturn" class="btn btn-flat red white-text">Regresar</a>');
+}
 /*$('.eliminar').on('click',function(){
   if(confirm('Desea eliminar esta madre?')){
     window.location.href="talleres";

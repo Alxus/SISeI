@@ -23,7 +23,7 @@
   <tbody>
     <?php foreach ($Conferencias as $aux):?>
       <tr>
-        <td><?php echo $aux['tallerista']; ?></td>
+        <td><?php echo $aux['ponente']; ?></td>
         <td><?php echo $aux['nombre']; ?></td>
         <td><?php echo $aux['fecha']; ?></td>
         <td><?php echo $aux['hora']; ?></td>
