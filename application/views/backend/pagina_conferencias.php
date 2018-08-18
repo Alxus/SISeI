@@ -63,7 +63,7 @@
     <label for="nombre">Nombre</label>
   </div>
   <div class="input-field col s12">
-    <input id="descripcion" type="text" name="descripcion" class="validate" required="" aria-required="true">
+    <textarea id="descripcion" name="descripcion" class="materialize-textarea" required="" aria-required="true" ></textarea>
     <label for="descripcion">Descripcion</label>
   </div>
   <div class="input-field col s12">

@@ -48,7 +48,7 @@ class Conferencias_controller extends CI_Controller{
                 if($this->upload->do_upload('btnicon')){
                     $data['icono']=base_url().'assets/img/'.$this->upload->data('file_name');
                     if($this->upload->do_upload('btnlog')){
-                        $data['logo']=base_url().'assets/img/'.$this->upload->data('file_name');
+                        $data['logo_empresa']=base_url().'assets/img/'.$this->upload->data('file_name');
                         if($this->Conferencias_model->add($data)){
                              $data['error']="ALL_OK";//el usuario fue agregado a la db sin problemas
                          }
@@ -124,7 +124,7 @@ class Conferencias_controller extends CI_Controller{
                     $data['icono']=base_url().'assets/img/'.$this->upload->data('file_name');
             
                     if($this->upload->do_upload('btnlog')){
-                        $data['logo']=base_url().'assets/img/'.$this->upload->data('file_name');
+                        $data['logo_empresa']=base_url().'assets/img/'.$this->upload->data('file_name');
             
                         if($this->Conferencias_model->update($id, $data)){
                             $data['error']="ALL_OK";
