@@ -12,9 +12,9 @@ class Conferencias_model extends CI_Model{
 
 	public function get()
     {
-       $this->db->select('t.*,CONCAT(p.nombres," ",p.apellidos) as tallerista');
-        $this->db->from('conferencia as t');
-        $this->db->join('ponente as p','t.ponente_id=p.id');
+       $this->db->select('c.*,CONCAT(p.nombres," ",p.apellidos) as ponente,  CONCAT(c.fecha," ",c.hora) as Fecha');
+        $this->db->from('conferencia as c');
+        $this->db->join('ponente as p','c.ponente_id=p.id');
         return $this->db->get()->result_array();
     }
 
@@ -33,10 +33,10 @@ class Conferencias_model extends CI_Model{
 
     function get_conferencia_by_id($id)
     {
-        $this->db->select('t.*,CONCAT(p.nombres," ",p.apellidos) as tallerista');
-        $this->db->from('conferencia as t');
-        $this->db->join('ponente as p','t.ponente_id=p.id');
-        $this->db->where('t.id',$id);
+        $this->db->select('c.*,CONCAT(p.nombres," ",p.apellidos) as ponente,  CONCAT(c.fecha," ",c.hora) as Fecha');
+        $this->db->from('conferencia as c');
+        $this->db->join('ponente as p','c.ponente_id=p.id');
+        $this->db->where('c.id',$id);
         return $this->db->get()->row_array();
     }
     function update($id, $data)
