@@ -11,6 +11,12 @@ class Ponentes_controller extends CI_Controller{
         $this->form_validation->set_rules('email', 'Email', 'required');
         $this->form_validation->set_rules('linkedin', 'Linkedin', 'required');
         $this->form_validation->set_rules('descripcion', 'Descripcion', 'required');
+        $this->form_validation->set_rules('imagen', 'Imagen', 'required');
+        //reglas para subir imagenes
+        $config['upload_path'] = './assets/img/';
+        $config['allowed_types'] = 'gif|jpg|png|jpeg|ico';
+        $config['remove_spaces'] = TRUE;
+        $this->upload->initialize($config);
     }
     public function index(){
         if(!$this->authentication->check_user()){
@@ -142,6 +148,12 @@ public function edit(){
         $this->pdf->SetFont('Arial','',10);
         $this->pdf->morepagestable($data['ponentes'],5);
         $this->pdf->Output('lista_talleres.pdf', 'I');
+    }
+
+    public function get_ponentes(){
+      header('Content-type: application/json');
+      header('Access-Control-Allow-Origin: *');
+      echo json_encode($this->Ponente_model->get_ponentes());
     }
 
 }

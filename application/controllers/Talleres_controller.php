@@ -76,7 +76,7 @@ class Talleres_controller extends CI_Controller {
 		    else{
 		      $data['error']="BAD_POST";
 		    }
-		    echo json_encode($data);
+		    redirect(base_url()."admin/panel/talleres");
 	}
 
 	public function edit(){
@@ -101,13 +101,7 @@ class Talleres_controller extends CI_Controller {
 
             if($resultado!=null)
             {
-                $data['taller'] = $resultado;
-                $data['Ponentes'] = $this->Talleres_model->getPonentes();
-                $data['title'] = 'Modificar Taller';
-                $this->load->view('backend/templates/header', $data);
-                $this->load->view('backend/templates/navbar');
-                $this->load->view('backend/formulario_tallerupdate.php', $data);
-                $this->load->view('backend/templates/footer');
+                redirect(base_url()."admin/panel/talleres");
             }
             else
             {

@@ -112,5 +112,6 @@ $route['api/coment']['POST']='Comentarios_controller/create/$data';
 
 $route['api/get_conferencias']='Conferencias_controller/get_conferencias';
 $route['api/get_talleres']='Talleres_controller/get_talleres';
+$route['api/get_ponentes']='Ponentes_controller/get_ponentes';
 
 

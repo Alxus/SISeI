@@ -67,5 +67,19 @@ class Ponente_model extends CI_Model{
         $this->db->join('conferencia as c','c.ponente_id=p.id','left');
         return $this->db->get()->result_array();
     }
+
+
+     public function get_ponentes(){
+        $this->db->select('p.*,
+            CONCAT(p.nombres," ",p.apellidos) as nombre,
+            p.descripcion as descripcion,
+            t.nombre as taller,
+            c.nombre as conferencia'
+        );
+        $this->db->from('ponente as p');
+        $this->db->join('taller as t','t.ponente_id=p.id','left');
+        $this->db->join('conferencia as c','c.ponente_id=p.id','left');
+        return $this->db->get()->result_array();
+    }
 }
 ?>
