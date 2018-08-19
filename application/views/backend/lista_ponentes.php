@@ -62,6 +62,20 @@
               <textarea id="descripcion" name="descripcion" class="materialize-textarea" required="" aria-required="true" ></textarea>
               <label for="descripcion">Descripcion</label>
             </div>
+            <div class="row">
+              <div class="file-field input-field col s7">
+                <div class="btn">
+                  <span>Imagen</span>
+                  <input id="btnimg" name="btnimg" type="file">
+                </div>
+                <div class="file-path-wrapper hide-on-med-and-down">
+                  <input id="imagen" name="imagen" class="file-path validate" type="text" class="validate" required="" aria-required="true">
+                </div>
+              </div>
+              <div class="col s5">
+                <img id="img" src="" class="responsive-img">
+              </div>
+            </div>        
             
            
   </div>

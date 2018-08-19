@@ -19,7 +19,6 @@ class Conferencias_controller extends CI_Controller{
         date_default_timezone_set( 'America/Mazatlan' );
         setlocale(LC_ALL , "es_CO.UTF-8");
         $this->load->model('Comentarios_model');
-
     }
     public function index(){
         if(!$this->authentication->check_user()){
@@ -76,7 +75,6 @@ class Conferencias_controller extends CI_Controller{
 
         //JSON de respuesta
         $this->index();
-        echo json_encode($data);
 
     }
     public function delete()
@@ -187,6 +185,13 @@ public function details(){
         $this->pdf->SetFont('Arial','',10);
         $this->pdf->morepagestable($data['conferencias'],5);
         $this->pdf->Output('lista_talleres.pdf', 'I');
+    }
+
+
+    public function get_conferencias(){
+        header('Content-type: application/json');
+        header('Access-Control-Allow-Origin: *');
+        echo json_encode($this->Conferencias_model->get());
     }
 }
 ?>
