@@ -75,7 +75,6 @@ class Conferencias_controller extends CI_Controller{
 
         //JSON de respuesta
         $this->index();
-        echo json_encode($data);
 
     }
     public function delete()

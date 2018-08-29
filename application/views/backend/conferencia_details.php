@@ -17,7 +17,7 @@
       </div> 
     </div>
     <div class="container">
-      <h4>Ponente: <?php echo $conferencias['tallerista']; ?> </h4>
+      <h4>Ponente: <?php echo $conferencias['ponente']; ?> </h4>
       <h4>Nombre: <?php echo $conferencias['nombre']; ?> </h4>
       <h4>Fecha: <?php echo $conferencias['fecha']; ?> </h4>
       <h4>Hora: <?php echo $conferencias['hora']; ?> </h4>

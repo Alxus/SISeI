@@ -43,7 +43,7 @@ class Carnets_controller extends CI_Controller{
                 }
             }
             else{
-                $this->index();
+                $data['error']=$this->upload->display_errors(); 
             }
             
         }
@@ -53,7 +53,7 @@ class Carnets_controller extends CI_Controller{
             
         }
         //JSON de respuesta
-        
+        $this->index();
         
     }
     public function delete()

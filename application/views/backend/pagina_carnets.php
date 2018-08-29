@@ -81,18 +81,6 @@
               <div class="col s5">
                 <img id="img" src="" class="responsive-img">
               </div>
-              <div class="file-field input-field col s7">
-                <div class="btn">
-                  <span>Imagen</span>
-                  <input id="btnc" name="btnc" type="file">
-                </div>
-                <div class="file-path-wrapper hide-on-med-and-down">
-                  <input id="ca" name="ca" class="file-path validate" type="text" class="validate" required="" aria-required="true">
-                </div>
-              </div>
-              <div class="col s5">
-                <img id="c" src="" class="responsive-img">
-              </div>
             </div>          
   </div>
    <div class="row">

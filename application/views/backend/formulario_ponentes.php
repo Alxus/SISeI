@@ -28,10 +28,25 @@
 	              <textarea id="descripcion" name="descripcion" class="materialize-textarea" required="" aria-required="true" ><?php echo $ponente['descripcion']; ?></textarea>
 	              <label for="descripcion">Descripcion</label>
 	            </div>
+	            <div class="row">
+	              <div class="file-field input-field col s7">
+	                <div class="btn">
+	                  <span>Imagen</span>
+	                  <input id="btnimg" name="btnimg" type="file">
+	                </div>
+	                <div class="file-path-wrapper hide-on-med-and-down">
+	                  <input id="imagen" name="imagen" class="file-path validate" type="text" class="validate" required="" aria-required="true" value="<?php echo $ponente['imagen'];?>">
+	                </div>
+	              </div>
+	              <div class="col s5">
+	                <img id="img" src="<?php echo $ponente['imagen']; ?>" class="responsive-img">
+	              </div>
+	            </div>        
 	           <div class="row">
 		         <div class="col s2 offset-s4"> <button href="#!" class="btn-flat red white-text" input="submit"> Modificar</button> </div>
 		         <div class="col s2"> <a href="<?php echo site_url('admin/panel/ponentes');?>" class="btn-flat red white-text" > Cancelar</a> </div>
 		       </div>
+		       
 	    </form>
 	</div>
 </div>  
