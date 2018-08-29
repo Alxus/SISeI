@@ -3,6 +3,10 @@ class Carnets_controller extends CI_Controller{
     public function __construct()
     {
         parent::__construct();
+        if(!$this->authentication->check_user()){
+          redirect(base_url());
+          return;
+      }
         $this->load->model('Carnets_model');
         $this->form_validation->set_rules('nombre', 'Nombre', 'required');
         $this->form_validation->set_rules('precio', 'Precio', 'integer|required');
@@ -15,10 +19,6 @@ class Carnets_controller extends CI_Controller{
         $this->upload->initialize($config);
     }
     public function index(){
-        if(!$this->authentication->check_user()){
-          redirect(base_url());
-          return;
-      }
       $data['title'] = 'Lista de Carnets';
       $data['carnets'] = $this->Carnets_model->get();
       $this->load->view('backend/templates/header',$data);
@@ -123,10 +123,6 @@ class Carnets_controller extends CI_Controller{
     }
 
     public function details(){
-        if(!$this->authentication->check_user()){
-      redirect(base_url());
-      return;
-    }
        $id = $this->input->get('id');
             //$id = $this->input->post('id');
        $data['carnet'] = $this->Carnets_model->get_carnets_by_id($id);;

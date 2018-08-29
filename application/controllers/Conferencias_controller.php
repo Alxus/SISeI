@@ -3,6 +3,10 @@ class Conferencias_controller extends CI_Controller{
     public function __construct()
     {
         parent::__construct();
+        if(!$this->authentication->check_user()){
+          redirect(base_url());
+          return;
+      }
         $this->load->model('Conferencias_model');
         $this->load->library('Pdf');
         $this->form_validation->set_rules('ponente_id', 'Ponente_Id', 'required');
@@ -21,10 +25,6 @@ class Conferencias_controller extends CI_Controller{
         $this->load->model('Comentarios_model');
     }
     public function index(){
-        if(!$this->authentication->check_user()){
-      redirect(base_url());
-      return;
-    }
         $data['title'] = 'Lista de Conferencias';
         $data['Conferencias'] = $this->Conferencias_model->get();
         $data['Ponentes'] = $this->Conferencias_model->getPonentes();
@@ -152,10 +152,6 @@ class Conferencias_controller extends CI_Controller{
 }
 
 public function details(){
-    if(!$this->authentication->check_user()){
-      redirect(base_url());
-      return;
-    }
    $id = $this->input->get('id');
    $data['conferencias'] = $this->Conferencias_model->get_conferencia_by_id($id);
    $data['comentarios'] = $this->Comentarios_model->get_coments_conf($id);
@@ -188,11 +184,5 @@ public function details(){
         $this->pdf->Output('lista_talleres.pdf', 'I');
     }
 
-
-    public function get_conferencias(){
-        header('Content-type: application/json');
-        header('Access-Control-Allow-Origin: *');
-        echo json_encode($this->Conferencias_model->get());
-    }
 }
 ?>

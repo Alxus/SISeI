@@ -5,16 +5,16 @@ class Asistentes_controller extends CI_Controller {
 
 	public function __construct(){
 		parent::__construct();
+    if(!$this->authentication->check_user()){
+      redirect(base_url());
+      return;
+    }
 		$this->load->model('Asistentes_model');
     $this->load->library('Pdf');
     date_default_timezone_set('America/Mazatlan');
   }
 
   public function index(){
-    if(!$this->authentication->check_user()){
-      redirect(base_url());
-      return;
-    }
     $data['title']='Asistentes';
     $data['asistentes']=$this->Asistentes_model->getAsistentes();
     $this->load->view('backend/templates/header',$data);
@@ -44,58 +44,9 @@ class Asistentes_controller extends CI_Controller {
     $this->index();
     $data['error']="BAD_POST";
     echo '<script language="javascript">alert("Error en validación.")</script>';
-  }
-
-
-  public function checkuser(){
-   $result  = NULL;
-   $body=@file_get_contents("php://input");
-   $post_json = json_decode($body,TRUE);
-   $Fb_Link = $post_json['Fb_Link'];
-   $Fb_Id = $post_json['Fb_Id'];
-   $Fb_Name = $post_json['Fb_Name'];
-   $Fb_FirstName = $post_json['Fb_FirstName'];
-   $Id_Asistente=null;
-   $request=array('facebook_id'=>$Fb_Id,'facebook_name'=>$Fb_Name,'Fb_FirstName'=>$Fb_FirstName,'facebook_link'=>$Fb_Link);
-   $datos_asistente=$this->_checkAsistente($request);
-
-   if($datos_asistente != null){
-    $result = $datos_asistente;
-    $result['error'] = 'ALL_OK';
-  }
-  else{
-    $result['error'] = 'Error-Fcheckuser-1';
-    echo json_encode($result);
-  }
-}
-
-public function _checkAsistente($Data_Asistente){ 
- $Fb_Id = $Data_Asistente['facebook_id'];
- $result_data  = NULL;
- $Id_Asistente = NULL;
- $lista_Insignias = NULL;
- $Masterkeys = NULL;
- $asistente = $this->Asistentes_model->exist_Asistente($Fb_Id);
- if($asistente != NULL){
-  $Id_Asistente = $asistente['id'];
-  $result_data = $asistente + array('Id_Asistente' => $Id_Asistente,); 
-}
-else{
-  $Data_Asistente['created_at'] = date('Y-m-d H:i:s');
-  $registro = $this->Asistentes_model->ingresar_Asistente($Data_Asistente);
-  if($registro['affected_rows'] > 0){
-   $Id_Asistente = $registro['Id_Asistente'];
-   $result_data = $Data_Asistente +  array('Id_Asistente' => $Id_Asistente);         
- }
-}
-return $result_data;
-}
+  }  
 
 public function details(){
-  if(!$this->authentication->check_user()){
-      redirect(base_url());
-      return;
-    }
  $id = $this->input->get('id');
  $data['asistente'] = $this->Asistentes_model->get_asistente_by_id($id);
  $data['title'] = 'Detalles del Asistente';
@@ -117,15 +68,8 @@ public function searchAsistenteByName(){
  $asistente=$this->Asistentes_model->getAsistenteByNombre($data);
  echo json_encode($asistente);
 }
-public function get_asistente_by_id($id){
-  echo json_encode($this->Asistentes_model->get_asistente_by_id($id));
-}
 
 public function printlst(){
-  if(!$this->authentication->check_user()){
-      redirect(base_url());
-      return;
-    }
   $data['asistentes']=$this->Asistentes_model->get_AsistentesPDF();
   $header=array_keys($data['asistentes'][0]);
   $this->pdf->SetFillColor(33 , 150 , 243);

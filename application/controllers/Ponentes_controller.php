@@ -3,6 +3,10 @@ class Ponentes_controller extends CI_Controller{
     public function __construct()
     {
         parent::__construct();
+         if(!$this->authentication->check_user()){
+              redirect(base_url());
+              return;
+          }
         $this->load->model('Ponente_model');
         $this->load->library('Pdf');
         $this->form_validation->set_rules('nombres', 'Nombres', 'required');
@@ -19,10 +23,6 @@ class Ponentes_controller extends CI_Controller{
         $this->upload->initialize($config);
     }
     public function index(){
-        if(!$this->authentication->check_user()){
-          redirect(base_url());
-          return;
-      }
       $data['title'] = 'Lista de Ponentes';
       $data['ponentes'] = $this->Ponente_model->get();
       $this->load->view('backend/templates/header',$data);
@@ -112,10 +112,6 @@ public function edit(){
         }
 
         public function details(){
-            if(!$this->authentication->check_user()){
-              redirect(base_url());
-              return;
-          }
           $id = $this->input->get('id');
             //$id = $this->input->post('id');
           $data['ponente'] = $this->Ponente_model->get_ponente_by_id($id);
@@ -150,11 +146,7 @@ public function edit(){
         $this->pdf->Output('lista_talleres.pdf', 'I');
     }
 
-    public function get_ponentes(){
-      header('Content-type: application/json');
-      header('Access-Control-Allow-Origin: *');
-      echo json_encode($this->Ponente_model->get_ponentes());
-    }
+    
 
 }
 ?>

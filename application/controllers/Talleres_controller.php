@@ -5,6 +5,10 @@ class Talleres_controller extends CI_Controller {
 	
 	public function __construct(){
 		parent::__construct();
+		if(!$this->authentication->check_user()){
+          redirect(base_url());
+          return;
+      }
 		//Cargamos los modelos que vamos a necesitar en el constructor
 		$this->load->model('Talleres_model');
 		$this->load->library('Pdf');
@@ -30,10 +34,6 @@ class Talleres_controller extends CI_Controller {
 	}
 	
 	public function index(){
-		if(!$this->authentication->check_user()){
-      redirect(base_url());
-      return;
-    }
 		$data['title']='Talleres';
 		$data['talleres']=$this->Talleres_model->get_talleres();
 		$data['Ponentes'] = $this->Talleres_model->getPonentes();
@@ -151,10 +151,6 @@ class Talleres_controller extends CI_Controller {
 	}
 
 	public function info($id){
-		if(!$this->authentication->check_user()){
-      redirect(base_url());
-      return;
-    }
 		$data['taller']=$this->Talleres_model->get_taller($id);
 		$data['comentarios'] = $this->Comentarios_model->get_coments_taller($id);
 		$data['title']=$data['taller']['nombre'];
@@ -208,10 +204,6 @@ class Talleres_controller extends CI_Controller {
 		$this->pdf->Output('lista_talleres.pdf', 'I');
 	}
 
-	 public function get_talleres(){
-        header('Content-type: application/json');
-        header('Access-Control-Allow-Origin: *');
-        echo json_encode($this->Talleres_model->get_talleres());
-    }
+	 
 
 }

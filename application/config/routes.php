@@ -104,14 +104,11 @@ $route['admin/panel/taller/pdf/(:num)']='Talleres_controller/printlstA/$1';
 
 
 //RUTAS API
-$route['api/checkuser']['POST']='Asistentes_controller/checkuser/$data';
-
-$route['api/get_asistente/(:num)']='Asistentes_controller/get_asistente_by_id/$1';
-
-$route['api/coment']['POST']='Comentarios_controller/create/$data'; 
-
-$route['api/get_conferencias']='Conferencias_controller/get_conferencias';
-$route['api/get_talleres']='Talleres_controller/get_talleres';
-$route['api/get_ponentes']='Ponentes_controller/get_ponentes';
+$route['api/checkuser']['POST']='Api_controller/checkuser/$data';
+$route['api/get_asistente/(:num)']='Api_controller/get_asistente_by_id/$1';
+$route['api/coment']['POST']='Api_controller/crear_comentario/$data'; 
+$route['api/get_conferencias']='Api_controller/get_conferencias';
+$route['api/get_talleres']='Api_controller/get_talleres';
+$route['api/get_ponentes']='Api_controller/get_ponentes';
 
 
