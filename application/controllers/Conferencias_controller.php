@@ -74,7 +74,7 @@ class Conferencias_controller extends CI_Controller{
         }
 
         //JSON de respuesta
-        $this->index();
+        redirect(base_url()."index.php/admin/panel/conferencia");
 
     }
     public function delete()
@@ -146,7 +146,7 @@ class Conferencias_controller extends CI_Controller{
         else{
            $data['error']="BAD_POST";
        }
-       $this->index();
+        redirect(base_url()."index.php/admin/panel/conferencia");
    }
 }
 

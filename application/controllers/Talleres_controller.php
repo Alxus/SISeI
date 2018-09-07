@@ -6,9 +6,9 @@ class Talleres_controller extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		if(!$this->authentication->check_user()){
-          redirect(base_url());
-          return;
-      }
+			redirect(base_url());
+			return;
+		}
 		//Cargamos los modelos que vamos a necesitar en el constructor
 		$this->load->model('Talleres_model');
 		$this->load->library('Pdf');
@@ -44,107 +44,106 @@ class Talleres_controller extends CI_Controller {
 	}
 
 	public function create_taller(){
-		 if($this->form_validation->run()){
-		      $data['ponente_id']=0;
-		      $data['nombre']=$this->input->post('nombre');
-		      $data['descripcion']=$this->input->post('descripcion');
-		      $data['requisitos']=$this->input->post('requisitos');
-		      $data['lugar']=$this->input->post('lugar');
-		      $data['fecha']=$this->input->post('fecha');
-		      $data['hora']=$this->input->post('hora');
-		      $data['limite']=$this->input->post('limite');
-		      $data['nivel']=$this->input->post('nivel');
-		      if($this->upload->do_upload('btnimg')){
-		        $data['imagen']=base_url().'assets/img/'.$this->upload->data('file_name');
-		        if($this->upload->do_upload('btnicon')){
-		          $data['icono']=base_url().'assets/img/'.$this->upload->data('file_name');
-		          if($this->Talleres_model->create_taller($data)){
-		            $data['error']="ALL_OK";
-		          }
-		          else{
-		            $data['error']="NOT_CREATED";
-		          }
-		        }
-		        else{
-		          $data['error']=$this->upload->display_errors();
-		        }
-		      }
-		      else{
-		        $data['error']=$this->upload->display_errors();
-		      }
-		    }
-		    else{
-		      $data['error']="BAD_POST";
-		    }
-		    redirect(base_url()."admin/panel/talleres");
+		if($this->form_validation->run()){
+			$data['ponente_id']=$this->input->post('ponente_id');
+			$data['nombre']=$this->input->post('nombre');
+			$data['descripcion']=$this->input->post('descripcion');
+			$data['requisitos']=$this->input->post('requisitos');
+			$data['lugar']=$this->input->post('lugar');
+			$data['fecha']=$this->input->post('fecha');
+			$data['hora']=$this->input->post('hora');
+			$data['limite']=$this->input->post('limite');
+			$data['nivel']=$this->input->post('nivel');
+			if($this->upload->do_upload('btnimg')){
+				$data['imagen']=base_url().'assets/img/'.$this->upload->data('file_name');
+				if($this->upload->do_upload('btnicon')){
+					$data['icono']=base_url().'assets/img/'.$this->upload->data('file_name');
+					if($this->Talleres_model->create_taller($data)){
+						$data['error']="ALL_OK";
+					}
+					else{
+						$data['error']="NOT_CREATED";
+					}
+				} else{
+					$data['error']=$this->upload->display_errors();
+				}
+			}else{
+				$data['error']=$this->upload->display_errors();
+			}
+		}else{
+			$data['error']="BAD_POST";
+		}
+		redirect(base_url()."index.php/admin/panel/talleres");
 	}
 
 	public function edit(){
-			$id = $this->input->get('id');
-            $resultado = $this->Talleres_model->get_taller_by_id($id);
-            $nombre = $this->input->post('nombre');
-            $data['nombre'] = $nombre;
-            $descripcion = $this->input->post('descripcion');
-            $data['descripcion'] = $descripcion;
-            $requisitos = $this->input->post('requisitos');
-            $data['requisitos'] = $requisitos;
-            $lugar = $this->input->post('lugar');
-            $data['lugar'] = $lugar;
-            $fecha = $this->input->post('fecha');
-            $data['fecha'] = $fecha;
-            $hora = $this->input->post('hora');
-            $data['hora'] = $hora;
-            $limite = $this->input->post('limite');
-            $data['limite'] = $limite;
-            $nivel = $this->input->post('nivel');
-            $data['nivel'] = $nivel;
+		$id = $this->input->get('id');
+		$resultado = $this->Talleres_model->get_taller_by_id($id);
+		$data['ponente_id']=$this->input->post('ponente_id');
+		$nombre = $this->input->post('nombre');
+		$data['nombre'] = $nombre;
+		$descripcion = $this->input->post('descripcion');
+		$data['descripcion'] = $descripcion;
+		$requisitos = $this->input->post('requisitos');
+		$data['requisitos'] = $requisitos;
+		$lugar = $this->input->post('lugar');
+		$data['lugar'] = $lugar;
+		$fecha = $this->input->post('fecha');
+		$data['fecha'] = $fecha;
+		$hora = $this->input->post('hora');
+		$data['hora'] = $hora;
+		$limite = $this->input->post('limite');
+		$data['limite'] = $limite;
+		$nivel = $this->input->post('nivel');
+		$data['nivel'] = $nivel;
 
-            if($resultado!=null)
-            {
-                redirect(base_url()."admin/panel/talleres");
-            }
-            else
-            {
-                $id = $this->input->post('id');
-                if ($this->form_validation->run())                        
-                {
-	                if($this->upload->do_upload('btnimg')){
-						$data['imagen']=base_url().'assets/img/'.$this->upload->data('file_name');
-						if($this->upload->do_upload('btnicon')){
-							$data['icono']=base_url().'assets/img/'.$this->upload->data('file_name');
-							if($this->Talleres_model->update_taller($data)){
+		if($resultado!=null)
+		{
+		redirect(base_url()."index.php/admin/panel/talleres");
+		}
+		else
+		{
+			$id = $this->input->post('id');
+			if ($this->form_validation->run())                        
+			{
+				if($this->upload->do_upload('btnimg')){
+					$data['imagen']=base_url().'assets/img/'.$this->upload->data('file_name');
+					if($this->upload->do_upload('btnicon')){
+						$data['icono']=base_url().'assets/img/'.$this->upload->data('file_name');
+						if($this->Talleres_model->update_taller($data)){
 
-								$data['error']="ALL_OK";
-							}
-							else{
-								$data['error']="NOT_CREATED";
-							}
+							$data['error']="ALL_OK";
 						}
 						else{
-						$data['error']=$this->upload->display_errors();	
+							$data['error']="NOT_CREATED";
 						}
 					}
 					else{
-					$data['error']=$this->upload->display_errors();
+						$data['error']=$this->upload->display_errors();	
 					}
 				}
 				else{
-				$data['error']="BAD_POST";
+					$data['error']=$this->upload->display_errors();
 				}
-				echo json_encode($data);
+			}
+			else{
+				$data['error']="BAD_POST";
+			}
+			echo json_encode($data);
 
-     	  }
-     }
+		}
+		redirect(base_url()."index.php/admin/panel/talleres");
+	}
 
 	public function delete()
-        {
-        	$id = $this->input->get('id');
-            $this->Talleres_model->delete_taller($id);
-            $this->index();
-            echo '<script language="javascript">';
-            echo 'alert("Se a borrado el taller con exito")';
-            echo '</script>';
-        }
+	{
+		$id = $this->input->get('id');
+		$this->Talleres_model->delete_taller($id);
+		$this->index();
+		echo '<script language="javascript">';
+		echo 'alert("Se a borrado el taller con exito")';
+		echo '</script>';
+	}
 
 	public function lista_talleres(){
 		echo json_encode($this->Talleres_model->get_talleres());
@@ -204,6 +203,6 @@ class Talleres_controller extends CI_Controller {
 		$this->pdf->Output('lista_talleres.pdf', 'I');
 	}
 
-	 
+
 
 }
