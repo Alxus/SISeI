@@ -182,7 +182,7 @@ $('body').on('click', '#btnReturn', function (){
 function call(id){
    $.get( base_url+"api/get_asistente/"+id,function( json ) {
     if(json.estado=="PAGADO"){
-      alert('Este asistente ya pago');
+      alert('Este carnet ya esta pagado');
       return;
     }
     setear(json);
@@ -231,7 +231,7 @@ function results(json){
   '<td>'+(json[i].carnet!=null?json[i].carnet:'N/A')+'</td>'+
   '<td>'+(json[i].estado!=null?json[i].estado:'N/A')+'</td>'+
   '<td>'+(json[i].debe!=null?'$ '+json[i].debe:'$ 0')+'</td>'+
-  '<td><a id="'+json[i].id+'" class="btn waves-effect btn-flat green btnCobrar white-text">Seleccionar</a></td>'+
+  '<td><a id="'+json[i].id+'/'+(json[i].cid!=null?json[i].cid:0)+'" class="btn waves-effect btn-flat green btnCobrar white-text">Seleccionar</a></td>'+
   '</tr>';
   }
   newList+='</tbody>';

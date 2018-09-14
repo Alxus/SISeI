@@ -55,8 +55,8 @@ class Api_controller extends CI_Controller {
 		return $result_data;
 	}
 
-	public function get_asistente_by_id($id){
-		echo json_encode($this->Asistentes_model->get_asistente_by_id($id));
+	public function get_asistente_by_id($id,$cid){
+		echo json_encode($this->Asistentes_model->get_asistente_by_id($id,$cid));
 	}
 
 	public function crear_comentario(){

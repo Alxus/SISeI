@@ -59,14 +59,28 @@ public function details(){
 public function searchAsistenteByNc(){
  $search=$this->input->post('dato');
  $asistente=$this->Asistentes_model->getAsistenteByNC($search);
- echo json_encode($asistente);
+ if($asistente==null){
+  echo json_encode($asistente);
+  return;
+ }
+ for ($i=0; $i <sizeof($asistente) ; $i++) { 
+  $result[$i]=$this->Asistentes_model->get_asistente_by_id($asistente[$i]['id'],$asistente[$i]['cid']);
+ }
+ echo json_encode($result);
 }
 
 public function searchAsistenteByName(){
  $data['nombre_real']=$this->input->post('nombres');
  $data['apellido_real']=$this->input->post('apellidos');
  $asistente=$this->Asistentes_model->getAsistenteByNombre($data);
- echo json_encode($asistente);
+ if($asistente==null){
+  echo json_encode($asistente);
+  return;
+ }
+ for ($i=0; $i <sizeof($asistente) ; $i++) { 
+  $result[$i]=$this->Asistentes_model->get_asistente_by_id($asistente[$i]['id'],$asistente[$i]['cid']);
+ }
+  echo json_encode($result);
 }
 
 public function printlst(){

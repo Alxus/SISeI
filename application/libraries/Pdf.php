@@ -218,7 +218,7 @@ class PDF extends FPDF {
 
 
 
-  function Recibo($orientation='', $size='', $rotation=0)
+  function Recibo($orientation='', $size='', $rotation=0, $folio="", $fecha="")
   {
   // Start a new page
     if($this->state==3)
@@ -261,7 +261,7 @@ class PDF extends FPDF {
     $this->ColorFlag = $cf;
   // Page header
     $this->InHeader = true;
-    $this->HeaderRecibo();
+    $this->HeaderRecibo($folio,$fecha);
     $this->InHeader = false;
   // Restore line width
     if($this->LineWidth!=$lw)
@@ -288,12 +288,12 @@ class PDF extends FPDF {
   }
 
 
-  public function HeaderRecibo(){
+  public function HeaderRecibo($folio,$fecha){
     $this->Image(base_url().'assets/img/logo_cosisei.png',20,30,55);
     $this->Image(base_url().'assets/img/fearless.jpg',130,30,55);
     $this->SetFont('Arial','',12);
-    $this->Cell(120,10,'Fecha: ',0,0,'C');
-    $this->Cell(50,10,'Folio: ',0,0,'C');
+    $this->Cell(120,10,'Fecha: '.$fecha,0,0,'C');
+    $this->Cell(50,10,'Folio: '.$folio,0,0,'C');
     $this->Ln('5');
     $this->Ln(30);
     $this->SetFont('Arial','B',16);

@@ -62,7 +62,7 @@
                   <input id="btnlog" name="btnlog" type="file">
                 </div>
                 <div class="file-path-wrapper hide-on-med-and-down">
-                  <input id="logo" name="logo" class="file-path validate" type="text" class="validate" required="" aria-required="true">
+                  <input id="logo" name="logo" class="file-path validate" type="text" class="validate" value="<?php echo $conferencia['logo_empresa'];?>" required="" aria-required="true">
                 </div>
               </div>
               <div class="col s5">

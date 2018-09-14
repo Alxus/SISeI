@@ -21,7 +21,7 @@
 							<td><?=$a['carnet']!=null?$a['carnet']:'N/A';?></td>
 							<td><?=$a['estado']!=null?$a['estado']:'N/A';?></td>
 							<td><?=$a['debe']!=null?'$ '.$a['debe']:'$ 0';?></td>
-							<td><a id="<?=$a['id']?>" class="btn waves-effect btn-flat green btnCobrar white-text">Seleccionar</a></td>
+							<td><a id=<?=$a['id']."/".($a['cid']!=null?$a['cid']:0)?> class="btn waves-effect btn-flat green btnCobrar white-text">Seleccionar</a></td>
 						</tr>
 						<?endforeach;?>
 					</tbody>

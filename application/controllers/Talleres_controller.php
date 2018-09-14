@@ -76,9 +76,18 @@ class Talleres_controller extends CI_Controller {
 		redirect(base_url()."index.php/admin/panel/talleres");
 	}
 
-	public function edit(){
-		$id = $this->input->get('id');
-		$resultado = $this->Talleres_model->get_taller_by_id($id);
+	public function edit($id){
+		$data['taller'] =  $this->Talleres_model->get_taller_by_id($id);
+        $data['Ponentes'] = $this->Talleres_model->getPonentes();
+        $data['title'] = 'Modificar Taller';
+        $this->load->view('backend/templates/header', $data);
+        $this->load->view('backend/templates/navbar');
+        $this->load->view('backend/formulario_tallerupdate');
+        $this->load->view('backend/templates/footer');		
+	}
+
+	public function editar_taller(){
+		$id = $this->input->post('id');
 		$data['ponente_id']=$this->input->post('ponente_id');
 		$nombre = $this->input->post('nombre');
 		$data['nombre'] = $nombre;
@@ -96,41 +105,29 @@ class Talleres_controller extends CI_Controller {
 		$data['limite'] = $limite;
 		$nivel = $this->input->post('nivel');
 		$data['nivel'] = $nivel;
+		if ($this->form_validation->run()){
+			if (!file_exists($_FILES['btnimg']['tmp_name'])) {
+                $data['imagen']=$this->input->post('imagen');
+            }
+            if (!file_exists($_FILES['btnicon']['tmp_name'])) {
+                $data['icono']=$this->input->post('icono');
+            }
+			if($this->upload->do_upload('btnimg')){
+				$data['imagen']=base_url().'assets/img/'.$this->upload->data('file_name');
+			}
+			if($this->upload->do_upload('btnicon')){
+				$data['icono']=base_url().'assets/img/'.$this->upload->data('file_name');
+			}
+			if($this->Talleres_model->update_taller($data)){
 
-		if($resultado!=null)
-		{
-		redirect(base_url()."index.php/admin/panel/talleres");
-		}
-		else
-		{
-			$id = $this->input->post('id');
-			if ($this->form_validation->run())                        
-			{
-				if($this->upload->do_upload('btnimg')){
-					$data['imagen']=base_url().'assets/img/'.$this->upload->data('file_name');
-					if($this->upload->do_upload('btnicon')){
-						$data['icono']=base_url().'assets/img/'.$this->upload->data('file_name');
-						if($this->Talleres_model->update_taller($data)){
-
-							$data['error']="ALL_OK";
-						}
-						else{
-							$data['error']="NOT_CREATED";
-						}
-					}
-					else{
-						$data['error']=$this->upload->display_errors();	
-					}
-				}
-				else{
-					$data['error']=$this->upload->display_errors();
-				}
+				$data['error']="ALL_OK";
 			}
 			else{
-				$data['error']="BAD_POST";
+				$data['error']="NOT_CREATED";
 			}
-			echo json_encode($data);
-
+		}
+		else{
+			$data['error']="BAD_POST";
 		}
 		redirect(base_url()."index.php/admin/panel/talleres");
 	}
