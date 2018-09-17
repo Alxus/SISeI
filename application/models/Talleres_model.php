@@ -82,4 +82,9 @@ class Talleres_model extends CI_Model{
         return $this->db->get()->result_array();
     }
 
+
+    public function get_talleres_importantes(){
+        return $this->db->get('taller',4)->result_array();
+    }
+
 }

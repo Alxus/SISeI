@@ -57,5 +57,9 @@ class Conferencias_model extends CI_Model{
         $this->db->join('ponente as p','c.ponente_id=p.id');
         return $this->db->get()->result_array();
     }
+
+    public function get_importantes(){
+        return $this->db->get('conferencia',4)->result_array();
+    }
 }
 ?>
