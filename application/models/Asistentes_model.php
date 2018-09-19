@@ -45,7 +45,18 @@ class Asistentes_model extends CI_Model{
     public function add($data){
          $this->db->insert('asistente',$data);
          return $this->db->affected_rows()!=0;
-   }
+    }
+
+    function update($id, $data)
+    {
+        $this->db->where('id', $id);
+        return $this->db->update('asistente', $data);
+    }
+
+    public function delete($id)
+    {
+        $this->db->delete('asistente', array('id' => $id));
+    }
 
     public function get_asistente_by_id($id,$cid){
         if($cid==0){
@@ -64,6 +75,14 @@ class Asistentes_model extends CI_Model{
         $this->db->where('ac.carnet_id=',$cid);
         return $this->db->get()->row_array();
     }
+
+    function get_carnets_by_id_for_panel_asistente($id)
+    {
+        $this->db->where('id', $id);
+        $query = $this->db->get('asistente');
+        return $query->row_array();
+    }
+    
     public function pro($data){
         return $this->db->where('id',$data['id'])->update('asistente',array('pro'=>$data['pro']));
     }

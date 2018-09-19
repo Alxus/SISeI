@@ -3,14 +3,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Asistentes_controller extends CI_Controller {
 
-	public function __construct(){
-		parent::__construct();
+    public function __construct(){
+        parent::__construct();
     if(!$this->authentication->check_user()){
       redirect(base_url());
       return;
     }
-		$this->load->model('Asistentes_model');
+        $this->load->model('Asistentes_model');
     $this->load->library('Pdf');
+
+    $this->form_validation->set_rules('nombre_real', 'Nombre_real', 'trim|required');
+    $this->form_validation->set_rules('apellido_real', 'Apellido_real', 'trim|required');
+    $this->form_validation->set_rules('no_control', 'No_control', 'trim|required');
+    $this->form_validation->set_rules('tel', 'Tel', 'required');
+    $this->form_validation->set_rules('email', 'Email', 'valid_email|required');
+    $this->form_validation->set_rules('carera', 'Carera', 'integer|required');
+    $this->form_validation->set_rules('sexo', 'Sexo', 'integer|required');
+    $this->form_validation->set_rules('talla', 'Talla', 'integer|required');
+    $this->form_validation->set_rules('pro', 'Pro', 'integer|required');
+
     date_default_timezone_set('America/Mazatlan');
   }
 
@@ -48,13 +59,129 @@ class Asistentes_controller extends CI_Controller {
 
 public function details(){
  $id = $this->input->get('id');
- $data['asistente'] = $this->Asistentes_model->get_asistente_by_id($id);
+ $data['asistente'] = $this->Asistentes_model->get_carnets_by_id_for_panel_asistente($id);
  $data['title'] = 'Detalles del Asistente';
  $this->load->view('backend/templates/header', $data);
  $this->load->view('backend/templates/navbar');
  $this->load->view('backend/asistente_details', $data);
  $this->load->view('backend/templates/footer');
 }
+
+public function delete()
+{
+    $id = $this->input->get('id');
+    $this->load->model('Asistentes_model');
+    $this->Asistentes_model->delete($id);
+    $this->index();
+        echo '<script language="javascript">';
+        echo 'alert("Se a borrado el asistente con exito")';
+        echo '</script>';
+}
+
+/*Aun no funciona el update*/
+public function edit(){
+    $id = $this->input->get('id');
+            //$id = $this->input->post('id');
+    $resultado = $this->Asistentes_model->get_carnets_by_id_for_panel_asistente($id);
+    $data['nombre_real']=$this->input->post('nombre_real');
+    $data['apellido_real']=$this->input->post('apellido_real');
+    $data['no_control']=$this->input->post('no_control');
+    $data['tel']=$this->input->post('tel');
+    $data['email']=$this->input->post('email');
+    $data['carrera']=$this->input->post('carrera');
+    $data['sexo']=$this->input->post('sexo');
+    $data['talla']=$this->input->post('talla');
+    $data['pro']=$this->input->post('pro');
+    if($resultado!=null)
+    {
+        $data['asistente'] = $resultado;
+        $data['title'] = 'Modificar Asistente';
+        $this->load->view('backend/templates/header', $data);
+        $this->load->view('backend/templates/navbar');
+        $this->load->view('backend/formulario_asistentes', $data);
+        $this->load->view('backend/templates/footer');
+    }
+    else
+    {
+        $id = $this->input->post('id');
+       /* if ($this->form_validation->run()){   */     
+              if($this->Asistentes_model->update($id, $data)){
+                  $data['error']="ALL_OK";   
+                    echo '<script language="javascript">';
+                    echo 'alert("Se a actualizado el asistente con exito")';
+                    echo '</script>'; 
+                    $this->index();
+              }
+              else{
+                $data['error']="NOT_CREATED";//ocurrio un error
+                    echo '<script language="javascript">';
+                    echo 'alert("Ocurrio un error: No se han podido actualizar los datos.")';
+                    echo '</script>';
+                    $this->index();
+              }
+        }
+       /* else{
+          $data['error']="BAD_POST";  
+                echo '<script language="javascript">';
+                echo 'alert("Datos incorrectos.")';
+                echo '</script>';
+        }*/   
+    }
+
+
+/*public function edit(){
+        $id = $this->input->get('id');
+            //$id = $this->input->post('id');
+        $resultado = $this->Asistentes_model->get_carnets_by_id_for_panel_asistente($id);
+        $nombre_real = $this->input->post('nombre_real');
+        $data['nombre_real'] = $nombre_real;
+        $apellido_real = $this->input->post('apellido_real');
+        $data['apellido_real'] = $apellido_real;
+        $no_control = $this->input->post('no_control');
+        $data['no_control'] = $no_control;
+        $tel = $this->input->post('tel');
+        $data['tel'] = $tel;
+        $email = $this->input->post('email');
+        $data['email'] = $email;
+        $carrera = $this->input->post('carrera');
+        $data['carrera'] = $carrera;
+        $sexo = $this->input->post('sexo');
+        $data['sexo'] = $sexo;
+        $talla = $this->input->post('talla');
+        $data['talla'] = $talla;
+        $pro = $this->input->post('pro');
+        $data['pro'] = $pro;
+        
+        if($resultado!=null){
+            $data['asistente'] = $resultado;
+            $data['title'] = 'Modificar Asistente';
+            $this->load->view('backend/templates/header', $data);
+            $this->load->view('backend/templates/navbar');
+            $this->load->view('backend/formulario_asistentes', $data);
+            $this->load->view('backend/templates/footer');
+        } else {
+            $id = $this->input->post('id');
+            if ($this->form_validation->run()) {
+                if($this->Asistentes_model->update($id, $data)){
+                    $data['error']="ALL_OK";
+                    echo '<script language="javascript">';
+                    echo 'alert("Se a actualizado el asistente con exito")';
+                    echo '</script>';
+                } else {
+                    $data['error']="NOT_CREATED";//ocurrio un error
+                    echo '<script language="javascript">';
+                    echo 'alert("Ocurrio un error: No se han podido actualizar los datos.")';
+                    echo '</script>';
+                }
+            } else {
+                $data['error']="BAD_POST";
+                echo '<script language="javascript">';
+                echo 'alert("Datos incorrectos.")';
+                echo '</script>';
+            }
+            $this->index();
+        }
+    }*/
 
 public function searchAsistenteByNc(){
  $search=$this->input->post('dato');
