@@ -78,7 +78,7 @@ $route['admin/update_carnet']='Carnets_controller/edit/$data';
 $route['admin/panel/asistentes']='Asistentes_controller'; 
 $route['admin/create_asistente']='Asistentes_controller/add/$data'; 
 $route['admin/asistente_details']='Asistentes_controller/details/$data';
-/*$route['admin/update_carnet']='Asistentes_controller/edit/$data'; */
+$route['admin/update_asistente']='Asistentes_controller/edit/$data'; 
 
 $route['admin/panel/conferencia']='Conferencias_controller';
 $route['admin/create_conferencia']='Conferencias_controller/add/$data'; 
@@ -115,5 +115,3 @@ $route['api/get_ponentes']='Api_controller/get_ponentes';
 $route['api/get_conferencias_imp']='Api_controller/get_conferencias_importantes';
 $route['api/get_talleres_imp']='Api_controller/get_talleres_importantes';
 $route['api/get_ponentes_imp']='Api_controller/get_ponentes_importatnes';
-
-

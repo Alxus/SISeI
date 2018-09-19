@@ -1,17 +1,18 @@
-    <div class="row d">
+<div class="row d">
     	<!-- _________________________Pestaña de informacion_________________________ -->
     	<div class="col s3 grey darken-4 hide-on-med-and-down">
     		<!-- Vacio -->
     		<ul>
     			<li><div class="user-view">
     				<div class="background"></div>
-    				<a href="#user"><img class="circle responsive-img" src="http://www.sisei.com.mx/assets/images/sisei.jpg"></a>
+    				<a href="#user"><img class="circle responsive-img" src="http://www.sisei.com.mx/Assets/img/sisei.jpg"></a>
     				<a href="#name"><span class="white-text name"><H3 align="center">SISeI XXII</H1></span></a><BR/>
     				</div>
     			</li>
     			<li><div class="divider"></div></li>
-    			<li><a class="subheader"><H5 align="center">INFORMACION IMPORTANTE DE LA BD</H5></a></li>
+    			<li><a class="subheader"><H5 align="center">INFORMACION </H5></a></li>
     			<li><div class="divider"></div></li>
+    			<div style="padding: 300px"></div>
     		</ul>
     		<!-- Vacio -->
     	</div>
@@ -46,7 +47,7 @@
     		<ul class="collection">
     			<?php foreach($asistentes as $aux){ ?> <!-- Rellena el listado de asistentes -->
     			<li class="collection-item avatar z-depth-3">
-    				<img src="http://www.sisei.com.mx/assets/images/defaultUser.jpg" class="circle"><!--Esta imagen sera cambiada por la de face-->
+    				<img src="http://www.sisei.com.mx/Assets/img/defaultUser.jpg" class="circle"><!--Esta imagen sera cambiada por la de face-->
     				<span class="title"><?php echo $aux['nombre_real']." ".$aux['apellido_real'];?></span>
     				<p><?php echo $aux['no_control'];?><br>
     					<?php echo $aux['carrera'];?>
@@ -56,8 +57,8 @@
     						<tbody>
     							<tr>
     								<td><a href="<?php echo base_url();?>index.php/Asistentes_controller/details?id=<?php echo $aux['id'];?>"><i class="material-icons" style="font-size: 35px">control_point</i></a></td>
-    								<td><i class="material-icons" style="font-size: 35px">settings</i></td>
-    								<td><i class="material-icons" style="font-size: 35px">delete</i></td>
+    								<td><a href="<?php echo base_url();?>index.php/Asistentes_controller/edit?id=<?php echo $aux['id'];?>"><i class="material-icons" style="font-size: 35px">settings</i></a></td>
+    								<td><a href="<?php echo base_url();?>index.php/Asistentes_controller/delete?id=<?php echo $aux['id'];?>"><i class="material-icons" style="font-size: 35px">delete</i></a></td>
 
     							</tbody>
     						</table>
@@ -159,4 +160,3 @@
 			</div>
 			 _________________________________________________________________________ -->
 		</div>
-		
