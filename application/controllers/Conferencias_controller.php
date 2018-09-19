@@ -74,7 +74,7 @@ class Conferencias_controller extends CI_Controller{
         }
 
         //JSON de respuesta
-        $this->index();
+        redirect(base_url()."index.php/admin/panel/conferencia");
 
     }
     public function delete()
@@ -115,38 +115,38 @@ class Conferencias_controller extends CI_Controller{
         else{
          $id = $this->input->post('id');
          if ($this->form_validation->run()){
+            if (!file_exists($_FILES['btnimg']['tmp_name'])) {
+                $data['imagen']=$this->input->post('imagen');
+            }
+            if (!file_exists($_FILES['btnicon']['tmp_name'])) {
+                $data['icono']=$this->input->post('icono');
+            }
+            if (!file_exists($_FILES['btnlog']['tmp_name'])) {
+                $data['logo_empresa']=$this->input->post('logo');
+            }
             if($this->upload->do_upload('btnimg')){
                 $data['imagen']=base_url().'assets/img/'.$this->upload->data('file_name');
+            }
             
-                if($this->upload->do_upload('btnicon')){
-                    $data['icono']=base_url().'assets/img/'.$this->upload->data('file_name');
+            if($this->upload->do_upload('btnicon')){
+                $data['icono']=base_url().'assets/img/'.$this->upload->data('file_name');
+            }
             
-                    if($this->upload->do_upload('btnlog')){
-                        $data['logo_empresa']=base_url().'assets/img/'.$this->upload->data('file_name');
-            
-                        if($this->Conferencias_model->update($id, $data)){
-                            $data['error']="ALL_OK";
-                        }
-                        else{
-                            $data['error']="NOT_CREATED";
-                        }
-                    }
-                    else{
-                        $data['error']=$this->upload->display_errors(); 
-                    }
-                }
-                else{
-                    $data['error']=$this->upload->display_errors(); 
-                } 
-            }   
+            if($this->upload->do_upload('btnlog')){
+                $data['logo_empresa']=base_url().'assets/img/'.$this->upload->data('file_name');
+            }
+
+            if($this->Conferencias_model->update($id, $data)){
+                $data['error']="ALL_OK";
+            }
             else{
-                $data['error']=$this->upload->display_errors(); 
-            }      
+                $data['error']="NOT_CREATED";
+            }       
         }     
         else{
            $data['error']="BAD_POST";
        }
-       $this->index();
+        redirect(base_url()."index.php/admin/panel/conferencia");
    }
 }
 

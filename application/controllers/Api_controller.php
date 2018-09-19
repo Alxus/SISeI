@@ -55,8 +55,8 @@ class Api_controller extends CI_Controller {
 		return $result_data;
 	}
 
-	public function get_asistente_by_id($id){
-		echo json_encode($this->Asistentes_model->get_asistente_by_id($id));
+	public function get_asistente_by_id($id,$cid){
+		echo json_encode($this->Asistentes_model->get_asistente_by_id($id,$cid));
 	}
 
 	public function crear_comentario(){
@@ -77,4 +77,17 @@ class Api_controller extends CI_Controller {
 	public function get_talleres(){
 		echo json_encode($this->Talleres_model->get_talleres());
 	}
+
+	public function get_conferencias_importantes(){
+		echo json_encode($this->Conferencias_model->get_importantes());
+	}
+
+	public function get_ponentes_importantes(){
+		echo json_encode($this->Ponente_model->get_ponentes_importantes());
+	}
+
+	public function get_talleres_importantes(){
+		echo json_encode($this->Talleres_model->get_talleres_importantes());
+	}
+
 }

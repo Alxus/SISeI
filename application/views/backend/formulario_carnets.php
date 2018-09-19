@@ -22,7 +22,9 @@
             <div class= "input-field col s12">
              <select name="tipo">
               <option value=1 <?php echo ($carnet['tipo']==1) ? 'Selected' : ''; ?>>Normal</option>
-              <option value=2 <?php echo ($carnet['tipo']==2) ? 'Selected' : ''; ?>>Promocion</option>
+              <option value=2 <?php echo ($carnet['tipo']==2) ? 'Selected' : ''; ?>>Viaje</option>
+              <option value=3 <?php echo ($carnet['tipo']==3) ? 'Selected' : ''; ?>>VIP</option>
+              <option value=4 <?php echo ($carnet['tipo']==4) ? 'Selected' : ''; ?>>Promocion</option>
             </select>
             <label>Tipo de carnet</label>
             <div class="row">

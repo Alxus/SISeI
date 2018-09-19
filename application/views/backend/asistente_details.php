@@ -12,7 +12,7 @@
 		      	<h6>
 			      	<ul class="collection">
 						<li class="collection-item avatar">
-						    <img src="http://www.sisei.com.mx/assets/images/defaultUser.jpg" class="circle"><!--Esta imagen sera cambiada por la de face-->
+						    <img src="http://www.sisei.com.mx/Assets/img/defaultUser.jpg" class="circle"><!--Esta imagen sera cambiada por la de face-->
 						    <span class="title"><?php echo $asistente['nombre_real']." ".$asistente['apellido_real'];?></span>
 
 						</li>
@@ -90,6 +90,7 @@
 		    </div>
 		    <div class="right-align">
 		       	<a href=<?php echo site_url('admin/panel/asistentes');?> id="btn_Eliminar" class="red modal-action modal-close waves-effect waves-light btn">Regresar al listado</a>
+		       	<div style="padding: 15px"></div>
 		    </div>
 		</div>
 	</div>

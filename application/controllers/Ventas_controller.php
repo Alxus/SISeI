@@ -58,35 +58,52 @@ class Ventas_controller extends CI_Controller {
 					$asistente['pago']=$this->input->post('abono');
 					$asistente['adeudo_anterior']=$carnet['precio'];
 					$abono['debe']=$carnet['precio']-$this->input->post('abono');
+					if($abono['debe']<0){
+						$abono['debe'] = 0;
+					}
+					$abono['estado']=($abono['debe']==0)?'PAGADO':'APARTADO';
+				}
+			} else {
+				$adeudo=$this->Asistentes_model->tiene_carnet($asistente['id'],$this->input->post('carnet'));
+				if($adeudo!=null){
+					$asistente['pago']=$this->input->post('abono');
+					$abono['asistente_id']=$asistente['id'];
+					$abono['carnet_id']=$adeudo['carnet_id'];
+					$asistente['adeudo_anterior']=$adeudo['debe'];
+					$abono['debe']=$adeudo['debe']-$this->input->post('abono');
+					if($abono['debe']<0){
+						$abono['debe'] = 0;
+					}
+					$abono['estado']=($abono['debe']==0)?'PAGADO':'APARTADO';
+				}else{
+					$asistente['pago']=$this->input->post('abono');
+					$abono['asistente_id']=$asistente['id'];
+					$abono['carnet_id']=$this->input->post('carnet');
+					$asistente['precio_carnet']=$carnet['precio'];
+					$asistente['pago']=$this->input->post('abono');
+					$asistente['adeudo_anterior']=$carnet['precio'];
+					$abono['debe']=$carnet['precio']-$this->input->post('abono');
+					if($abono['debe']<0){
+						$abono['debe'] = 0;
+					}
 					$abono['estado']=($abono['debe']==0)?'PAGADO':'APARTADO';
 				}
 			}
-			else{
-				if($asistente['estado']=="PAGADO"){
-					$asistente['carnet']=$carnet;
-					$this->printComprobante($asistente,1);
-					return;
-				}
-				$asistente['pago']=$this->input->post('abono');
-				$abono['asistente_id']=$asistente['id'];
-				$abono['carnet_id']=$asistente['carnet_id'];
-				$asistente['adeudo_anterior']=$asistente['debe'];
-				$abono['debe']=$asistente['debe']-$this->input->post('abono');
-				$abono['estado']=($abono['debe']==0)?'PAGADO':'APARTADO';
-			}
+		
 
-			if($abono['estado']=='PAGADO'){
-				if(($this->Pagos_model->getPagados()['total']+$this->Asistentes_model->getPagados()['total'])<50){
-					$asistente['pro']=true;
-					$this->Asistentes_model->pro($asistente);
-				}
+		if($abono['estado']=='PAGADO'){
+			if(($this->Pagos_model->getPagados()['total']+$this->Asistentes_model->getPagados()['total'])<50){
+				$asistente['pro']=true;
+				$this->Asistentes_model->pro($asistente);
 			}
-			$this->Asistentes_model->abono_asistente($abono);
-			$asistente['debe']=$abono['debe'];
-			$asistente['estado']=$abono['estado'];
-			$asistente['carnet']=$carnet;
-			$this->printComprobante($asistente,1);
-		}else{
+		}
+		$asistente['folio']=$this->Asistentes_model->abono_asistente($abono);
+		$asistente['debe']=$abono['debe'];
+		$asistente['estado']=$abono['estado'];
+		$asistente['carnet']=$carnet;
+		$this->printComprobante($asistente,1);
+		}
+		else{
 			echo '<script language="javascript">';
 			echo 'alert("Verifique los datos del asistente.")';
 			echo '</script>';
@@ -105,9 +122,9 @@ class Ventas_controller extends CI_Controller {
 	public function printComprobante($asistente,$g){
 		$vendedor=$_SESSION['SISeI_User']['nombres'].' '.$_SESSION['SISeI_User']['apellidos'];
 		$cliente=$asistente['nombre_real'].' '.$asistente['apellido_real'];
-		$this->pdf->SetMargins(25,10,25);
+		$folio =str_pad($asistente['folio'],6,"0",STR_PAD_LEFT);
 		$this->pdf->AliasNbPages();
-		$this->pdf->Recibo();
+		$this->pdf->Recibo('','',0,$folio,date("d/m/Y"));
 		$this->pdf->Ln(30);
 		$this->pdf->SetFont('Arial','B',12);
 		$this->pdf->Cell(50,10,'Nombre del asistente: ',$g,0,"L",false);
@@ -126,17 +143,13 @@ class Ventas_controller extends CI_Controller {
 		$this->pdf->SetFont('Arial','',12);
 		$this->pdf->Cell(0,10,$asistente['tel'],$g,1,"L",false);
 		$this->pdf->SetFont('Arial','B',12);
-		$this->pdf->Cell(50,10,'Contraseña: ',$g,0,"L",false);
-		$this->pdf->SetFont('Arial','',12);
-		$this->pdf->Cell(0,10,$this->encryption->decrypt($asistente['password']),$g,1,"L",false);
-		$this->pdf->SetFont('Arial','B',12);
 		$this->pdf->Cell(50,10,'Carnet: ',$g,0,"L",false);
 		$this->pdf->SetFont('Arial','',12);
 		$this->pdf->Cell(0,10,$asistente['carnet']['nombre'],$g,1,"L",false);
 		$this->pdf->SetFont('Arial','B',12);
 		$this->pdf->Cell(50,10,'Precio del carnet: ',$g,0,"L",false);
 		$this->pdf->SetFont('Arial','',12);
-		$this->pdf->Cell(30,10,"$".$asistente['carnet']['precio'],$g,0,"L",false);
+		$this->pdf->Cell(50,10,"$".$asistente['carnet']['precio'],$g,0,"L",false);
 		$this->pdf->SetFont('Arial','B',12);
 		$this->pdf->Cell(50,10,'Adeudo Anterior: ',$g,0,"L",false);
 		$this->pdf->SetFont('Arial','',12);
@@ -144,22 +157,64 @@ class Ventas_controller extends CI_Controller {
 		$this->pdf->SetFont('Arial','B',12);
 		$this->pdf->Cell(50,10,'Pago: ',$g,0,"L",false);
 		$this->pdf->SetFont('Arial','',12);
+		$this->pdf->Cell(50,10,'$'.$asistente['pago'],$g,0,"L",false);
+		$this->pdf->SetFont('Arial','B',12);
+		$this->pdf->Cell(50,10,'Adeudo Actual: ',$g,0,"L",false);
+		$this->pdf->SetFont('Arial','',12);
+		$this->pdf->Cell(0,10,'$'.$asistente['debe'],$g,1,"L",false);
+		$this->pdf->Ln(25);
+		$this->pdf->Cell(90,10,"Firma del asistente","T",0,"C",false);
+		$this->pdf->Cell(10,10,"",0,0,"C",false);
+		$this->pdf->Cell(90,10,"Firma del organizador","T",0,"C",false);
+		$this->pdf->Ln(15);
+		$this->pdf->Cell(0,10," - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ",0,1,"C",false);
+		$this->pdf->SetFont('Arial','B',12);
+		$this->pdf->Cell(30,10,"FECHA: ".date("d/m/Y"),0,0,"L",false);
+		$this->pdf->Cell(0,10,"FOLIO: ".$folio,0,1,"R",false);
+		$this->pdf->Cell(0,5,"Comprobante de compra para entrada a la 12 edición de SISeI",0,1,"C",false);
+		$this->pdf->Cell(65,40,$this->pdf->Image(base_url().'assets/img/logo_cosisei.png',$this->pdf->GetX()+12,$this->pdf->GetY()+7,45),$g,0,"L",false);
+		$this->pdf->Cell(50,10,'Nombre del asistente: ',$g,0,"L",false);
+		$this->pdf->SetFont('Arial','',12);
+		$this->pdf->Cell(0,10,$cliente,$g,1,"L",false);
+		$this->pdf->SetFont('Arial','B',12);
+		$this->pdf->Cell(65,10,' ',0,0,"L",false);
+		$this->pdf->Cell(50,10,'Nombre del vendedor: ',$g,0,"L",false);
+		$this->pdf->SetFont('Arial','',12);
+		$this->pdf->Cell(0,10,$vendedor,$g,1,"L",false);
+		$this->pdf->SetFont('Arial','B',12);
+		$this->pdf->Cell(65,10,' ',0,0,"L",false);
+		$this->pdf->Cell(50,10,'Email del asistente: ',$g,0,"L",false);
+		$this->pdf->SetFont('Arial','',12);
+		$this->pdf->Cell(0,10,$asistente['email'],$g,1,"L",false);
+		$this->pdf->SetFont('Arial','B',12);
+		$this->pdf->Cell(65,10,' ',0,0,"L",false);
+		$this->pdf->Cell(50,10,'Número de telefono: ',$g,0,"L",false);
+		$this->pdf->SetFont('Arial','',12);
+		$this->pdf->Cell(0,10,$asistente['tel'],$g,1,"L",false);
+		$this->pdf->SetFont('Arial','B',12);
+		$this->pdf->Cell(65,10,'Carnet: ',$g,0,"L",false);
+		$this->pdf->SetFont('Arial','',12);
+		$this->pdf->Cell(0,10,$asistente['carnet']['nombre'],$g,1,"L",false);
+		$this->pdf->SetFont('Arial','B',12);
+		$this->pdf->Cell(65,10,'Precio del carnet: ',$g,0,"L",false);
+		$this->pdf->SetFont('Arial','',12);
+		$this->pdf->Cell(30,10,"$".$asistente['carnet']['precio'],$g,0,"L",false);
+		$this->pdf->SetFont('Arial','B',12);
+		$this->pdf->Cell(50,10,'Adeudo Anterior: ',$g,0,"L",false);
+		$this->pdf->SetFont('Arial','',12);
+		$this->pdf->Cell(0,10,'$'.$asistente['adeudo_anterior'],$g,1,"L",false);
+		$this->pdf->SetFont('Arial','B',12);
+		$this->pdf->Cell(65,10,'Pago: ',$g,0,"L",false);
+		$this->pdf->SetFont('Arial','',12);
 		$this->pdf->Cell(30,10,'$'.$asistente['pago'],$g,0,"L",false);
 		$this->pdf->SetFont('Arial','B',12);
 		$this->pdf->Cell(50,10,'Adeudo Actual: ',$g,0,"L",false);
 		$this->pdf->SetFont('Arial','',12);
 		$this->pdf->Cell(0,10,'$'.$asistente['debe'],$g,1,"L",false);
-		$this->pdf->Ln(30);
-		$this->pdf->Cell(75,10,"Firma del asistente","T",0,"C",false);
-		$this->pdf->Cell(10,10,"",0,0,"C",false);
-		$this->pdf->Cell(75,10,"Firma del organizador","T",0,"C",false);
-		$this->pdf->Ln(10);
-		$this->pdf->Cell(0,20,"--------------------------------------------------------------------------------------------------------------------------------------------------------",0,1,"C",false);
-		$this->pdf->Cell(70,40,$this->pdf->Image(base_url().'assets/img/logo_cosisei.png',$this->pdf->GetX()+12,$this->pdf->GetY()+7,45),1,0);
-		$this->pdf->Cell(30,5,"FOLIO: ",0,1,"C",false);
-		$this->pdf->Ln(40);
-		$this->pdf->multicell(0,5,"*Utilice el correo electrónico proporcionado y la contraseña generada para acceder a su perfil de usuario en www.sisei.com.mx");
-		$this->pdf->multicell(0,5,"**No hay devoluciones.");
+		$this->pdf->Ln(5);
+		$this->pdf->multicell(0,5,'*Utilice el correo electrónico proporcionado y la contraseña "'.$this->encryption->decrypt($asistente['password']).'" para acceder a su perfil de usuario en www.sisei.com.mx');
+		$this->pdf->multicell(0,5,"**Este comprobante no es válido sin sello.");
+		$this->pdf->multicell(0,5,"***No hay devoluciones.");
 		$this->pdf->Output('comprobante'.$cliente.'.pdf', 'I');
 	}
 

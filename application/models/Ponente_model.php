@@ -81,5 +81,9 @@ class Ponente_model extends CI_Model{
         $this->db->join('conferencia as c','c.ponente_id=p.id','left');
         return $this->db->get()->result_array();
     }
+    
+    public function get_ponentes_importantes(){
+        return $this->db->get('ponente',4)->result_array();
+    }
 }
 ?>

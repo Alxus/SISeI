@@ -1,6 +1,6 @@
 <div class="container">
 	<h5 class="card-title center">Modificar Taller</h5>
-	<form class="row" id="talleres-form" method="POST" action=<?php echo site_url('admin/panel/talleres/update/');?> class="col s12" enctype="multipart/form-data">
+	<form class="row" id="talleres-form" method="POST" action=<?php echo site_url('admin/update_taller/');?> class="col s12" enctype="multipart/form-data">
 		<div class= "input-field col s12">
               <input type="hidden" name="id" value="<?php echo $taller['id']; ?>" required="" aria-required="true">
               <select name="ponente_id" value =1>

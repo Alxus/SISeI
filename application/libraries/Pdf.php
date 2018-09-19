@@ -4,6 +4,7 @@ class PDF extends FPDF {
 
   public $tablewidths;
   public $footerset;
+  public $recibo;
 
   function _beginpage($orientation, $size, $rotation) {
     $this->page++;
@@ -218,7 +219,7 @@ class PDF extends FPDF {
 
 
 
-  function Recibo($orientation='', $size='', $rotation=0)
+  function Recibo($orientation='', $size='', $rotation=0, $folio="", $fecha="")
   {
   // Start a new page
     if($this->state==3)
@@ -235,7 +236,7 @@ class PDF extends FPDF {
     {
     // Page footer
       $this->InFooter = true;
-      $this->Footer();
+      $this->FooterRecibo();
       $this->InFooter = false;
     // Close page
       $this->_endpage();
@@ -261,7 +262,7 @@ class PDF extends FPDF {
     $this->ColorFlag = $cf;
   // Page header
     $this->InHeader = true;
-    $this->HeaderRecibo();
+    $this->HeaderRecibo($folio,$fecha);
     $this->InHeader = false;
   // Restore line width
     if($this->LineWidth!=$lw)
@@ -288,14 +289,12 @@ class PDF extends FPDF {
   }
 
 
-  public function HeaderRecibo(){
-    $this->Image(base_url().'assets/img/logo_cosisei.png',20,30,55);
-    $this->Image(base_url().'assets/img/fearless.jpg',130,30,55);
-    $this->SetFont('Arial','',12);
-    $this->Cell(120,10,'Fecha: ',0,0,'C');
-    $this->Cell(50,10,'Folio: ',0,0,'C');
-    $this->Ln('5');
-    $this->Ln(30);
+  public function HeaderRecibo($folio,$fecha){
+    $this->Image(base_url().'assets/img/logo_cosisei.png',10,5,30);
+    $this->Image(base_url().'assets/img/fearless.jpg',158,5,45);
+    $this->SetFont('Arial','B',12);
+    $this->Cell(95,5,'Fecha: '.$fecha,0,0,'R');
+    $this->Cell(50,5,'Folio: '.$folio,0,1,'C');
     $this->SetFont('Arial','B',16);
     $this->Cell(0,50,'Comprobante de compra para entrada a la 12 edición de SISeI',0,0,'C');
   }
