@@ -24,12 +24,13 @@
 
     		<nav>
     			<div class="nav-wrapper grey darken-4">
-    				<div style="padding: 5px"></div>
-    		
-    				<ul id="nav-mobile" class="center">
+    				<div style="padding: 3px"></div>
+    				<ul id="nav-mobile" class="container">
     							<?if($_SESSION['SISeI_User']['tipo']<=2):?>
-    				<a class="brand-logo center"><a class="btn center" target="_blank" href=<?=site_url('admin/panel/asistentes/pdf');?>>Imprimir lista</a></a>
+    				<a class="brand-logo center col s3"><a class="btn center" target="_blank" href=<?=site_url('admin/panel/asistentes/pdf');?>>Imprimir lista</a>
+    				</a>
     				<?endif;?>
+
     				</ul>
     			</div>
     		</nav>

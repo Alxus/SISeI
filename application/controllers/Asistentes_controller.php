@@ -104,7 +104,7 @@ public function edit(){
     else
     {
         $id = $this->input->post('id');
-       /* if ($this->form_validation->run()){   */     
+        /*if ($this->form_validation->run()){  */     
               if($this->Asistentes_model->update($id, $data)){
                   $data['error']="ALL_OK";   
                     echo '<script language="javascript">';
@@ -120,13 +120,15 @@ public function edit(){
                     $this->index();
               }
         }
-       /* else{
+        /*else{
           $data['error']="BAD_POST";  
                 echo '<script language="javascript">';
                 echo 'alert("Datos incorrectos.")';
                 echo '</script>';
-        }*/   
-    }
+          $this->index();
+        }  
+    }*/
+}
 
 
 /*public function edit(){
