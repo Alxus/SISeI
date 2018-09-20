@@ -64,15 +64,55 @@
 					        </div>
 
 					        <div class="input-field col s3">
-					          <input disabled value="<?php echo $asistente['carrera'];?>" id="carrera" type="text" class="validate">
-					          <label for="first_name">Carrera</label>
+					        	<select disabled id="sexo" class="browser-default" name="sexo">
+								<option value="" disabled>Seleccione</option>
+								<option value=1 <?php echo ($asistente['carrera']==1) ? 'Selected' : ''; ?>>Sistemas</option>
+								<option value=2 <?php echo ($asistente['carrera']==2) ? 'Selected' : ''; ?>>TICs</option>
+								<option value=3 <?php echo ($asistente['carrera']==3) ? 'Selected' : ''; ?>>Electrónica</option>
+								<option value=4 <?php echo ($asistente['carrera']==4) ? 'Selected' : ''; ?>>Mecatrónica</option>
+								<option value=5 <?php echo ($asistente['carrera']==5) ? 'Selected' : ''; ?>>Eléctrica</option>
+								<option value=6 <?php echo ($asistente['carrera']==6) ? 'Selected' : ''; ?>>Mecánica</option>
+								<option value=7 <?php echo ($asistente['carrera']==7) ? 'Selected' : ''; ?>>Ambiental</option>
+								<option value=8 <?php echo ($asistente['carrera']==8) ? 'Selected' : ''; ?>>Bioquímica</option>
+								<option value=9 <?php echo ($asistente['carrera']==9) ? 'Selected' : ''; ?>>Renovables</option>
+								<option value=10 <?php echo ($asistente['carrera']==10) ? 'Selected' : ''; ?>>Gestíon</option>
+								<option value=11 <?php echo ($asistente['carrera']==11) ? 'Selected' : ''; ?>>Industrial</option>
+							  	</select>
+							  	<label class="active">Sexo</label>
 					        </div>
 
 					        <div class="input-field col s3">
-					          <input disabled value="<?php echo $asistente['sexo'];?>" id="sexo" type="text" class="validate">
-					          <label for="last_name">Sexo</label>
+					          <select disabled id="sexo" class="browser-default" name="sexo">
+								<option value="" disabled>Seleccione</option>
+								<option value=0 <?php echo ($asistente['sexo']==0) ? 'Selected' : ''; ?>>Hombre</option>
+								<option value=1 <?php echo ($asistente['sexo']==1) ? 'Selected' : ''; ?>>Mujer</option>
+							  </select>
+							  <label class="active">Sexo</label>
 					        </div>
 					      </div>
+
+					      <div class="row">
+								<div class="input-field col s3">
+									<select disabled id="talla" class="browser-default" name="talla">
+										<option value="" disabled>Seleccione</option>
+										<option value=1 <?php echo ($asistente['talla']==1) ? 'Selected' : ''; ?>>Extra Chica</option>
+										<option value=2 <?php echo ($asistente['talla']==2) ? 'Selected' : ''; ?>>Chica</option>
+										<option value=3 <?php echo ($asistente['talla']==3) ? 'Selected' : ''; ?>>Mediana</option>
+										<option value=4 <?php echo ($asistente['talla']==4) ? 'Selected' : ''; ?>>Grande</option>
+										<option value=5 <?php echo ($asistente['talla']==5) ? 'Selected' : ''; ?>>Extra Grande</option>
+									</select>
+									<label class="active">Talla</label>
+								</div>
+
+								<div class="input-field col s2">
+									<select disabled id="pro" class="browser-default" name="pro">
+										<option value="" disabled>Seleccione</option>
+										<option value=0 <?php echo ($asistente['pro']==0) ? 'Selected' : ''; ?>>Básico</option>
+										<option value=1 <?php echo ($asistente['pro']==1) ? 'Selected' : ''; ?>>Completo</option>
+									</select>
+									<label class="active">Carnet</label>
+								</div>
+						</div>
 
 					      <div class="row">
 					        <div class="input-field col s6">
