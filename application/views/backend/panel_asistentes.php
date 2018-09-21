@@ -6,7 +6,7 @@
     			<li><div class="user-view">
     				<div class="background"></div>
     				<a href="#user"><img class="circle responsive-img" src="http://www.sisei.com.mx/Assets/img/sisei.jpg"></a>
-    				<a href="#name"><span class="white-text name"><H3 align="center">SISeI XXII</H1></span></a><BR/>
+    				<a href="#name"><span class="white-text name"><H3 align="center">SISeI XII</H1></span></a><BR/>
     				</div>
     			</li>
     			<li><div class="divider"></div></li>
@@ -51,7 +51,18 @@
     				<img src="http://www.sisei.com.mx/Assets/img/defaultUser.jpg" class="circle"><!--Esta imagen sera cambiada por la de face-->
     				<span class="title"><?php echo $aux['nombre_real']." ".$aux['apellido_real'];?></span>
     				<p><?php echo $aux['no_control'];?><br>
-    					<?php echo $aux['carrera'];?>
+    					<!--<?php echo $aux['carrera'];?>-->
+    					<?php echo ($aux['carrera']==1) ? 'Sistemas' : ''; ?>
+    					<?php echo ($aux['carrera']==2) ? 'TICs' : ''; ?>
+    					<?php echo ($aux['carrera']==3) ? 'Electrónica' : ''; ?>
+    					<?php echo ($aux['carrera']==4) ? 'Mecatrónica' : ''; ?>
+    					<?php echo ($aux['carrera']==5) ? 'Eléctrica' : ''; ?>
+    					<?php echo ($aux['carrera']==6) ? 'Mecánica' : ''; ?>
+    					<?php echo ($aux['carrera']==7) ? 'Ambiental' : ''; ?>
+    					<?php echo ($aux['carrera']==8) ? 'Bioquímica' : ''; ?>
+    					<?php echo ($aux['carrera']==9) ? 'Renovables' : ''; ?>
+    					<?php echo ($aux['carrera']==10) ? 'Gestíon' : ''; ?>
+    					<?php echo ($aux['carrera']==11) ? 'Industrial' : ''; ?>
     				</p>
     				<a href="" class="secondary-content modal-trigger">
     					<table class="responsive-table">
