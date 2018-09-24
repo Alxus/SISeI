@@ -76,10 +76,15 @@ class Asistentes_model extends CI_Model{
         return $this->db->get()->row_array();
     }
 
-    function get_carnets_by_id_for_panel_asistente($id)
+    function get_asistentes_by_id_for_panel_asistente($id)
     {
-        $this->db->where('id', $id);
-        $query = $this->db->get('asistente');
+        /*$this->db->where('id', $id);*/
+        $this->db->select('a.*, ac.debe, ac.carnet_id, ac.estado, c.nombre as nc, c.id as cid');
+        $this->db->from('asistente as a');
+        $this->db->join('asistente_carnet as ac','a.id=ac.asistente_id',"left");
+        $this->db->join('carnet as c','c.id=ac.carnet_id',"left");
+        $this->db->where('a.id=',$id);
+        $query = $this->db->get();/*$this->db->get('asistente');*/
         return $query->row_array();
     }
     

@@ -59,7 +59,7 @@ class Asistentes_controller extends CI_Controller {
 
 public function details(){
  $id = $this->input->get('id');
- $data['asistente'] = $this->Asistentes_model->get_carnets_by_id_for_panel_asistente($id);
+ $data['asistente'] = $this->Asistentes_model->get_asistentes_by_id_for_panel_asistente($id);
  $data['title'] = 'Detalles del Asistente';
  $this->load->view('backend/templates/header', $data);
  $this->load->view('backend/templates/navbar');
@@ -82,7 +82,7 @@ public function delete()
 public function edit(){
     $id = $this->input->get('id');
             //$id = $this->input->post('id');
-    $resultado = $this->Asistentes_model->get_carnets_by_id_for_panel_asistente($id);
+    $resultado = $this->Asistentes_model->get_asistentes_by_id_for_panel_asistente($id);
     $data['nombre_real']=$this->input->post('nombre_real');
     $data['apellido_real']=$this->input->post('apellido_real');
     $data['no_control']=$this->input->post('no_control');

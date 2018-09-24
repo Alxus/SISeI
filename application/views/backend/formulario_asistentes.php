@@ -94,12 +94,21 @@
 								</div>
 
 								<div class="input-field col s2">
-									<select disabled id="pro" class="browser-default" name="pro">
+									<select disabled id="carnet" class="browser-default" name="carnet">
 										<option value="" disabled>Seleccione</option>
-										<option value=0 <?php echo ($asistente['pro']==0) ? 'Selected' : ''; ?>>Básico</option>
-										<option value=1 <?php echo ($asistente['pro']==1) ? 'Selected' : ''; ?>>Completo</option>
+										<option value=1 <?php echo ($asistente['carnet_id']==1) ? 'Selected' : ''; ?>>Básico</option>
+										<option value=2 <?php echo ($asistente['carnet_id']==2) ? 'Selected' : ''; ?>>Completo</option>
 									</select>
 									<label class="active">Carnet</label>
+								</div>
+
+								<div class="input-field col s2">
+									<select disabled id="pro" class="browser-default" name="pro">
+										<option value="" disabled>Seleccione</option>
+										<option value=0 <?php echo ($asistente['pro']==0) ? 'Selected' : ''; ?>>No</option>
+										<option value=1 <?php echo ($asistente['pro']==1) ? 'Selected' : ''; ?>>Sí</option>
+									</select>
+									<label class="active">Pro</label>
 								</div>
 						</div>
 
