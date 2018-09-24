@@ -52,6 +52,7 @@ class Ventas_controller extends CI_Controller {
 				$asistente['email']=$this->input->post('email');
 				$result=$this->Asistentes_model->ingresar_Asistente($asistente);
 				if($result['affected_rows']==1){
+					$asistente['id']=$result['Id_Asistente'];
 					$abono['asistente_id']=$result['Id_Asistente'];
 					$abono['carnet_id']=$this->input->post('carnet');
 					$asistente['precio_carnet']=$carnet['precio'];

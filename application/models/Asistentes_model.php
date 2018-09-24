@@ -121,7 +121,7 @@ class Asistentes_model extends CI_Model{
 
     public function getPagados(){
         $this->db->trans_start();
-        $this->db->select('COUNT(id) as total')->from('asistente_carnet')->where('estado="PAGADO"');
+        $this->db->select('COUNT(*) as total')->from('asistente_carnet')->where('estado="PAGADO"');
         $pagados = $this->db->get()->row_array();
         $this->db->trans_complete();
         return $pagados;
@@ -153,12 +153,12 @@ class Asistentes_model extends CI_Model{
         return $this->db->get()->result_array();
     }
 
-    public function getAsistenteByNombre($data){
+    public function getAsistenteByNombre($nombre){
         $this->db->select('a.*, ac.debe, ac.carnet_id, ac.estado, c.nombre as nc, c.id as cid');
-            $this->db->from('asistente as a');
-            $this->db->join('asistente_carnet as ac','a.id=ac.asistente_id',"left");
-            $this->db->join('carnet as c','c.id=ac.carnet_id',"left");
-            $this->db->where($data);
+        $this->db->from('asistente as a');
+        $this->db->join('asistente_carnet as ac','a.id=ac.asistente_id',"left");
+        $this->db->join('carnet as c','c.id=ac.carnet_id',"left");
+        $this->db->where("CONCAT(nombre_real,' ',apellido_real) like '%".$nombre."%'");
         return $this->db->get()->result_array();
     }
 

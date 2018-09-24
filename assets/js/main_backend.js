@@ -7,16 +7,11 @@ $(document).ready(function(){
 });
 
 var nc;
-var nm='<div id="searchByNombre" class="center">'+
-'<label><i class="material-icons">search</i> Buscar por asistente nombre completo</label>'+
-'<div class="input-field col s6">'+
-'<input id="nombres" type="text" name="nombres">'+
-'<label for="nombres">Nombres</label>'+
-'</div>'+
-'<div class="input-field col s6">'+
-'<input id="apellidos" type="text" name="apellidos">'+
-'<label for="apellidos">Apellidos</label>'+
-'</div>'+
+var nm='<div id="searchByNombre">'+
+'<div class="input-field col s12">'+
+'<i class="material-icons prefix">search</i>'+
+'<input id="nombres" type="text" name="name">'+
+'<label for="nombres">Buscar por nombre</label>'+
 '</div>'+
 '</div>';
 var base_url=window.location.protocol + "//" + window.location.host + "/"+"SISeIXII/index.php/";
@@ -106,15 +101,15 @@ $('#users-form').submit(function(event){
 
 $('input[name=filtro]').on('click',function(){
   if($('input[name=filtro]').is(':checked')){
-   nc = $('#searchByNC').detach();
-   $('#inputBusqueda').prepend(nm);
-   $('#formSearch').attr( "action",base_url+"admin/searchAsistenteByName" );
- }
- else{
-  nm = $('#searchByNombre').detach();
-  $('#inputBusqueda').prepend(nc);
-  $('#formSearch').attr( "action", base_url+"admin/searchAsistenteByNC" );
-}
+    nc = $('#searchByNC').detach();
+    $('#inputBusqueda').prepend(nm);
+    $('#formSearch').attr( "action",base_url+"admin/searchAsistenteByName" );
+  }
+  else{
+    nm = $('#searchByNombre').detach();
+    $('#inputBusqueda').prepend(nc);
+    $('#formSearch').attr( "action", base_url+"admin/searchAsistenteByNC" );
+  }
 });
 
 $('#formSearch').submit(function(event){
@@ -131,10 +126,10 @@ $('#formSearch').submit(function(event){
     }).done(function (json){
       if(json!=null){
         if(JSON.stringify(json)!='[]'){
-        results(json);
-      }else{
-        alert('No se encontró el asistente');
-      }
+          results(json);
+        }else{
+          alert('No se encontró el asistente');
+        }
       }else{
         alert('No se encontró el asistente');
       }
@@ -147,58 +142,66 @@ $('#formSearch').submit(function(event){
       type        : 'POST',
       url         : $('#formSearch').attr( "action" ),
       data        : {
-        nombres: $('input[name=nombres]').val(),
-        apellidos: $('input[name=apellidos]').val()        
+        nombre: $('input[name=name]').val()
       },
       dataType    : 'json',
       encode          : false
     }).done(function (json){
       if(json!=null){
-        console.log($.parseJSON('[]'));
-        if(json!=$.parseJSON
-          ('[]')){
-        results(json);
+        if(json!=$.parseJSON('[]') && json.length!=0){
+          results(json);
+        }else{
+          alert('No se encontró el asistente');
+        }
       }else{
         alert('No se encontró el asistente');
       }
-     }else{
-      alert('No se encontró el asistente');
-    }
-  }).fail(function(xhr){
-    console.log(xhr);
-    alert("Error en el servidor");
-  });
-}
+    }).fail(function(xhr){
+      console.log(xhr);
+      alert("Error en el servidor");
+    });
+  }
 });
 
 $('body').on('click', '.btnCobrar', function (){
-    call($(this).attr('id'));
+  call($(this).attr('id'));
 });
 
 $('body').on('click', '#btnReturn', function (){
-    regresar();
+  regresar();
 });
 
 function call(id){
-   $.get( base_url+"api/get_asistente/"+id,function( json ) {
-    if(json.estado=="PAGADO"){
-      alert('Este carnet ya esta pagado');
-      return;
-    }
-    setear(json);
-    $('input[name=dato]').val('');
-    $('input[name=nombres]').val('');
-    $('input[name=apellidos]').val('');
-    $('#lisresult').remove();
-    $('#tablaAsist').append(listaorig);
-    $('.collapsible').collapsible("close");
-  },"json");
+  $.get( base_url+"api/get_asistente/"+id,
+    function( json ) {
+      if(json.estado=="PAGADO" && json.nc=="Básico"){
+        if(confirm('¿Desea cobrar el carnet completo?')){
+          setearcompleto(json);
+          $('input[name=dato]').val('');
+          $('input[name=name]').val('');
+          $('#lisresult').remove();
+          $('#tablaAsist').append(listaorig);
+          $('.collapsible').collapsible("close");
+        }else{
+          return;
+        }
+      } else if(json.estado=="PAGADO" && json.nc=="Completo"){
+        alert("Este asistente ya pagó.");
+        return;
+      }
+      setear(json);
+      $('input[name=dato]').val('');
+      $('input[name=name]').val('');
+      $('#lisresult').remove();
+      $('#tablaAsist').append(listaorig);
+      $('.collapsible').collapsible("close");
+    },
+    "json");
 }
 
 function regresar(){
   $('input[name=dato]').val('');
-  $('input[name=nombres]').val('');
-  $('input[name=apellidos]').val('');
+  $('input[name=name]').val('');
   $('#lisresult').remove();
   $('#tablaAsist').append(listaorig);
   $('#btnReturn').remove();
@@ -206,17 +209,33 @@ function regresar(){
 }
 
 function setear(json){
- $('input[name=fb]').val(json.facebook_id).prop( "readonly", true );
- $('input[name=nombre]').val(json.nombre_real).prop( "readonly", true );
- $('input[name=apellido]').val(json.apellido_real).prop( "readonly", true );
- $('input[name=email]').val(json.email).prop( "readonly", true );
- $('input[name=tel]').val(json.tel).prop( "readonly", true );
- $('input[name=noControl]').val(json.no_control).prop( "readonly", true );
- $('select[name=carrera]').val(json.carrera).prop( "readonly", true );
- $('select[name=carnet]').val(json.carnet_id);
- $('select[name=sexo]').val(json.sexo).prop( "readonly", true );
- $('select[name=talla]').val(json.talla).prop( "readonly", true );
- $('label').addClass('active');      
+  $('input[name=fb]').val(json.facebook_id).prop( "readonly", true );
+  $('input[name=nombre]').val(json.nombre_real).prop( "readonly", true );
+  $('input[name=apellido]').val(json.apellido_real).prop( "readonly", true );
+  $('input[name=email]').val(json.email).prop( "readonly", true );
+  $('input[name=tel]').val(json.tel).prop( "readonly", true );
+  $('input[name=noControl]').val(json.no_control).prop( "readonly", true );
+  $('select[name=carrera]').val(json.carrera).prop( "readonly", true );
+  $('select[name=carnet]').val(json.carnet_id);
+  $('select[name=sexo]').val(json.sexo).prop( "readonly", true );
+  $('select[name=talla]').val(json.talla).prop( "readonly", true );
+  $('label').addClass('active');
+  $('#btnReturn').remove();
+}
+
+function setearcompleto(json){
+  $('input[name=fb]').val(json.facebook_id).prop( "readonly", true );
+  $('input[name=nombre]').val(json.nombre_real).prop( "readonly", true );
+  $('input[name=apellido]').val(json.apellido_real).prop( "readonly", true );
+  $('input[name=email]').val(json.email).prop( "readonly", true );
+  $('input[name=tel]').val(json.tel).prop( "readonly", true );
+  $('input[name=noControl]').val(json.no_control).prop( "readonly", true );
+  $('select[name=carrera]').val(json.carrera).prop( "readonly", true );
+  $('select[name=carnet]').val(2);
+  $('select[name=sexo]').val(json.sexo).prop( "readonly", true );
+  $('select[name=talla]').val(json.talla).prop( "readonly", true );
+  $('label').addClass('active');
+  $('#btnReturn').remove();
 }
 
 function results(json){
@@ -226,73 +245,15 @@ function results(json){
   var newList = '<tbody id="lisresult">';
   for (var i = 0; i < json.length; i++) {
     newList+='<tr>'+
-  '<td>'+(json[i].no_control!=null?json[i].no_control:'N/A')+'</td>'+
-  '<td>'+json[i].nombre_real+' '+json[i].apellido_real+'</td>'+
-  '<td>'+(json[i].carnet!=null?json[i].carnet:'N/A')+'</td>'+
-  '<td>'+(json[i].estado!=null?json[i].estado:'N/A')+'</td>'+
-  '<td>'+(json[i].debe!=null?'$ '+json[i].debe:'$ 0')+'</td>'+
-  '<td><a id="'+json[i].id+'/'+(json[i].cid!=null?json[i].cid:0)+'" class="btn waves-effect btn-flat green btnCobrar white-text">Seleccionar</a></td>'+
-  '</tr>';
+    '<td>'+(json[i].no_control!=null?json[i].no_control:'N/A')+'</td>'+
+    '<td>'+json[i].nombre_real+' '+json[i].apellido_real+'</td>'+
+    '<td>'+(json[i].nc!=null?json[i].nc:'N/A')+'</td>'+
+    '<td>'+(json[i].estado!=null?json[i].estado:'N/A')+'</td>'+
+    '<td>'+(json[i].debe!=null?'$ '+json[i].debe:'$ 0')+'</td>'+
+    '<td><a id="'+json[i].id+'/'+(json[i].cid!=null?json[i].cid:0)+'" class="btn waves-effect btn-flat green btnCobrar white-text">Seleccionar</a></td>'+
+    '</tr>';
   }
   newList+='</tbody>';
   $('#tablaAsist').append(newList);
   $('#return').append('<a id="btnReturn" class="btn btn-flat red white-text">Regresar</a>');
 }
-/*$('.eliminar').on('click',function(){
-  if(confirm('Desea eliminar esta madre?')){
-    window.location.href="talleres";
-    alert('Borrado');
-  }
-
-  M.toast({html: '<span>¿Desea elminar el taller?</span>'+
-    '<button class="btn-flat toast-action">Sí</button>'+
-    '<button class="btn-flat toast-action">No</button>',
-    classes:''})
-});
-*/
-
-
-
-/*$('#talleres-form').submit(function(event){
-  event.preventDefault();
-  $.ajax({
-    type: "POST",
-    enctype: 'multipart/form-data',
-    processData: false,
-    contentType: false,
-    cache: false,
-    url         : $('#talleres-form').attr( "action" ),
-    data        : {
-      nombre: $('input[name=nombre]').val(),
-      descripcion: $('textarea[name=descripcion]').val(),
-      requisitos: $('textarea[name=requisitos]').val(),
-      lugar: $('input[name=lugar]').val(),
-      limite: $('input[name=limite]').val(),
-      fecha: $('input[name=fecha]').val(),
-      hora: $('input[name=hora]').val(),
-      nivel: $('input[name=nivel]').val(),
-      btnimg: $('input[name=btnimg]').val(),
-      btnicon: $('input[name=btnicon]').val(),
-      imagen: $('input[name=imagen]').val(),
-      icono: $('input[name=icono]').val(),
-    },
-  }).done(function (json){
-    if(json!=null){
-      if(json.error=='ALL_OK'){
-        alert("Taller agregado");
-        window.location.href='admin/panel/talleres';
-      }
-      if(json.error=='BAD_POST'){
-        alert("Verifique los datos");
-      }
-      if(json.error=='NOT_CREATED'){
-        alert("Error en la base de datos");
-      }
-    }else{
-      alert('Ha ocurrido un error');
-    }
-  }).fail(function(xhr){
-    console.log(xhr);
-    alert("Error en el servidor");
-  });
-});*/

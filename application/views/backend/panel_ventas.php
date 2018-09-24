@@ -41,7 +41,7 @@
 						<div class="row" id="inputBusqueda">
 							<div class="input-field col s12" id="searchByNC">
 								<i class="material-icons prefix">search</i>
-								<input id="buscar" type="text" name="dato"></input>
+								<input id="buscar" type="text" name="dato">
 								<label for="buscar">Buscar por No. Control</label>
 							</div>
 							<div class="center">
