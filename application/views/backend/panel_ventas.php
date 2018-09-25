@@ -41,7 +41,7 @@
 						<div class="row" id="inputBusqueda">
 							<div class="input-field col s12" id="searchByNC">
 								<i class="material-icons prefix">search</i>
-								<input id="buscar" type="text" name="dato"></input>
+								<input id="buscar" type="text" name="dato" required>
 								<label for="buscar">Buscar por No. Control</label>
 							</div>
 							<div class="center">
@@ -69,31 +69,31 @@
 					<div class="row">
 						<div class="input-field col s6">
 							<input hidden id="fb" type="text" name="fb">
-							<input id="nombre" type="text" name="nombre">
+							<input id="nombre" type="text" name="nombre" required>
 							<label for="nombre">Nombres</label>
 						</div>
 						<div class="input-field col s6">
-							<input id="apellido" type="text" name="apellido">
+							<input id="apellido" type="text" name="apellido" required>
 							<label for="apellido">Apellidos</label>
 						</div>
 					</div>
 					<div class="row">
 						<div class="input-field col s6">
-							<input id="email" type="email" name="email">
+							<input id="email" type="email" name="email" required>
 							<label for="email">Correo</label>
 						</div>
 						<div class="input-field col s6">
-							<input id="tel" type="text" name="tel">
+							<input id="tel" type="text" name="tel" required>
 							<label for="tel">Telefono</label>
 						</div>
 					</div>
 					<div class="row">
 						<div class="input-field col s6">
-							<input id="noControl" type="text" name="noControl">
+							<input id="noControl" type="text" name="noControl" required>
 							<label for="noControl">No. Control</label>
 						</div>
 						<div class="input-field col s6">
-							<select name="carrera" class="browser-default">
+							<select name="carrera" class="browser-default" required>
 								<option value="" disabled selected>Seleccione</option>
 								<option value="1">Sistemas</option>
 								<option value="2">TICs</option>
@@ -112,7 +112,7 @@
 					</div>
 					<div class="row">
 						<div class="input-field col s6">
-							<select id="carnet" class="browser-default" name="carnet">
+							<select id="carnet" class="browser-default" name="carnet" required>
 								<option value="" disabled selected>Seleccione</option>
 								<?php foreach ($Carnets as $c): ?>
 									<option value=<?=$c['id'];?>><?=$c['nombre']?></option>
@@ -121,13 +121,13 @@
 							<label class="active">Carnet</label>
 						</div>
 						<div class="input-field col s6">
-							<input id="abono" type="text" name="abono">
+							<input id="abono" type="text" name="abono" required>
 							<label for="abono">Pago/Abono</label>
 						</div>
 					</div>
 					<div class="row">
 						<div class="input-field col s6">
-							<select id="sexo" class="browser-default" name="sexo">
+							<select id="sexo" class="browser-default" name="sexo" required>
 								<option value="" disabled selected>Seleccione</option>
 								<option value="0">Hombre</option>
 								<option value="1">Mujer</option>
@@ -135,7 +135,7 @@
 							<label class="active">Sexo</label>
 						</div>
 						<div class="input-field col s6">
-							<select id="talla" class="browser-default" name="talla">
+							<select id="talla" class="browser-default" name="talla" required>
 								<option value="" disabled selected>Seleccione</option>
 								<option value="1">Extra Chica</option>
 								<option value="2">Chica</option>

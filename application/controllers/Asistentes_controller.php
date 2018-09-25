@@ -59,7 +59,7 @@ class Asistentes_controller extends CI_Controller {
 
 public function details(){
  $id = $this->input->get('id');
- $data['asistente'] = $this->Asistentes_model->get_carnets_by_id_for_panel_asistente($id);
+ $data['asistente'] = $this->Asistentes_model->get_asistentes_by_id_for_panel_asistente($id);
  $data['title'] = 'Detalles del Asistente';
  $this->load->view('backend/templates/header', $data);
  $this->load->view('backend/templates/navbar');
@@ -82,7 +82,7 @@ public function delete()
 public function edit(){
     $id = $this->input->get('id');
             //$id = $this->input->post('id');
-    $resultado = $this->Asistentes_model->get_carnets_by_id_for_panel_asistente($id);
+    $resultado = $this->Asistentes_model->get_asistentes_by_id_for_panel_asistente($id);
     $data['nombre_real']=$this->input->post('nombre_real');
     $data['apellido_real']=$this->input->post('apellido_real');
     $data['no_control']=$this->input->post('no_control');
@@ -199,17 +199,9 @@ public function searchAsistenteByNc(){
 }
 
 public function searchAsistenteByName(){
- $data['nombre_real']=$this->input->post('nombres');
- $data['apellido_real']=$this->input->post('apellidos');
- $asistente=$this->Asistentes_model->getAsistenteByNombre($data);
- if($asistente==null){
-  echo json_encode($asistente);
-  return;
- }
- for ($i=0; $i <sizeof($asistente) ; $i++) { 
-  $result[$i]=$this->Asistentes_model->get_asistente_by_id($asistente[$i]['id'],$asistente[$i]['cid']);
- }
-  echo json_encode($result);
+ $nombre=$this->input->post('nombre');
+ $asistente=$this->Asistentes_model->getAsistenteByNombre($nombre);
+ echo json_encode($asistente);
 }
 
 public function printlst(){
@@ -221,7 +213,7 @@ public function printlst(){
   $this->pdf->SetFont('Arial','B',12);
   $this->pdf->MultiCell(0,10,'Lista de Asistentes');
   $this->pdf->SetFont('Arial','B',10);
-  $this->pdf->tablewidths = array(10, 22, 65, 25, 20, 25, 10);
+  $this->pdf->tablewidths = array(10, 22, 55, 35, 20, 25, 10);
   for($i=0; $i<sizeof($header); $i++){
     $this->pdf->Cell($this->pdf->tablewidths[$i],7,$header[$i],1,0,'C',true);
   }
