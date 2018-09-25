@@ -34,10 +34,12 @@ class Ventas_controller extends CI_Controller {
 
 	public function Abono(){
 		if($this->form_validation->run()){
+			$basico=null;
 			$data['facebook_id']=$this->input->post('fb');
 			$data['email']=$this->input->post('email');
 			$data['carnet_id']=$this->input->post('carnet');
 			$carnet=$this->Carnets_model->get_carnets_by_id($this->input->post('carnet'));
+			$carnet_basico=$this->Carnets_model->get_carnets_by_id(1);
 			$asistente=$this->Asistentes_model->getbByEmail_OR_FbId($data);
 			//El usuario no se encuentra en nuestra BD
 			if($asistente==null){
@@ -77,32 +79,48 @@ class Ventas_controller extends CI_Controller {
 					}
 					$abono['estado']=($abono['debe']==0)?'PAGADO':'APARTADO';
 				}else{
-					$asistente['pago']=$this->input->post('abono');
-					$abono['asistente_id']=$asistente['id'];
-					$abono['carnet_id']=$this->input->post('carnet');
-					$asistente['precio_carnet']=$carnet['precio'];
-					$asistente['pago']=$this->input->post('abono');
-					$asistente['adeudo_anterior']=$carnet['precio'];
-					$abono['debe']=$carnet['precio']-$this->input->post('abono');
-					if($abono['debe']<0){
-						$abono['debe'] = 0;
+					$basico = $this->Asistentes_model->pago_basico($asistente['id']);
+					if($basico!=null){
+						$asistente['pago']=$this->input->post('abono');
+						$abono['asistente_id']=$asistente['id'];
+						$abono['carnet_id']=$this->input->post('carnet');
+						$asistente['precio_carnet']=$carnet['precio'];
+						$asistente['pago']=$this->input->post('abono');
+						$asistente['adeudo_anterior']=$carnet['precio']-$carnet_basico['precio'];
+						$abono['debe']=$carnet['precio']-$carnet_basico['precio']-$this->input->post('abono');
+						$this->Asistentes_model->delete_basico($asistente['id'],1);
+						if($abono['debe']<0){
+							$abono['debe'] = 0;
+						}
+						$abono['estado']=($abono['debe']==0)?'PAGADO':'APARTADO';
+					}else{
+						$asistente['pago']=$this->input->post('abono');
+						$abono['asistente_id']=$asistente['id'];
+						$abono['carnet_id']=$this->input->post('carnet');
+						$asistente['precio_carnet']=$carnet['precio'];
+						$asistente['pago']=$this->input->post('abono');
+						$asistente['adeudo_anterior']=$carnet['precio'];
+						$abono['debe']=$carnet['precio']-$this->input->post('abono');
+						if($abono['debe']<0){
+							$abono['debe'] = 0;
+						}
+						$abono['estado']=($abono['debe']==0)?'PAGADO':'APARTADO';
 					}
-					$abono['estado']=($abono['debe']==0)?'PAGADO':'APARTADO';
 				}
 			}
-		
 
-		if($abono['estado']=='PAGADO'){
-			if(($this->Pagos_model->getPagados()['total']+$this->Asistentes_model->getPagados()['total'])<50){
-				$asistente['pro']=true;
-				$this->Asistentes_model->pro($asistente);
+
+			if($abono['estado']=='PAGADO'){
+				if(($this->Pagos_model->getPagados()['total']+$this->Asistentes_model->getPagados()['total'])<50){
+					$asistente['pro']=true;
+					$this->Asistentes_model->pro($asistente);
+				}
 			}
-		}
-		$asistente['folio']=$this->Asistentes_model->abono_asistente($abono);
-		$asistente['debe']=$abono['debe'];
-		$asistente['estado']=$abono['estado'];
-		$asistente['carnet']=$carnet;
-		$this->printComprobante($asistente,1);
+			$asistente['folio']=$this->Asistentes_model->abono_asistente($abono);
+			$asistente['debe']=$abono['debe'];
+			$asistente['estado']=$abono['estado'];
+			$asistente['carnet']=$carnet;
+			$this->printComprobante($asistente,1);
 		}
 		else{
 			echo '<script language="javascript">';

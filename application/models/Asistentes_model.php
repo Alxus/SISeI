@@ -97,6 +97,7 @@ class Asistentes_model extends CI_Model{
         $this->db->from('asistente as a');
         $this->db->join('asistente_carnet as ac','a.id=ac.asistente_id','left');
         $this->db->join('carnet as c','c.id=ac.carnet_id','left');
+        $this->db->order_by('concat(a.apellido_real," ",a.nombre_real)');
         return $this->db->get()->result_array();
     }
 
@@ -122,6 +123,20 @@ class Asistentes_model extends CI_Model{
 
     public function tiene_carnet($id,$idc){
         return $this->db->from('asistente_carnet')->where('asistente_id='.$id)->where('carnet_id='.$idc)->get()->row_array();
+    }
+
+    public function pago_basico($id){
+        return $this->db->from('asistente_carnet')
+        ->where('asistente_id='.$id)
+        ->where('carnet_id=1')
+        ->where("estado='PAGADO'")
+        ->get()->row_array();
+    }
+
+    public function delete_basico($id,$idc){
+        $this->db->where('asistente_id='.$id);
+        $this->db->where('carnet_id='.$idc);
+        return $this->db->delete('asistente_carnet');
     }
 
     public function getPagados(){

@@ -10,7 +10,7 @@ var nc;
 var nm='<div id="searchByNombre">'+
 '<div class="input-field col s12">'+
 '<i class="material-icons prefix">search</i>'+
-'<input id="nombres" type="text" name="name">'+
+'<input id="nombres" type="text" name="name" required>'+
 '<label for="nombres">Buscar por nombre</label>'+
 '</div>'+
 '</div>';
@@ -224,14 +224,16 @@ function setear(json){
 }
 
 function setearcompleto(json){
+  json.carnet_id=2;
   $('input[name=fb]').val(json.facebook_id).prop( "readonly", true );
   $('input[name=nombre]').val(json.nombre_real).prop( "readonly", true );
   $('input[name=apellido]').val(json.apellido_real).prop( "readonly", true );
   $('input[name=email]').val(json.email).prop( "readonly", true );
   $('input[name=tel]').val(json.tel).prop( "readonly", true );
   $('input[name=noControl]').val(json.no_control).prop( "readonly", true );
+  $('input[name=abono]').val(500).prop( "readonly", true );
   $('select[name=carrera]').val(json.carrera).prop( "readonly", true );
-  $('select[name=carnet]').val(2);
+  $('select[name=carnet]').val(json.carnet_id);
   $('select[name=sexo]').val(json.sexo).prop( "readonly", true );
   $('select[name=talla]').val(json.talla).prop( "readonly", true );
   $('label').addClass('active');
