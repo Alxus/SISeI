@@ -67,15 +67,15 @@ class Api_controller extends CI_Controller {
 	}
 
 	public function get_conferencias(){
-		echo json_encode($this->Conferencias_model->get());
+		echo json_encode($this->Conferencias_model->get_conferencias_landing());
 	}
 
 	public function get_ponentes(){
-		echo json_encode($this->Ponente_model->get_ponentes());
+		echo json_encode($this->Ponente_model->get_ponentes_landing());
 	}
 
 	public function get_talleres(){
-		echo json_encode($this->Talleres_model->get_talleres());
+		echo json_encode($this->Talleres_model->get_talleres_landing());
 	}
 
 	public function get_conferencias_importantes(){

@@ -82,9 +82,12 @@ class Talleres_model extends CI_Model{
         return $this->db->get()->result_array();
     }
 
+    public function get_talleres_landing(){
+        return $this->db->get('vw_talleres')->result_array();
+    }
 
     public function get_talleres_importantes(){
-        return $this->db->get('taller',4)->result_array();
+        return $this->db->get('vw_talleres',3)->result_array();
     }
 
 }

@@ -24,8 +24,10 @@
       <h4>Calificacion: <?php echo $conferencias['calificacion']; ?> </h4>
       <h4>Created_At: <?php echo $conferencias['created_at']; ?> </h4>
       <h4>Updated_At: <?php echo $conferencias['updated_at']; ?> </h4>
+      <?if($_SESSION['SISeI_User']['tipo']<=3):?>
       <a class="waves-effect waves-light btn blue" href="<?php echo base_url();?>index.php/Conferencias_controller/edit?id=<?php echo $conferencias['id'];?>"><i class="material-icons white-text">edit</i>Editar</a>
       <a class="waves-effect waves-light btn red" href="<?php echo base_url();?>index.php/Conferencias_controller/delete?id=<?php echo $conferencias['id'];?>"><i class="material-icons white-text">delete</i>Eliminar</a>
+      <?endif;?>
     </div> 
   </div>
 </div>

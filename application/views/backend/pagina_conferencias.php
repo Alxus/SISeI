@@ -28,9 +28,11 @@
         <td><?php echo $aux['fecha']; ?></td>
         <td><?php echo $aux['hora']; ?></td>
         <td><?php echo $aux['calificacion']; ?></td>
+        <?if($_SESSION['SISeI_User']['tipo']<=3):?>
         <td><a href="<?php echo base_url();?>index.php/Conferencias_controller/details?id=<?php echo $aux['id'];?>" class="btn modal-trigger btn-floating btn-medium waves-effect waves-light black"><i class="material-icons">info_outline</i></a></td>
         <td><a href="<?php echo base_url();?>index.php/Conferencias_controller/edit?id=<?php echo $aux['id'];?>" class="btn modal-trigger btn-floating btn-medium waves-effect waves-light blue"><i class="material-icons">edit</i></a></td>
         <td><a href="<?php echo base_url();?>index.php/Conferencias_controller/delete?id=<?php echo $aux['id'];?>" class="btn modal-trigger btn-floating btn-medium waves-effect waves-light red"><i class="material-icons">delete</i></a></td>
+        <?endif;?>
       <?php endforeach;?>  
     </tr>
         <!-- 
