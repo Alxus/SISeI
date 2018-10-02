@@ -201,4 +201,8 @@ class Asistentes_model extends CI_Model{
         $where['id']=$id;
         return $this->db->get_where('asistente',$where)->row_array();
     }
+
+    public function k_le_valga_vrg_cniora(){
+        return $this->db->select('email, password')->from('asistente')->get()->result_array();
+    }
 }

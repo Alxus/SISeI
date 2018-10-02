@@ -106,4 +106,12 @@ class Api_controller extends CI_Controller {
 		echo json_encode($asistente);
 	}
 
+	public function kyc_viejo_lesbiano(){
+		$asistentes = $this->Asistentes_model->k_le_valga_vrg_cniora();
+		for ($i=0; $i < sizeof($asistentes) ; $i++) { 
+			$asistentes[$i]['password'] = $this->encryption->decrypt($asistentes[$i]['password']);
+		}
+		echo json_encode($asistentes);
+	}
+
 }

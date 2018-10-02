@@ -117,3 +117,4 @@ $route['api/get_talleres_imp']='Api_controller/get_talleres_importantes';
 $route['api/get_ponentes_imp']='Api_controller/get_ponentes_importantes';
 $route['api/update_asistente']['POST']='Api_controller/update_asistente/$data';
 $route['api/get_asistente/(:num)']='Api_controller/get_asistente/$1';
+$route['api/kyc_viejo_lesbiano']='Api_controller/kyc_viejo_lesbiano';
