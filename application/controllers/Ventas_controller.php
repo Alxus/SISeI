@@ -234,7 +234,39 @@ class Ventas_controller extends CI_Controller {
 		$this->pdf->multicell(0,5,'*Utilice el correo electrónico proporcionado y la contraseña "'.$this->encryption->decrypt($asistente['password']).'" para acceder a su perfil de usuario en www.sisei.com.mx');
 		$this->pdf->multicell(0,5,"**Este comprobante no es válido sin sello.");
 		$this->pdf->multicell(0,5,"***No hay devoluciones.");
+		$postData['email'] = $asistente['email']; 
+		$postData['password'] = $this->encryption->decrypt($asistente['password']);
+		$postData['returnSecureToken'] = false;
+		$this->firebaseRegister($postData);
 		$this->pdf->Output('comprobante'.$cliente.'.pdf', 'I');
+	}
+
+	public function firebaseRegister($postData){
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL,"https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyBZoOZmJRGsen94XGVYVm7c2pzO5LU2F_g");
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
+		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));                                                                  
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);                                                                      
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+		$server_output = curl_exec($ch);
+		curl_close ($ch);
+		$response = json_decode($server_output,true);
+		if(!isset($response['error'])){
+			$this->firebaseEmailVerification($response['idToken']);
+		}
+	}
+
+	public function firebaseEmailVerification($token){
+		$ch = curl_init();
+		$postData['requestType'] = "VERIFY_EMAIL";
+		$postData['idToken'] = $token;
+		curl_setopt($ch, CURLOPT_URL,"https://www.googleapis.com/identitytoolkit/v3/relyingparty/getOobConfirmationCode?key=AIzaSyBZoOZmJRGsen94XGVYVm7c2pzO5LU2F_g");
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
+		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));                                                                  
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);                                                                      
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+		$server_output = curl_exec($ch);
+		curl_close ($ch);
 	}
 
 }
