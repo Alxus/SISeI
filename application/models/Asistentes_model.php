@@ -103,7 +103,6 @@ class Asistentes_model extends CI_Model{
 
     public function abono_asistente($data){
         $result=null;
-        $this->db->trans_start();
         $this->db->where('asistente_id',$data['asistente_id']);
         $this->db->where('carnet_id',$data['carnet_id']);
         $idAC = $this->db->get('asistente_carnet')->row_array();
@@ -117,7 +116,6 @@ class Asistentes_model extends CI_Model{
             $this->db->where('carnet_id',$data['carnet_id']);
             $this->db->update('asistente_carnet',$data);
         }
-        $this->db->trans_complete();
         return $result;
     }
 
@@ -140,10 +138,8 @@ class Asistentes_model extends CI_Model{
     }
 
     public function getPagados(){
-        $this->db->trans_start();
         $this->db->select('COUNT(*) as total')->from('asistente_carnet')->where('estado="PAGADO"');
         $pagados = $this->db->get()->row_array();
-        $this->db->trans_complete();
         return $pagados;
     }
 
@@ -194,5 +190,15 @@ class Asistentes_model extends CI_Model{
         $this->db->from('asistente');
         $this->db->order_by('Nombre');
         return $this->db->get()->result_array();
+    }
+
+
+    public function update_asistente($data){
+        return $this->db->where('id',$data['id'])->update('asistente',$data);
+    }
+
+    public function get_asistente($id){
+        $where['id']=$id;
+        return $this->db->get_where('asistente',$where)->row_array();
     }
 }

@@ -90,4 +90,20 @@ class Api_controller extends CI_Controller {
 		echo json_encode($this->Talleres_model->get_talleres_importantes());
 	}
 
+	public function update_asistente(){
+		$result  = 'BAD_POST';
+		$body=@file_get_contents("php://input");
+		$asistente = json_decode($body,TRUE);
+		if($this->Asistentes_model->update_asistente($asistente)){
+			$result = "ALL_OK";
+		}
+		echo json_encode($result);
+	}
+
+	public function get_asistente($id){
+		$asistente = $this->Asistentes_model->get_asistente($id);
+		unset($asistente['password']);
+		echo json_encode($asistente);
+	}
+
 }
