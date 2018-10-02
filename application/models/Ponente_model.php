@@ -91,11 +91,11 @@ class Ponente_model extends CI_Model{
     }
     
     public function get_ponentes_landing(){
-        return $this->db->get('vw_ponentes')->result_array();
+        return $this->db->get('vw_ponentes_conferencias')->result_array();
     }
     
     public function get_ponentes_importantes(){
-        return $this->db->get('vw_ponentes',3)->result_array();
+        return $this->db->get('vw_ponentes_conferencias',3)->result_array();
     }
 }
 ?>
