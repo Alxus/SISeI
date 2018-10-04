@@ -205,4 +205,17 @@ class Asistentes_model extends CI_Model{
     public function k_le_valga_vrg_cniora(){
         return $this->db->select('email, password')->from('asistente')->get()->result_array();
     }
+
+    public function print_ventas($date){
+        $stop_date = new DateTime($date);
+        $stop_date->modify('+1 day');
+        return $this->db->select('no_control as "NC", 
+            concat(nombre_real," ",apellido_real) as "Nombe del asistente",
+            carnet_nombre as "Carnet", estado as "Estado", debe as "Debe", created_at as "Fecha"')
+        ->from('vw_asistente_carnet')
+        ->where('created_at >= '.'"'.$date.'"')
+        ->where('created_at < '.'"'.$stop_date->format('Y-m-d').'"')
+        ->order_by('created_at')
+        ->get()->result_array();
+    }
 }

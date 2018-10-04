@@ -92,6 +92,7 @@ $route['admin/panel/ventas/Abono']['POST']='Ventas_controller/Abono/$data';
 $route['admin/searchAsistenteByNC']['POST']='Asistentes_controller/searchAsistenteByNc/$data'; 
 $route['admin/searchAsistenteByName']['POST']='Asistentes_controller/searchAsistenteByName/$data';
 $route['admin/panel/ventas/pdf']='Ventas_controller/printComprobante'; 
+$route['admin/panel/ventas/list/(:any)'] = 'Ventas_controller/print_ventas/$1'; 
 //Comentarios
 
 

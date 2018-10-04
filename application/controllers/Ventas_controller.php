@@ -8,6 +8,7 @@ class Ventas_controller extends CI_Controller {
 		if(!$this->authentication->check_user()){
 			redirect('admin');
 		}
+		date_default_timezone_set('America/Mazatlan');
 		$this->load->model('Asistentes_model');		
 		$this->load->model('Carnets_model');
 		$this->load->model('Pagos_model');
@@ -267,6 +268,29 @@ class Ventas_controller extends CI_Controller {
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
 		$server_output = curl_exec($ch);
 		curl_close ($ch);
+	}
+
+	public function print_ventas($date){
+		$ventas = $this->Asistentes_model->print_ventas($date);
+		if($ventas==null){
+			echo "Ninguna venta ha sido realizada el dia ".$date;
+			return;
+		}
+		$header=array_keys($ventas[0]);
+		$this->pdf->SetFillColor(33 , 150 , 243);
+		$this->pdf->AliasNbPages();
+		$this->pdf->AddPage();
+		$this->pdf->SetFont('Arial','B',16);
+		$this->pdf->MultiCell(0,10,'Ventas del dia',0,"C");
+		$this->pdf->SetFont('Arial','B',12);
+		$this->pdf->tablewidths = array(22, 65,22,25,20,40);
+		for($i=0; $i<sizeof($header); $i++){
+			$this->pdf->Cell($this->pdf->tablewidths[$i],7,$header[$i],1,0,'C',true);
+		}
+		$this->pdf->Ln();
+		$this->pdf->SetFont('Arial','',10);
+		$this->pdf->morepagestable($ventas,8,"C",true);
+		$this->pdf->Output('ventas_'.$date.'.pdf', 'I');
 	}
 
 }

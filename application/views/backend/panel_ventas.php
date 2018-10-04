@@ -31,8 +31,10 @@
 			</div>
 		</div>
 	</div>
-	
 	<div class="col s12 m5 l4">
+		<div class="center">
+			<a class="btn green waves-effect" href=<?=site_url('admin/panel/ventas/list/'.date('Y-m-d'))?> target="blank">Lista de ventas del dia</a>
+		</div>
 		<ul class="collapsible">
 			<li>
 				<div class="collapsible-header"><i class="material-icons">search</i>Buscar Asistente</div>
