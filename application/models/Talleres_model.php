@@ -17,9 +17,9 @@ class Talleres_model extends CI_Model{
         return $this->db->get()->result_array();
     }
     
-    public function update_taller($data){
-        $this->db->update('taller',$data);
-        return $this->db->affected_rows()!=0;
+    public function update_taller($id, $data){
+        $this->db->where('id', $id);
+        return $this->db->update('taller', $data);
     }
 
     public function get_taller($id){

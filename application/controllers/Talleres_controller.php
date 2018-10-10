@@ -118,7 +118,7 @@ class Talleres_controller extends CI_Controller {
 			if($this->upload->do_upload('btnicon')){
 				$data['icono']=base_url().'assets/img/'.$this->upload->data('file_name');
 			}
-			if($this->Talleres_model->update_taller($data)){
+			if($this->Talleres_model->update_taller($id, $data)){
 
 				$data['error']="ALL_OK";
 			}
