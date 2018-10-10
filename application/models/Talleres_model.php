@@ -17,9 +17,9 @@ class Talleres_model extends CI_Model{
         return $this->db->get()->result_array();
     }
     
-    public function update_taller($data){
-        $this->db->update('taller',$data);
-        return $this->db->affected_rows()!=0;
+    public function update_taller($id, $data){
+        $this->db->where('id', $id);
+        return $this->db->update('taller', $data);
     }
 
     public function get_taller($id){
@@ -53,7 +53,9 @@ class Talleres_model extends CI_Model{
     }
 
     public function get_talleresPDF(){
-        $this->db->select('t.nombre as Taller,
+        $this->db->select('
+            t.id as "No.",
+            t.nombre as Taller,
             CONCAT(p.nombres," ",p.apellidos) as Tallerista,
             t.descripcion as Descripcion,
             t.requisitos as Requisitos,
@@ -78,6 +80,11 @@ class Talleres_model extends CI_Model{
         $this->db->where('t.id='.$id);
         $this->db->order_by('No');
         return $this->db->get()->result_array();
+    }
+
+
+    public function get_talleres_importantes(){
+        return $this->db->get('taller',4)->result_array();
     }
 
 }

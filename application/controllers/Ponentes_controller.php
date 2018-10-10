@@ -3,6 +3,10 @@ class Ponentes_controller extends CI_Controller{
     public function __construct()
     {
         parent::__construct();
+         if(!$this->authentication->check_user()){
+              redirect(base_url());
+              return;
+          }
         $this->load->model('Ponente_model');
         $this->load->library('Pdf');
         $this->form_validation->set_rules('nombres', 'Nombres', 'required');
@@ -11,13 +15,14 @@ class Ponentes_controller extends CI_Controller{
         $this->form_validation->set_rules('email', 'Email', 'required');
         $this->form_validation->set_rules('linkedin', 'Linkedin', 'required');
         $this->form_validation->set_rules('descripcion', 'Descripcion', 'required');
-        $this->form_validation->set_rules('imagen', 'Imagen', 'required'); 
+        $this->form_validation->set_rules('imagen', 'Imagen', 'required');
+        //reglas para subir imagenes
+        $config['upload_path'] = './assets/img/';
+        $config['allowed_types'] = 'gif|jpg|png|jpeg|ico';
+        $config['remove_spaces'] = TRUE;
+        $this->upload->initialize($config);
     }
     public function index(){
-        if(!$this->authentication->check_user()){
-          redirect(base_url());
-          return;
-      }
       $data['title'] = 'Lista de Ponentes';
       $data['ponentes'] = $this->Ponente_model->get();
       $this->load->view('backend/templates/header',$data);
@@ -85,23 +90,18 @@ public function edit(){
     else
     {
         $id = $this->input->post('id');
-        if ($this->form_validation->run())                        
-        {
+        if ($this->form_validation->run()) {
+            if (!file_exists($_FILES['btnimg']['tmp_name'])) {
+                $data['imagen']=$this->input->post('imagen');
+            }
             if($this->upload->do_upload('btnimg')){
-              $data['imagen']=base_url().'assets/img/'.$this->upload->data('file_name');          
-              if($this->Ponente_model->update($id, $data)){
-                  $data['error']="ALL_OK";    
-              }
-              else
-              {
+                $data['imagen']=base_url().'assets/img/'.$this->upload->data('file_name');
+            }
+            if($this->Ponente_model->update($id, $data)){
+                $data['error']="ALL_OK";
+            } else {
                 $data['error']="NOT_CREATED";//ocurrio un error
-              }
-            }
-            else
-            {
-              $data['error']=$this->upload->display_errors();        
-            }
-                       
+            }     
         }
         else{
           $data['error']="BAD_POST";  
