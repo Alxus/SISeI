@@ -79,6 +79,7 @@ $route['admin/panel/asistentes']='Asistentes_controller';
 $route['admin/create_asistente']='Asistentes_controller/add/$data'; 
 $route['admin/asistente_details']='Asistentes_controller/details/$data';
 $route['admin/update_asistente']='Asistentes_controller/edit/$data'; 
+$route['admin/asignar_taller_asistente']='Asistentes_controller/asignar_taller/$data'; 
 
 $route['admin/panel/conferencia']='Conferencias_controller';
 $route['admin/create_conferencia']='Conferencias_controller/add/$data'; 
