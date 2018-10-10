@@ -28,6 +28,17 @@ class Asistentes_model extends CI_Model{
         return $query->result_array();
     }
 
+    function get_asistentes_for_panel_asistente()
+    {
+        /*$this->db->where('id', $id);*/
+        $this->db->select('a.*, ac.debe, ac.carnet_id, ac.estado, c.nombre as nc, c.id as cid');
+        $this->db->from('asistente as a');
+        $this->db->join('asistente_carnet as ac','a.id=ac.asistente_id',"left");
+        $this->db->join('carnet as c','c.id=ac.carnet_id',"left");
+        $query = $this->db->get();/*$this->db->get('asistente');*/
+        return $query->row_array();
+    }
+
     public function exist_Asistente($Fb_Id){
         $this->db->select('*');
         $this->db->where('facebook_id', $Fb_Id);
@@ -57,6 +68,19 @@ class Asistentes_model extends CI_Model{
     {
         $this->db->delete('asistente', array('id' => $id));
     }
+
+    public function get_talleres(){
+        $query = $this->db->get('taller');
+        return $query->result_array();
+    }
+
+    public function asignar_taller_asistente($data, $id){
+         $values['asistente_id']=$id;
+         $values['taller_id']=$data['taller_id'];
+         $this->db->insert('asistente_taller',$values);
+         return $this->db->affected_rows()!=0;
+    }
+
 
     public function get_asistente_by_id($id,$cid){
         if($cid==0){
@@ -118,6 +142,8 @@ class Asistentes_model extends CI_Model{
         }
         return $result;
     }
+
+
 
     public function tiene_carnet($id,$idc){
         return $this->db->from('asistente_carnet')->where('asistente_id='.$id)->where('carnet_id='.$idc)->get()->row_array();
