@@ -64,17 +64,27 @@
     					<?php echo ($aux['carrera']==10) ? 'Gestíon' : ''; ?>
     					<?php echo ($aux['carrera']==11) ? 'Industrial' : ''; ?>
     				</p>
+      				<?if($_SESSION['SISeI_User']['tipo']<=1):?>
     				<a href="" class="secondary-content modal-trigger">
     					<table class="responsive-table">
     						<tbody>
     							<tr>
     								<td><a href="<?php echo base_url();?>index.php/Asistentes_controller/details?id=<?php echo $aux['id'];?>"><i class="material-icons" style="font-size: 35px">control_point</i></a></td>
-    								<td><a href="<?php echo base_url();?>index.php/Asistentes_controller/edit?id=<?php echo $aux['id'];?>"><i class="material-icons" style="font-size: 35px">settings</i></a></td>
-    								<td><a href="<?php echo base_url();?>index.php/Asistentes_controller/delete?id=<?php echo $aux['id'];?>"><i class="material-icons" style="font-size: 35px">delete</i></a></td>
 
-    							</tbody>
-    						</table>
+    								<td><a href="<?php echo base_url();?>index.php/Asistentes_controller/edit?id=<?php echo $aux['id'];?>"><i class="material-icons" style="font-size: 35px">settings</i></a></td>
+
+    								<?if($_SESSION['SISeI_User']['tipo']<=0):?>
+    								<td><a href="<?php echo base_url();?>index.php/Asistentes_controller/delete?id=<?php echo $aux['id'];?>"><i class="material-icons" style="font-size: 35px">delete</i></a></td>
+    								<?endif;?>
+
+    								<!--Faltan los permisos -->
+    								<td><a class="brand-logo center col s1 offset-s9"><a class="btn center" target="_blank" href="<?php echo base_url();?>index.php/Asistentes_controller/asignar_taller?id=<?php echo $aux['id'];?>">Taller</a>
+    								</a></td>
+    							</tr>
+    						</tbody>
+    					</table>
     					</a>
+    				<?endif;?>
 					    <!-- <a href="" class="secondary-content modal-trigger">
 					    	<i class="material-icons" style="font-size: 35px">control_point</i>
 					    	<i class="material-icons" style="font-size: 35px">settings</i>

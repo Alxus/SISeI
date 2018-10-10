@@ -90,23 +90,18 @@ public function edit(){
     else
     {
         $id = $this->input->post('id');
-        if ($this->form_validation->run())                        
-        {
+        if ($this->form_validation->run()) {
+            if (!file_exists($_FILES['btnimg']['tmp_name'])) {
+                $data['imagen']=$this->input->post('imagen');
+            }
             if($this->upload->do_upload('btnimg')){
-              $data['imagen']=base_url().'assets/img/'.$this->upload->data('file_name');          
-              if($this->Ponente_model->update($id, $data)){
-                  $data['error']="ALL_OK";    
-              }
-              else
-              {
+                $data['imagen']=base_url().'assets/img/'.$this->upload->data('file_name');
+            }
+            if($this->Ponente_model->update($id, $data)){
+                $data['error']="ALL_OK";
+            } else {
                 $data['error']="NOT_CREATED";//ocurrio un error
-              }
-            }
-            else
-            {
-              $data['error']=$this->upload->display_errors();        
-            }
-                       
+            }     
         }
         else{
           $data['error']="BAD_POST";  

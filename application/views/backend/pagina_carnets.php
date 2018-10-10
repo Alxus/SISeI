@@ -1,7 +1,8 @@
-
+    <?if($_SESSION['SISeI_User']['tipo']<=2):?>
    <div class="row">
       <div class="col s2 offset-s5"><a class="waves-effect waves-light btn modal-trigger" href="#modal1">Nuevo Carnet</a></div>
    </div>
+  <?endif;?>
    <div class="container">
      <table class="responsive-table">
       <thead>
@@ -23,9 +24,11 @@
           <td><?php echo $aux['precio']; ?></td>
           <td><?php echo $aux['limite']; ?></td>
           <td><?php echo $aux['descripcion']; ?></td>
+          <?if($_SESSION['SISeI_User']['tipo']<=2):?>
           <td><a href="<?php echo base_url();?>index.php/Carnets_controller/details?id=<?php echo $aux['id'];?>" class="btn modal-trigger btn-floating btn-medium waves-effect waves-light black"><i class="material-icons">info_outline</i></a></td>
           <td><a href="<?php echo base_url();?>index.php/Carnets_controller/edit?id=<?php echo $aux['id'];?>" class="btn modal-trigger btn-floating btn-medium waves-effect waves-light blue"><i class="material-icons">edit</i></a></td>
           <td><a href="<?php echo base_url();?>index.php/Carnets_controller/delete?id=<?php echo $aux['id'];?>" class="btn modal-trigger btn-floating btn-medium waves-effect waves-light red"><i class="material-icons">delete</i></a></td>
+          <?endif;?>
           <?php endforeach;?>  
         </tr>
         <!-- 

@@ -18,6 +18,10 @@ class Conferencias_model extends CI_Model{
         return $this->db->get()->result_array();
     }
 
+    public function get_conferencias_landing(){
+        return $this->db->get('vw_conferencias')->result_array();
+    }
+
     public function getPonentes()
     {
         $this->db->order_by('id', 'asc');
@@ -59,7 +63,7 @@ class Conferencias_model extends CI_Model{
     }
 
     public function get_importantes(){
-        return $this->db->get('conferencia',4)->result_array();
+        return $this->db->get('vw_conferencias',3)->result_array();
     }
 }
 ?>

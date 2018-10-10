@@ -28,6 +28,17 @@ class Asistentes_model extends CI_Model{
         return $query->result_array();
     }
 
+    function get_asistentes_for_panel_asistente()
+    {
+        /*$this->db->where('id', $id);*/
+        $this->db->select('a.*, ac.debe, ac.carnet_id, ac.estado, c.nombre as nc, c.id as cid');
+        $this->db->from('asistente as a');
+        $this->db->join('asistente_carnet as ac','a.id=ac.asistente_id',"left");
+        $this->db->join('carnet as c','c.id=ac.carnet_id',"left");
+        $query = $this->db->get();/*$this->db->get('asistente');*/
+        return $query->row_array();
+    }
+
     public function exist_Asistente($Fb_Id){
         $this->db->select('*');
         $this->db->where('facebook_id', $Fb_Id);
@@ -57,6 +68,19 @@ class Asistentes_model extends CI_Model{
     {
         $this->db->delete('asistente', array('id' => $id));
     }
+
+    public function get_talleres(){
+        $query = $this->db->get('taller');
+        return $query->result_array();
+    }
+
+    public function asignar_taller_asistente($data, $id){
+         $values['asistente_id']=$id;
+         $values['taller_id']=$data['taller_id'];
+         $this->db->insert('asistente_taller',$values);
+         return $this->db->affected_rows()!=0;
+    }
+
 
     public function get_asistente_by_id($id,$cid){
         if($cid==0){
@@ -103,7 +127,6 @@ class Asistentes_model extends CI_Model{
 
     public function abono_asistente($data){
         $result=null;
-        $this->db->trans_start();
         $this->db->where('asistente_id',$data['asistente_id']);
         $this->db->where('carnet_id',$data['carnet_id']);
         $idAC = $this->db->get('asistente_carnet')->row_array();
@@ -117,9 +140,10 @@ class Asistentes_model extends CI_Model{
             $this->db->where('carnet_id',$data['carnet_id']);
             $this->db->update('asistente_carnet',$data);
         }
-        $this->db->trans_complete();
         return $result;
     }
+
+
 
     public function tiene_carnet($id,$idc){
         return $this->db->from('asistente_carnet')->where('asistente_id='.$id)->where('carnet_id='.$idc)->get()->row_array();
@@ -140,10 +164,8 @@ class Asistentes_model extends CI_Model{
     }
 
     public function getPagados(){
-        $this->db->trans_start();
         $this->db->select('COUNT(*) as total')->from('asistente_carnet')->where('estado="PAGADO"');
         $pagados = $this->db->get()->row_array();
-        $this->db->trans_complete();
         return $pagados;
     }
 
@@ -194,5 +216,32 @@ class Asistentes_model extends CI_Model{
         $this->db->from('asistente');
         $this->db->order_by('Nombre');
         return $this->db->get()->result_array();
+    }
+
+
+    public function update_asistente($data){
+        return $this->db->where('id',$data['id'])->update('asistente',$data);
+    }
+
+    public function get_asistente($id){
+        $where['id']=$id;
+        return $this->db->get_where('asistente',$where)->row_array();
+    }
+
+    public function k_le_valga_vrg_cniora(){
+        return $this->db->select('email, password')->from('asistente')->get()->result_array();
+    }
+
+    public function print_ventas($date){
+        $stop_date = new DateTime($date);
+        $stop_date->modify('+1 day');
+        return $this->db->select('no_control as "NC", 
+            concat(nombre_real," ",apellido_real) as "Nombe del asistente",
+            carnet_nombre as "Carnet", estado as "Estado", debe as "Debe", created_at as "Fecha"')
+        ->from('vw_asistente_carnet')
+        ->where('created_at >= '.'"'.$date.'"')
+        ->where('created_at < '.'"'.$stop_date->format('Y-m-d').'"')
+        ->order_by('created_at')
+        ->get()->result_array();
     }
 }

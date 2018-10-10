@@ -31,8 +31,10 @@
 			</div>
 		</div>
 	</div>
-	
 	<div class="col s12 m5 l4">
+		<div class="center">
+			<a class="btn green waves-effect" href=<?=site_url('admin/panel/ventas/list/'.date('Y-m-d'))?> target="blank">Lista de ventas del dia</a>
+		</div>
 		<ul class="collapsible">
 			<li>
 				<div class="collapsible-header"><i class="material-icons">search</i>Buscar Asistente</div>
@@ -89,11 +91,11 @@
 					</div>
 					<div class="row">
 						<div class="input-field col s6">
-							<input id="noControl" type="text" name="noControl" required>
+							<input id="noControl" type="text" name="noControl">
 							<label for="noControl">No. Control</label>
 						</div>
 						<div class="input-field col s6">
-							<select name="carrera" class="browser-default" required>
+							<select name="carrera" class="browser-default">
 								<option value="" disabled selected>Seleccione</option>
 								<option value="1">Sistemas</option>
 								<option value="2">TICs</option>

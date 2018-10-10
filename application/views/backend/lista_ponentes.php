@@ -1,5 +1,7 @@
 <div class="row">
+      <?if($_SESSION['SISeI_User']['tipo']<=3 && && $_SESSION['SISeI_User']['tipo']!=2):?>
       <div class="col s2 offset-s5"><a class="waves-effect waves-light btn modal-trigger" href="#modal1">Nuevo Ponente</a></div>
+      <?endif;?>
       <?if($_SESSION['SISeI_User']['tipo']<=2):?>
   <a class="btn blue" target="_blank" href=<?=site_url('admin/panel/ponentes/pdf');?>>Imprimir lista</a>
   <?endif;?>
@@ -23,9 +25,11 @@
           <td><?php echo $aux['nombres']; ?></td>
           <td><?php echo $aux['apellidos']; ?></td>
           <td><?php echo $aux['tel']; ?></td>
+          <?if($_SESSION['SISeI_User']['tipo']<=3 && $_SESSION['SISeI_User']['tipo']!=2):?>
           <td><a href="<?php echo base_url();?>index.php/Ponentes_controller/details?id=<?php echo $aux['id'];?>" class="btn modal-trigger btn-floating btn-medium waves-effect waves-light black"><i class="material-icons">info_outline</i></a></td>
           <td><a href="<?php echo base_url();?>index.php/Ponentes_controller/edit?id=<?php echo $aux['id'];?>" class="btn modal-trigger btn-floating btn-medium waves-effect waves-light blue"><i class="material-icons">edit</i></a></td>
           <td><a href="<?php echo base_url();?>index.php/Ponentes_controller/delete?id=<?php echo $aux['id'];?>" class="btn modal-trigger btn-floating btn-medium waves-effect waves-light red"><i class="material-icons">delete</i></a></td>
+          <?endif;?>
           <?php endforeach;?>  
         </tr>
       </tbody>

@@ -8,6 +8,7 @@ class Ventas_controller extends CI_Controller {
 		if(!$this->authentication->check_user()){
 			redirect('admin');
 		}
+		date_default_timezone_set('America/Mazatlan');
 		$this->load->model('Asistentes_model');		
 		$this->load->model('Carnets_model');
 		$this->load->model('Pagos_model');
@@ -234,7 +235,62 @@ class Ventas_controller extends CI_Controller {
 		$this->pdf->multicell(0,5,'*Utilice el correo electrónico proporcionado y la contraseña "'.$this->encryption->decrypt($asistente['password']).'" para acceder a su perfil de usuario en www.sisei.com.mx');
 		$this->pdf->multicell(0,5,"**Este comprobante no es válido sin sello.");
 		$this->pdf->multicell(0,5,"***No hay devoluciones.");
+		$postData['email'] = $asistente['email']; 
+		$postData['password'] = $this->encryption->decrypt($asistente['password']);
+		$postData['returnSecureToken'] = false;
+		$this->firebaseRegister($postData);
 		$this->pdf->Output('comprobante'.$cliente.'.pdf', 'I');
+	}
+
+	public function firebaseRegister($postData){
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL,"https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyBZoOZmJRGsen94XGVYVm7c2pzO5LU2F_g");
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
+		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));                                                                  
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);                                                                      
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+		$server_output = curl_exec($ch);
+		curl_close ($ch);
+		$response = json_decode($server_output,true);
+		if(!isset($response['error'])){
+			$this->firebaseEmailVerification($response['idToken']);
+		}
+	}
+
+	public function firebaseEmailVerification($token){
+		$ch = curl_init();
+		$postData['requestType'] = "VERIFY_EMAIL";
+		$postData['idToken'] = $token;
+		curl_setopt($ch, CURLOPT_URL,"https://www.googleapis.com/identitytoolkit/v3/relyingparty/getOobConfirmationCode?key=AIzaSyBZoOZmJRGsen94XGVYVm7c2pzO5LU2F_g");
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
+		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));                                                                  
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);                                                                      
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+		$server_output = curl_exec($ch);
+		curl_close ($ch);
+	}
+
+	public function print_ventas($date){
+		$ventas = $this->Asistentes_model->print_ventas($date);
+		if($ventas==null){
+			echo "Ninguna venta ha sido realizada el dia ".$date;
+			return;
+		}
+		$header=array_keys($ventas[0]);
+		$this->pdf->SetFillColor(33 , 150 , 243);
+		$this->pdf->AliasNbPages();
+		$this->pdf->AddPage();
+		$this->pdf->SetFont('Arial','B',16);
+		$this->pdf->MultiCell(0,10,'Ventas del dia',0,"C");
+		$this->pdf->SetFont('Arial','B',12);
+		$this->pdf->tablewidths = array(22, 65,22,25,20,40);
+		for($i=0; $i<sizeof($header); $i++){
+			$this->pdf->Cell($this->pdf->tablewidths[$i],7,$header[$i],1,0,'C',true);
+		}
+		$this->pdf->Ln();
+		$this->pdf->SetFont('Arial','',10);
+		$this->pdf->morepagestable($ventas,8,"C",true);
+		$this->pdf->Output('ventas_'.$date.'.pdf', 'I');
 	}
 
 }

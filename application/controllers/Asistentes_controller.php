@@ -78,7 +78,45 @@ public function delete()
         echo '</script>';
 }
 
-/*Aun no funciona el update*/
+
+public function asignar_taller(){
+    $id = $this->input->get('id');
+            //$id = $this->input->post('id');
+    $resultado = $this->Asistentes_model->get_asistentes_by_id_for_panel_asistente($id);
+    $data['talleres']=$this->Asistentes_model->get_talleres();
+    $data['asistente_id']=$this->input->get('id');
+    $data['taller_id']=$this->input->post('taller_id');
+    if($resultado!=null)
+    {
+        $data['asistente'] = $resultado;
+        $data['title'] = 'Asignar Talleres';
+        $this->load->view('backend/templates/header', $data);
+        $this->load->view('backend/templates/navbar');
+        $this->load->view('backend/asignar_taller_asistentes', $data);
+        $this->load->view('backend/templates/footer');
+    }
+    else
+    {
+        $id = $this->input->post('id');  
+              if($this->Asistentes_model->asignar_taller_asistente($data, $id)){
+                  $data['error']="ALL_OK";   
+                    echo '<script language="javascript">';
+                    echo 'alert("Se a asignado el taller con exito")';
+                    echo '</script>'; 
+                    $this->index();
+              }
+              else{
+                $data['error']="NOT_CREATED";//ocurrio un error
+                    echo '<script language="javascript">';
+                    echo 'alert("Ocurrio un error: No se han podido asignar el taller.")';
+                    echo '</script>';
+                    $this->index();
+              }
+        }
+}
+
+
+
 public function edit(){
     $id = $this->input->get('id');
             //$id = $this->input->post('id');

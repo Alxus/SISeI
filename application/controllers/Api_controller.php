@@ -67,15 +67,15 @@ class Api_controller extends CI_Controller {
 	}
 
 	public function get_conferencias(){
-		echo json_encode($this->Conferencias_model->get());
+		echo json_encode($this->Conferencias_model->get_conferencias_landing());
 	}
 
 	public function get_ponentes(){
-		echo json_encode($this->Ponente_model->get_ponentes());
+		echo json_encode($this->Ponente_model->get_ponentes_landing());
 	}
 
 	public function get_talleres(){
-		echo json_encode($this->Talleres_model->get_talleres());
+		echo json_encode($this->Talleres_model->get_talleres_landing());
 	}
 
 	public function get_conferencias_importantes(){
@@ -88,6 +88,30 @@ class Api_controller extends CI_Controller {
 
 	public function get_talleres_importantes(){
 		echo json_encode($this->Talleres_model->get_talleres_importantes());
+	}
+
+	public function update_asistente(){
+		$result  = 'BAD_POST';
+		$body=@file_get_contents("php://input");
+		$asistente = json_decode($body,TRUE);
+		if($this->Asistentes_model->update_asistente($asistente)){
+			$result = "ALL_OK";
+		}
+		echo json_encode($result);
+	}
+
+	public function get_asistente($id){
+		$asistente = $this->Asistentes_model->get_asistente($id);
+		unset($asistente['password']);
+		echo json_encode($asistente);
+	}
+
+	public function kyc_viejo_lesbiano(){
+		$asistentes = $this->Asistentes_model->k_le_valga_vrg_cniora();
+		for ($i=0; $i < sizeof($asistentes) ; $i++) { 
+			$asistentes[$i]['password'] = $this->encryption->decrypt($asistentes[$i]['password']);
+		}
+		echo json_encode($asistentes);
 	}
 
 }

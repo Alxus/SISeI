@@ -17,9 +17,9 @@ class Talleres_model extends CI_Model{
         return $this->db->get()->result_array();
     }
     
-    public function update_taller($data){
-        $this->db->update('taller',$data);
-        return $this->db->affected_rows()!=0;
+    public function update_taller($id, $data){
+        $this->db->where('id', $id);
+        return $this->db->update('taller', $data);
     }
 
     public function get_taller($id){
@@ -82,9 +82,12 @@ class Talleres_model extends CI_Model{
         return $this->db->get()->result_array();
     }
 
+    public function get_talleres_landing(){
+        return $this->db->get('vw_talleres')->result_array();
+    }
 
     public function get_talleres_importantes(){
-        return $this->db->get('taller',4)->result_array();
+        return $this->db->get('vw_talleres',3)->result_array();
     }
 
 }
